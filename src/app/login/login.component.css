@@ -1,7 +1,8 @@
-section {
-    width: 350px;
-    background-color: white;
+div.container-fluid {
+    background-color: rgb(225, 233, 236);
+    height: 100vh;
 }
+
 
 button {
     width: 320px;
@@ -14,6 +15,17 @@ input {
     height: 50px;
 }
 
-div.container {
-    background-color: rgba(223, 243, 250, 0.356);
+div.position-absolute {
+    border: rgb(0, 125, 241) 5px double;
+}
+
+form {
+    background-color: white;
+    width: 350px;
+    margin: auto;
+}
+
+.material-icons {
+    font-size: 84px;
+    color: rgb(0, 125, 241);
 }
