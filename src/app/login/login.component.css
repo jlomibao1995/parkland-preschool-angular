@@ -1,0 +1,19 @@
+section {
+    width: 350px;
+    background-color: white;
+}
+
+button {
+    width: 320px;
+}
+
+input {
+    background-color: rgba(223, 243, 250, 0.356);
+    border: none;
+    border-bottom: solid 1px rgb(193, 197, 199);
+    height: 50px;
+}
+
+div.container {
+    background-color: rgba(223, 243, 250, 0.356);
+}
