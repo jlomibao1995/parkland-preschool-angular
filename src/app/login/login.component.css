@@ -1,26 +1,3 @@
-div.container-fluid {
-    background-color: rgb(225, 233, 236);
-    height: 100vh;
-}
-
-
-button {
-    width: 320px;
-}
-
-input {
-    background-color: rgba(223, 243, 250, 0.356);
-    border: none;
-    border-bottom: solid 1px rgb(193, 197, 199);
-    height: 50px;
-}
-
-form {
-    background-color: white;
-    width: 350px;
-    margin: auto;
-}
-
 .material-icons {
     font-size: 84px;
     color: rgb(0, 125, 241);

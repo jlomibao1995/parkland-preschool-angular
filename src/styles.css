@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+form.out {
+    background-color: white;
+    width: 350px;
+    margin: auto;
+}
+
+div.container-fluid.out {
+    background-color: rgb(225, 233, 236);
+    height: 100vh;
+}
+
+
+button.out {
+    width: 320px;
+}
+
+input.out {
+    background-color: rgba(223, 243, 250, 0.356);
+    border: none;
+    border-bottom: solid 1px rgb(193, 197, 199);
+    height: 50px;
+}
