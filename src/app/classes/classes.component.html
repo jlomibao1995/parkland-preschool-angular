@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let class of classes; let i = index" (click)="selectClass(i)" [class.selected]="i==selectedIndex">
+            <tr *ngFor="let class of classes; let i = index" (click)="selectClass(class.id)" [class.selected]="class.id==selectedId">
                 <td>{{class.description}}</td>
                 <td>{{class.ageGroup}}</td>
                 <!-- <td>{{class.startDate | date:'shortDate'}} - {{class.endDate | date:'shortDate'}}</td> -->

@@ -16,6 +16,9 @@ import { CookieService } from './services/cookie.service';
 import { AuthorizationInterceptor } from './helpers/authorization.interceptor';
 import { AddClassComponent } from './add-class/add-class.component';
 import { ClassDetailsComponent } from './class-details/class-details.component';
+import { AccountsComponent } from './accounts/accounts.component';
+import { AddAccountComponent } from './add-account/add-account.component';
+import { AccountDetailsComponent } from './account-details/account-details.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { ClassDetailsComponent } from './class-details/class-details.component';
     RegistrationsComponent,
     ClassesComponent,
     AddClassComponent,
-    ClassDetailsComponent
+    ClassDetailsComponent,
+    AccountsComponent,
+    AddAccountComponent,
+    AccountDetailsComponent
   ],
   imports: [
     BrowserModule,

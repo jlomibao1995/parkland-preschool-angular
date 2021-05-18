@@ -11,7 +11,7 @@ export class ClassesComponent implements OnInit {
   public classes: [];
   public selectedClass: Classroom;
   public message: String;
-  public selectedIndex: number;
+  public selectedId: number;
 
   constructor(private _classroomService: ClassesService) { }
 
@@ -23,9 +23,9 @@ export class ClassesComponent implements OnInit {
       });
   }
 
-  selectClass(index) {
-    this.selectedIndex = index;
-    this._classroomService.getClass(index).subscribe(data => this.selectedClass = data,
+  selectClass(id) {
+    this.selectedId = id;
+    this._classroomService.getClass(id).subscribe(data => this.selectedClass = data,
       error => {
         this.message = error.error.message
         console.log(this.message);
