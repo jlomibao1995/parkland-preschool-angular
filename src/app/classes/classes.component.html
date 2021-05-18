@@ -1,0 +1,23 @@
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Age</th>
+                <th>Dates</th>
+                <th>Times</th>
+                <th>Days</th>
+                <th>Spots Available</th>
+            </tr>
+            <tr *ngFor="let class of classes">
+                <td>{{class.description}}</td>
+                <td>{{class.ageGroup}}</td>
+                <td>{{class.startDate | date:'mediumDate'}} to {{class.endDate | date:'mediumDate'}}</td>
+                <td>{{class.startDate | date:'shortTime'}} - {{class.endDate | date:'shortTime'}}</td>
+                <td *ngIf="class.days == 'MWF'">Monday/Wednesday/Friday</td>
+                <td *ngIf="class.days == 'TTh'">Tuesday/Thursday</td>
+                <td>{{class.enrolled}}/{{class.capacity}}</td>
+            </tr>
+        </thead>
+    </table>
+</div>

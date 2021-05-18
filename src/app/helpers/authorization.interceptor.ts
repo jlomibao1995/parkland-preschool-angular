@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent } from '@angular/c
 import { CookieService } from '../services/cookie.service';
 import { Observable } from 'rxjs';
 @Injectable()
-export class UniversalAppInterceptor implements HttpInterceptor {
+export class AuthorizationInterceptor implements HttpInterceptor {
  
   constructor( private _cookieService: CookieService) { }
  

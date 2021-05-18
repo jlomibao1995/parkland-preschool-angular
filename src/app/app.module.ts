@@ -8,8 +8,12 @@ import { SignupComponent } from './signup/signup.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthenticationService } from './services/authentication.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RegistrationsComponent } from './registrations/registrations.component';
+import { ClassesComponent } from './classes/classes.component';
+import { ClassesService } from './services/classes.service';
+import { CookieService } from './services/cookie.service';
+import { AuthorizationInterceptor } from './helpers/authorization.interceptor';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,8 @@ import { RegistrationsComponent } from './registrations/registrations.component'
     LoginComponent,
     SignupComponent,
     ResetPasswordComponent,
-    RegistrationsComponent
+    RegistrationsComponent,
+    ClassesComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +30,8 @@ import { RegistrationsComponent } from './registrations/registrations.component'
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, ClassesService, CookieService,
+  {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

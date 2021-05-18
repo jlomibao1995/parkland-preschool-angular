@@ -9,14 +9,13 @@ import { CookieService } from './cookie.service';
 })
 export class AuthenticationService {
   public authenticated: boolean = false;
-  baseUrl = environment.baseUrl + '/out/authenticate';
+  url = environment.baseUrl + '/out/authenticate';
 
   constructor(private _http: HttpClient, private _cookieService: CookieService) { }
 
   async authenticate(credentials: any) {
-    console.log(this.baseUrl);
     const headers = { 'content-type': 'application/json' };
-    await this._http.post<any>(this.baseUrl, credentials, { 'headers': headers })
+    await this._http.post<any>(this.url, credentials, { 'headers': headers })
       .toPromise().then(data => {
         this._cookieService.set('authorization', data.jwt);
         this.authenticated = true;
