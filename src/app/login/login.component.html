@@ -1,5 +1,5 @@
 <div class="container-fluid out py-5">
-    <form class="out py-3">
+    <form class="out py-3" [formGroup]="loginForm" (ngSubmit)="authenticate()">
         <div class="">
             <div class="my-5 text-center">
                 <span class="material-icons">
@@ -7,12 +7,20 @@
                     </span>
             </div>
 
-            <div class="m-3">
-                <input type="text" class="form-control out" placeholder="Email">
+            <div class="m-3 form-group">
+                <input type="text" class="form-control out" formControlName="email"
+                [class.is-invalid]="email.invalid && email.touched" placeholder="Email">
+                <small [class.d-none]="email.valid || email.untouched" class="text-danger">Enter your email</small>
             </div>
 
-            <div class="m-3">
-                <input type="password" class="form-control out" placeholder="Password">
+            <div class="m-3 form-group">
+                <input type="password" class="form-control out" formControlName="password" 
+                [class.is-invalid]="password.invalid && password.touched" placeholder="Password">
+                <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter a password</small>
+            </div>
+
+            <div class="m-3 text-center">
+                <small *ngIf="message != null" class="text-danger">{{message}}</small>
             </div>
 
             <div class="m-3 text-center">
@@ -20,7 +28,7 @@
             </div>
 
             <div class="my-4 mx-3">
-                <button class="btn btn-primary btn-lg out">Log In</button>
+                <button class="btn btn-primary btn-lg out" [disabled]="!loginForm.valid">Log In</button>
             </div>
 
             <div class="my-3 text-center">
