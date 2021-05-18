@@ -18,6 +18,12 @@ export class ClassesService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getClass(classId) {
+    let url = this.baseUrl + '/' + classId;
+    return this._http.get<any>(url)
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

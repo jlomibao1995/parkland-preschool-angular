@@ -22,7 +22,7 @@ export class AuthenticationService {
       });
   }
 
-  errorHandler(error: HttpErrorResponse) {
-    return throwError(error);
+  logout(){
+    this._cookieService.remove('authorization');
   }
 }

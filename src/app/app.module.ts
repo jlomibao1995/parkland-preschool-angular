@@ -14,6 +14,8 @@ import { ClassesComponent } from './classes/classes.component';
 import { ClassesService } from './services/classes.service';
 import { CookieService } from './services/cookie.service';
 import { AuthorizationInterceptor } from './helpers/authorization.interceptor';
+import { AddClassComponent } from './add-class/add-class.component';
+import { ClassDetailsComponent } from './class-details/class-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { AuthorizationInterceptor } from './helpers/authorization.interceptor';
     SignupComponent,
     ResetPasswordComponent,
     RegistrationsComponent,
-    ClassesComponent
+    ClassesComponent,
+    AddClassComponent,
+    ClassDetailsComponent
   ],
   imports: [
     BrowserModule,

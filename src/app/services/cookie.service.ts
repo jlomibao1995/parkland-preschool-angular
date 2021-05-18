@@ -26,7 +26,7 @@ export class CookieService {
   }
 
   remove(key: string) {
-    document.cookie = `${key} = ; max-age=3600; path=/`;
+    document.cookie = `${key} = ; max-age=0; path=/`;
   }
 
   set(key: string, value: string) {

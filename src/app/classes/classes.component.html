@@ -1,20 +1,26 @@
 <div class="container">
-    <table class="table table-hover table-borderless table-responsive">
+    <button type="button" class="btn btn-outline-success m-3" data-bs-toggle="modal" data-bs-target="#addClass" data-bs-whatever="@mdo">
+        <span class="material-icons">
+            add
+            </span>
+    </button>
+
+    <table class="table table-hover table-borderless table-responsive m-3">
         <thead>
             <tr>
                 <th>Class</th>
                 <th>Age</th>
-                <th>Dates</th>
+                <!-- <th>Dates</th> -->
                 <th>Times</th>
                 <th>Days</th>
                 <th>Spots Available</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let class of classes">
+            <tr *ngFor="let class of classes; let i = index" (click)="selectClass(i)" [class.selected]="i==selectedIndex">
                 <td>{{class.description}}</td>
                 <td>{{class.ageGroup}}</td>
-                <td>{{class.startDate | date:'shortDate'}} - {{class.endDate | date:'shortDate'}}</td>
+                <!-- <td>{{class.startDate | date:'shortDate'}} - {{class.endDate | date:'shortDate'}}</td> -->
                 <td>{{class.startDate | date:'shortTime'}} - {{class.endDate | date:'shortTime'}}</td>
                 <td *ngIf="class.days == 'MWF'">Monday/Wednesday/Friday</td>
                 <td *ngIf="class.days == 'TTh'">Tuesday/Thursday</td>
@@ -23,3 +29,26 @@
         </tbody>
     </table>
 </div>
+
+<div *ngIf="selectedClass != null" class="my-5">
+    <app-class-details [class]="selectedClass"></app-class-details>
+</div>
+
+<!-- modal for adding a new class -->
+<div class="modal fade" id="addClass" tabindex="-1" aria-labelledby="addClassLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addClassLabel">Create New Class</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <app-add-class></app-add-class>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Send message</button> -->
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,8 +1,8 @@
 export class Classroom {
     constructor(public id: number,
         public capacity: number,
-        public startDate: Date,
-        public endDate: Date,
+        public startDate: String,
+        public endDate: String,
         public enrolled: number,
         public ageGroup: number,
         public costPerMonth: number,

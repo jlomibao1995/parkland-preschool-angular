@@ -8,8 +8,10 @@ import { ClassesService } from '../services/classes.service';
   styleUrls: ['./classes.component.css']
 })
 export class ClassesComponent implements OnInit {
-  public classes: Classroom;
+  public classes: [];
+  public selectedClass: Classroom;
   public message: String;
+  public selectedIndex: number;
 
   constructor(private _classroomService: ClassesService) { }
 
@@ -19,6 +21,15 @@ export class ClassesComponent implements OnInit {
         this.message = error.error.message
         console.log(this.message);
       });
+  }
+
+  selectClass(index) {
+    this.selectedIndex = index;
+    this._classroomService.getClass(index).subscribe(data => this.selectedClass = data,
+      error => {
+        this.message = error.error.message
+        console.log(this.message);
+      })
   }
 
 }

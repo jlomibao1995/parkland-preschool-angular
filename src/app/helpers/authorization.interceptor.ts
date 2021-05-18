@@ -9,12 +9,14 @@ export class AuthorizationInterceptor implements HttpInterceptor {
  
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this._cookieService.get('authorization');
-    req = req.clone({
-      url:  req.url,
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    if (token) {
+      req = req.clone({
+        url:  req.url,
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    }
     return next.handle(req);
   }
 }
