@@ -12,8 +12,9 @@ export class ClassesService {
 
   constructor(private _http: HttpClient) { }
 
-  getClasses() {
-    let url = this.baseUrl + '/classrooms';
+  getClasses(page, pageSize) {
+    page = page -1;
+    let url = this.baseUrl + '/classrooms/pages?page=' + page + '&pageSize=' + pageSize;
     return this._http.get<any>(url)
     .pipe(catchError(this.errorHandler));
   }

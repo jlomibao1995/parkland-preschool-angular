@@ -21,11 +21,13 @@ input.out {
     height: 50px;
 }
 
-.selected {
-    background-color: rgb(208, 242, 255);
-}
-
 div.scrollable {
     height: 300px;
     overflow: scroll;
+}
+
+input[type=number].page-entries {
+    width: 70px;
+    display: inline;
+    text-align: center;
 }

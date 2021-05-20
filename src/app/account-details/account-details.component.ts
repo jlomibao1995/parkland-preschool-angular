@@ -12,11 +12,13 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
   editMode = false;
   passwordForm: FormGroup;
   @Input() account: Account;
+  public passwordMode = false;
 
   constructor(private _formBuilder: FormBuilder) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.editMode = false;
+    this.passwordMode = false;
 
     this.editForm = this._formBuilder.group({
       role: [this.account.role, Validators.required],
@@ -79,10 +81,15 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
 
   goToEditMode() {
     this.editMode = true
+    this.passwordMode = false;
   }
 
   cancelEdit() {
     this.editMode = false;
+  }
+
+  changePasswordMode() {
+    this.passwordMode = true;
   }
 
 }

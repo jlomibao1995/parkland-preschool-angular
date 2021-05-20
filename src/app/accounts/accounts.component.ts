@@ -18,7 +18,7 @@ export class AccountsComponent implements OnInit {
 
   public totalPages: number;
   public currentPage = 1;
-  public numOfAccounts = 5;
+  public numOfAccounts = 10;
   public totalAccounts: number;
 
   public accountNumForm: FormGroup;
@@ -27,7 +27,7 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountNumForm = this._formBuilder.group({
-      numOfAccounts: [5]
+      numOfAccounts: [10]
     });
 
     this.goToPage(this.currentPage);  

@@ -95,15 +95,10 @@
     
             <div class="row p-3">
                 <div class="col">
-                    <button class="btn btn-outline-danger"  [hidden]="!editMode" data-bs-toggle="modal" data-bs-target="#deleteClass">
-                        <span class="material-icons">
-                            delete
-                            </span>
-                    </button>
+                    <button class="btn btn-secondary mx-3" [hidden]="!editMode" (click)="cancelEdit()">Cancel</button>
                 </div>
 
                 <div class="col-auto form-group">
-                    <button class="btn btn-secondary mx-3" [hidden]="!editMode" (click)="cancelEdit()">Cancel</button>
                     <input type="submit" class="btn btn-success" value="Save Changes" [disabled]="editForm.invalid" [hidden]="!editMode">
                 </div>
             </div>
@@ -111,24 +106,4 @@
         </fieldset>
     </form>
 </div>
-
-
-  <!-- modal for adding deleting class -->
-  <div class="modal fade" id="deleteClass" tabindex="-1" aria-labelledby="deleteClassLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteClassLabel">Delete {{class.description}} Class</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Deleting the class will delete all registrations associated with it. Are you sure you want to delete {{class.description}}?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
 

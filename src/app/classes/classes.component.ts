@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Classroom } from '../models/Classroom';
 import { ClassesService } from '../services/classes.service';
 
@@ -12,15 +13,23 @@ export class ClassesComponent implements OnInit {
   public selectedClass: Classroom;
   public message: String;
   public selectedId: number;
+  public pages: number[] = [];
 
-  constructor(private _classroomService: ClassesService) { }
+  public totalPages: number;
+  public currentPage = 1;
+  public numOfClasses = 10;
+  public totalClasses: number;
+
+  public classNumForm: FormGroup;
+
+  constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this._classroomService.getClasses().subscribe(data => this.classes = data,
-      error => {
-        this.message = error.error.message
-        console.log(this.message);
-      });
+    this.classNumForm = this._formBuilder.group({
+      numOfClasses: [10]
+    });
+
+    this.goToPage(this.currentPage);
   }
 
   selectClass(id) {
@@ -30,6 +39,42 @@ export class ClassesComponent implements OnInit {
         this.message = error.error.message
         console.log(this.message);
       })
+  }
+
+  goToPage(page) {
+    this.pages = [];
+    this.currentPage = page;
+
+    this._classroomService.getClasses(this.currentPage, this.numOfClasses).subscribe(
+      data => {
+        this.classes = data.content;
+        this.totalPages = data.totalPages;
+
+        //figure out which page buttons are visible
+        let start = this.currentPage - 2;
+        if (start <= 0) {
+          start = 1;
+        }
+
+        for (let i = 0; i < 5; i++) {
+          this.pages[i] = start + i;
+
+          if (start + i == this.totalPages) {
+            break;
+          }
+        }
+
+        this.totalClasses = data.totalElements;
+      },
+      error => {
+        this.message = error.error.message
+        console.log(this.message);
+      });
+  }
+
+  changeClassesNum() {
+    this.numOfClasses = this.classNumForm.get('numOfClasses').value;
+    this.goToPage(1);
   }
 
 }
