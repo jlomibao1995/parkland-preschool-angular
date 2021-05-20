@@ -1,66 +1,105 @@
 <div class="container">
-    <button type="button" class="btn btn-outline-success m-3" data-bs-toggle="modal" data-bs-target="#addAccount" data-bs-whatever="@mdo">
-        <span class="material-icons">
-            add
-            </span>
-    </button>
+  <button type="button" class="btn btn-outline-success m-3" data-bs-toggle="modal" data-bs-target="#addAccount"
+    data-bs-whatever="@mdo">
+    <span class="material-icons">
+      add
+    </span>
+  </button>
 
-    <table class="table table-hover table-borderless table-responsive m-3">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Child</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let account of accounts; let i = index" (click)="selectAccount(account.id)" [class.selected]="account.id==selectedId">
-                <td>{{account.email}}</td>
-                <td>{{account.firstName}} {{account.lastName}}</td>
-                <td>{{account.role}}</td>
-                <td>
-                    <ul class="list-unstyled">
-                        <li *ngFor="let child of account.childList">{{child.firstName}} {{child.lastName}}</li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="table table-hover table-borderless table-responsive m-3">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Child</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let account of accounts; let i = index" (click)="selectAccount(account.id)"
+        [class.selected]="account.id==selectedId">
+        <td>{{account.email}}</td>
+        <td>{{account.firstName}} {{account.lastName}}</td>
+        <td>{{account.role}}</td>
+        <td>
+          <ul class="list-unstyled">
+            <li *ngFor="let child of account.childList">{{child.firstName}} {{child.lastName}}</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div *ngIf="selectedAccount != null" class="container my-5">
-    <div class="row">
-        <div class="col-auto">
-            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deactivateAccount">
-                Deactivate Account
-            </button>
-        </div>
+  <div class="row">
+    <div class="col">
+      <h2>Account Details</h2>
+    </div>
+    <div class="col-auto">
+      <button *ngIf="selectedAccount.active" class="btn btn-outline-danger" data-bs-toggle="modal"
+        data-bs-target="#deactivateAccount">
+        Deactivate Account
+      </button>
+      <button *ngIf="!selectedAccount.active" class="btn btn-outline-success">
+        Activate Account
+      </button>
     </div>
 
-    <app-account-details [account]="selectedAccount"></app-account-details>
+    <div *ngIf="!selectedAccount.active" class="col-auto">
+      <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAccount">
+        <span class="material-icons">
+          delete
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <app-account-details [account]="selectedAccount"></app-account-details>
 </div>
 
 <!-- modal for adding a new account-->
 <div class="modal fade" id="addAccount" tabindex="-1" aria-labelledby="addAccountLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addAccountLabel">Create New Account</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <app-add-account></app-add-account>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addAccountLabel">Create New Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-add-account></app-add-account>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>
 
-    <!-- modal for adding deactivating account -->
-  <!-- <div class="modal fade" id="deactivateAccount" tabindex="-1" aria-labelledby="deactivateAccountLabel" aria-hidden="true">
+<!-- modal for adding deleting account -->
+<div *ngIf="selectedAccount != null" class="modal fade" id="deleteAccount" tabindex="-1"
+  aria-labelledby="deleteAccountLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAccountLabel">Delete {{selectedAccount.firstName}}
+          {{selectedAccount.lastName}}'s account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Deleting the class will delete all records (child info, registrations, and payment info) associated with it.
+        Are you sure you want to delete {{selectedAccount.firstName}} {{selectedAccount.lastName}}'s account?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal for adding deactivating account -->
+<!-- <div class="modal fade" id="deactivateAccount" tabindex="-1" aria-labelledby="deactivateAccountLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -74,26 +113,6 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-danger">Deactivate</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-   <!-- modal for adding deleting account --> 
-  <!-- <div class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="deleteAccountLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteAccountLabel">Delete {{account.firstName}} {{account.lastName}}'s account</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Deleting the class will delete all records (child info, registrations, and payment info) associated with it. 
-          Are you sure you want to delete {{account.firstName}} {{account.lastName}}'s account?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger">Delete</button>
         </div>
       </div>
     </div>

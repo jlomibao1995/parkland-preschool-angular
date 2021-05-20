@@ -30,13 +30,18 @@
     </table>
 </div>
 
-<div *ngIf="selectedClass != null" class="my-5">
+<div *ngIf="selectedClass != null" class="container my-5">
+    <div class="row">
+        <div class="col">
+            <h2>Class Details</h2>
+        </div>
+    </div>
     <app-class-details [class]="selectedClass"></app-class-details>
 </div>
 
 <!-- modal for adding a new class -->
 <div class="modal fade" id="addClass" tabindex="-1" aria-labelledby="addClassLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addClassLabel">Create New Class</h5>
