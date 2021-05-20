@@ -1,0 +1,5 @@
+input[type=number] {
+    width: 70px;
+    display: inline;
+    text-align: center;
+}

@@ -24,3 +24,8 @@ input.out {
 .selected {
     background-color: rgb(208, 242, 255);
 }
+
+div.scrollable {
+    height: 300px;
+    overflow: scroll;
+}

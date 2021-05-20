@@ -1,8 +1,9 @@
 <div class="container">
-    <button type="button" class="btn btn-outline-success m-3" data-bs-toggle="modal" data-bs-target="#addClass" data-bs-whatever="@mdo">
+    <button type="button" class="btn btn-outline-success m-3" data-bs-toggle="modal" data-bs-target="#addClass"
+        data-bs-whatever="@mdo">
         <span class="material-icons">
             add
-            </span>
+        </span>
     </button>
 
     <table class="table table-hover table-borderless table-responsive m-3">
@@ -17,7 +18,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let class of classes; let i = index" (click)="selectClass(class.id)" [class.selected]="class.id==selectedId">
+            <tr *ngFor="let class of classes; let i = index" (click)="selectClass(class.id)"
+                [class.selected]="class.id==selectedId">
                 <td>{{class.description}}</td>
                 <td>{{class.ageGroup}}</td>
                 <!-- <td>{{class.startDate | date:'shortDate'}} - {{class.endDate | date:'shortDate'}}</td> -->
@@ -42,18 +44,18 @@
 <!-- modal for adding a new class -->
 <div class="modal fade" id="addClass" tabindex="-1" aria-labelledby="addClassLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addClassLabel">Create New Class</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addClassLabel">Create New Class</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-add-class></app-add-class>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary">Send message</button> -->
+            </div>
         </div>
-        <div class="modal-body">
-            <app-add-class></app-add-class>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <!-- <button type="button" class="btn btn-primary">Send message</button> -->
-        </div>
-      </div>
     </div>
-  </div>
+</div>

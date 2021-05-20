@@ -13,9 +13,10 @@ export class AccountService {
 
   constructor(private _http: HttpClient) { }
 
-  getAccounts() {
-    let url = this.baseUrl + '/accounts'
-    return this._http.get<Account[]>(url)
+  getAccounts(page, pageSize) {
+    page = page -1;
+    let url = this.baseUrl + '/accounts/pages?page=' + page + '&pageSize=' + pageSize;
+    return this._http.get<any>(url)
     .pipe(catchError(this.errorHandler));
   }
 
