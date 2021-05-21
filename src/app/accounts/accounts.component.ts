@@ -21,13 +21,16 @@ export class AccountsComponent implements OnInit {
   public numOfAccounts = 10;
   public totalAccounts: number;
 
-  public accountNumForm: FormGroup;
+  public pageForm: FormGroup;
 
   constructor(private _accountService: AccountService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.accountNumForm = this._formBuilder.group({
-      numOfAccounts: [10]
+    this.pageForm = this._formBuilder.group({
+      numOfAccounts: [10],
+      sort: [''],
+      search: [''],
+      role: ['']
     });
 
     this.goToPage(this.currentPage);  
@@ -43,14 +46,18 @@ export class AccountsComponent implements OnInit {
   }
 
   changeAccountNum() {
-    this.numOfAccounts = this.accountNumForm.get('numOfAccounts').value;
+    this.numOfAccounts = this.pageForm.get('numOfAccounts').value;
     this.goToPage(1);
   }
 
   goToPage(page) {
     this.pages = [];
     this.currentPage = page;
-    this._accountService.getAccounts(this.currentPage, this.numOfAccounts).subscribe(
+    let sort: String = this.pageForm.get('sort').value;
+    let role: String = this.pageForm.get('role').value;
+    let searchQuery: String = this.pageForm.get('search').value;
+
+    this._accountService.getAccounts(this.currentPage, this.numOfAccounts, sort, role, searchQuery).subscribe(
       data => {
         this.accounts = data.content;
         this.totalPages = data.totalPages;
@@ -75,6 +82,10 @@ export class AccountsComponent implements OnInit {
         this.message = error.error.message
         console.log(this.message);
       });
+  }
+
+  clearFilter() {
+    this.ngOnInit();
   }
 
 }

@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RegistrationsComponent } from './registrations/registrations.component';
 import { ClassesComponent } from './classes/classes.component';
-import { ClassesService } from './services/classes.service';
+import { ClassesService } from './services/classroom.service';
 import { CookieService } from './services/cookie.service';
 import { AuthorizationInterceptor } from './helpers/authorization.interceptor';
 import { AddClassComponent } from './add-class/add-class.component';
@@ -19,6 +19,7 @@ import { ClassDetailsComponent } from './class-details/class-details.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AddAccountComponent } from './add-account/add-account.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
+import { RegistrationService } from './services/registration.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthenticationService, ClassesService, CookieService,
+  providers: [AuthenticationService, ClassesService, CookieService, RegistrationService,
   {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

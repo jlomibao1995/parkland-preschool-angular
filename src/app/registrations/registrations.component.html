@@ -1,1 +1,95 @@
+<div class="container">
+    <div class="row mx-3">
+        <div class="col-lg p-3">
+            <form [formGroup]="">
+                <div class="form-group">
+                    <!-- <input type="number" min="1" class="form-control page-entries" formControlName=""
+                        (change)=""> registrations per page -->
+                    <input type="number" min="1" class="form-control page-entries" formControlName="">
+                    registrations per page
+                </div>
+            </form>
+        </div>
 
+        <div class="col-lg p-3">
+            <form>
+                <div class="form-group">
+                    <select name="sort" class="form-select">
+                        <option value="" selected disabled hidden>Sort By</option>
+                        <option value="name">Last Name</option>
+                        <option value="loginDate">Registration Date</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg p-3">
+            <form>
+                <div class="form-group">
+                    <select name="role" class="form-select">
+                        <option value="" selected disabled hidden>Class</option>
+                        <option value="">1</option>
+                        <option value="">2</option>
+                        <option value="">3</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg p-3">
+            <form>
+                <div class="form-group">
+                    <select name="sort" class="form-select">
+                        <option value="" selected disabled hidden>Status</option>
+                        <option value="REGISTERED">Registered</option>
+                        <option value="WAIT_LISTED">Wait List</option>
+                        <option value="UNREGISTERED">Pending Payment</option>
+                        <option value="PENDING">Pending Confirmation</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg p-3">
+            <form>
+                <div class="form-group">
+                    <input type="search" class="form-control" placeholder="🔍 Enter child name">
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg p-3">
+            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                data-bs-target="#addRegistration" data-bs-whatever="@mdo">
+                <span class="material-icons">
+                    add
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th colspan="7" class="p-3">Registration Listing</th>
+                </tr>
+                <tr>
+                    <th>Child</th>
+                    <th>Email</th>
+                    <th>Registration Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let registration of registrations; let i = index" (click)="selectRegistration(registration.id)"
+                    [class.table-active]="registration.id==selectedId">
+                    <td>{{registration.child.firstName}} {{registration.child.lastName}}</td>
+                    <td><a [href]="'mailto:' + registration.child.account.email">{{registration.child.account.email}}</a></td>                    
+                    <td>{{registration.registrationDate}}</td>
+                    <td>{{registration.status}}</td>
+            </tbody>
+        </table>
+    </div>
+</div>

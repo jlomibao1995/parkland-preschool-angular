@@ -82,7 +82,7 @@
 
                 <div class="col-auto form-group">
                     <button class="btn btn-secondary mx-3" [hidden]="!editMode" (click)="cancelEdit()">Cancel</button>
-                    <input type="submit" class="btn btn-success" value="Save Changes" [disabled]="editForm.invalid" [hidden]="!editMode">
+                    <input type="submit" class="btn btn-primary" value="Save Changes" [disabled]="editForm.invalid" [hidden]="!editMode">
                 </div>
             </div>
             
@@ -120,7 +120,7 @@
 
         <div class="row p-3">
             <div class="col form-group">
-                <input type="submit" class="btn btn-success" value="Change password" [disabled]="passwordForm.invalid">
+                <input type="submit" class="btn btn-primary" value="Change password" [disabled]="passwordForm.invalid">
             </div>
         </div>
     </form>

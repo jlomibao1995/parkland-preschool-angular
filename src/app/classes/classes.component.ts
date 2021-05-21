@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Classroom } from '../models/Classroom';
-import { ClassesService } from '../services/classes.service';
+import { ClassesService } from '../services/classroom.service';
 
 @Component({
   selector: 'app-classes',

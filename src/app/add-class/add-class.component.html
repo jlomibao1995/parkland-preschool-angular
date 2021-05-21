@@ -2,16 +2,17 @@
     <form class="p-3" [formGroup]="addForm">
         <div class="row p-3">
             <div class="col form-group">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" formControlName="description"
-                [class.is-invalid]="description.invalid && description.touched">
-                <small [class.d-none]="description.valid || description.untouched" class="text-danger">Enter class description</small>
+                <label for="capacity">Capacity</label>
+                <input type="number" class="form-control" formControlName="capacity"
+                    [class.is-invalid]="capacity.invalid && capacity.touched">
+                <small [class.d-none]="capacity.valid || capacity.untouched" class="text-danger">Enter number of spots
+                    available in class</small>
             </div>
 
             <div class="col form-group">
                 <label for="age group">Age</label>
                 <input type="number" class="form-control" min="3" max="5" formControlName="age"
-                [class.is-invalid]="age.invalid && age.touched">
+                    [class.is-invalid]="age.invalid && age.touched">
                 <small [class.d-none]="age.valid || age.untouched" class="text-danger">Enter class age</small>
             </div>
         </div>
@@ -20,29 +21,33 @@
             <div class="col form-group">
                 <label for="start date">Start Date</label>
                 <input type="date" class="form-control" formControlName="startDate"
-                [class.is-invalid]="startDate.invalid && startDate.touched">
-                <small [class.d-none]="startDate.valid || startDate.untouched" class="text-danger">Enter class start date</small>
+                    [class.is-invalid]="startDate.invalid && startDate.touched">
+                <small [class.d-none]="startDate.valid || startDate.untouched" class="text-danger">Enter class start
+                    date</small>
             </div>
 
             <div class="col form-group">
                 <label for="start time">Start Time</label>
                 <input type="time" class="form-control" formControlName="startTime"
-                [class.is-invalid]="startTime.invalid && startTime.touched">
-                <small [class.d-none]="startTime.valid || startTime.untouched" class="text-danger">Enter class start time</small>
+                    [class.is-invalid]="startTime.invalid && startTime.touched">
+                <small [class.d-none]="startTime.valid || startTime.untouched" class="text-danger">Enter class start
+                    time</small>
             </div>
 
             <div class="col form-group">
                 <label for="end date">End Date</label>
                 <input type="date" class="form-control" formControlName="endDate"
-                [class.is-invalid]="endDate.invalid && endDate.touched">
-                <small [class.d-none]="endDate.valid || endDate.untouched" class="text-danger">Enter class end date</small>
+                    [class.is-invalid]="endDate.invalid && endDate.touched">
+                <small [class.d-none]="endDate.valid || endDate.untouched" class="text-danger">Enter class end
+                    date</small>
             </div>
 
             <div class="col form-group">
                 <label for="end time">End Time</label>
                 <input type="time" class="form-control" formControlName="endTime"
-                 [class.is-invalid]="endTime.invalid && endTime.touched">
-                <small [class.d-none]="endTime.valid || endTime.untouched" class="text-danger">Enter class end time</small>
+                    [class.is-invalid]="endTime.invalid && endTime.touched">
+                <small [class.d-none]="endTime.valid || endTime.untouched" class="text-danger">Enter class end
+                    time</small>
             </div>
         </div>
 
@@ -50,26 +55,28 @@
             <div class="col form-group">
                 <label for="days">Days</label>
                 <select name="days" class="form-control" formControlName="days"
-                [class.is-invalid]="days.invalid && days.touched">
+                    [class.is-invalid]="days.invalid && days.touched">
                     <option value="MWF">Monday/Wednesday/Friday</option>
                     <option value="TTh">Tuesday/Thursday</option>
                 </select>
-                <small [class.d-none]="days.valid || days.untouched" class="text-danger">Enter dyas class is in session</small>
+                <small [class.d-none]="days.valid || days.untouched" class="text-danger">Enter dyas class is in
+                    session</small>
             </div>
             <div class="col form-group">
                 <label for="cost">Cost</label>
                 <input type="number" class="form-control" formControlName="cost"
-                [class.is-invalid]="cost.invalid && cost.touched">
+                    [class.is-invalid]="cost.invalid && cost.touched">
                 <small [class.d-none]="cost.valid || cost.untouched" class="text-danger">Enter cost per month</small>
             </div>
         </div>
-        
+
         <div class="row p-3">
             <div class="col form-group">
-                <label for="capacity">Capacity</label>
-                <input type="number" class="form-control" formControlName="capacity"
-                [class.is-invalid]="capacity.invalid && capacity.touched">
-                <small [class.d-none]="capacity.valid || capacity.untouched" class="text-danger">Enter number of spots available in class</small>
+                <label for="description">Description</label>
+                <input type="text" class="form-control" formControlName="description"
+                    [class.is-invalid]="description.invalid && description.touched">
+                <small [class.d-none]="description.valid || description.untouched" class="text-danger">Enter class
+                    description</small>
             </div>
         </div>
 
