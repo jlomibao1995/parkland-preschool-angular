@@ -1,13 +1,11 @@
-<div [class.d-none]="message == null || !success" class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div [class.d-none]="message == null || !success" class="alert alert-success d-flex align-items-center" role="alert">
     <span class="material-icons">check_circle</span>
     <div>
       {{message}}
     </div>
   </div>
 
-  <div [class.d-none]="message == null || success" class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <div [class.d-none]="message == null || success" class="alert alert-danger d-flex align-items-center" role="alert">
     <span class="material-icons">error</span>
     <div>
         {{message}}

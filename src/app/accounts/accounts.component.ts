@@ -28,6 +28,8 @@ export class AccountsComponent implements OnInit {
   constructor(private _accountService: AccountService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.message = null;
+    this.success = null;
     this.pageForm = this._formBuilder.group({
       numOfAccounts: [10],
       sort: [''],
@@ -100,6 +102,13 @@ export class AccountsComponent implements OnInit {
   deactivateAccount(accountId) {
     this._accountService.activateDeactivateAccount(accountId, false).subscribe(
       data => this.successMessage("Account has been deactivated"),
+      error => this.errorMessage(error)
+    );
+  }
+
+  deleteAccount(accountId) {
+    this._accountService.deleteAccount(accountId).subscribe(
+      data => this.successMessage("Account has been deleted"),
       error => this.errorMessage(error)
     );
   }

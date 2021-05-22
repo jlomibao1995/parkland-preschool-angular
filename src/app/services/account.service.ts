@@ -65,6 +65,11 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
+  deleteAccount(id) {
+    return this._http.delete<any>(this.baseUrl + '/' + id)
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }
