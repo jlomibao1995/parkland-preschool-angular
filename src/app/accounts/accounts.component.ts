@@ -1,4 +1,5 @@
 
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Account } from '../models/Account';
@@ -11,6 +12,7 @@ import { AccountService } from '../services/account.service';
 })
 export class AccountsComponent implements OnInit {
   public message: String;
+  public success: boolean;
   public accounts: Account[];
   public selectedAccount: Account;
   public selectedId:number;
@@ -86,6 +88,32 @@ export class AccountsComponent implements OnInit {
 
   reload() {
     this.ngOnInit();
+  }
+
+  activateAccount(accountId) {
+    this._accountService.activateDeactivateAccount(accountId, true).subscribe(
+      data => this.successMessage("Account has been activated"),
+      error => this.errorMessage(error)
+    );
+  }
+
+  deactivateAccount(accountId) {
+    this._accountService.activateDeactivateAccount(accountId, false).subscribe(
+      data => this.successMessage("Account has been deactivated"),
+      error => this.errorMessage(error)
+    );
+  }
+
+  successMessage(successMesage: String) {
+    this.reload();
+    this.message = successMesage;
+    this.success = true;
+  }
+
+  errorMessage(error: HttpErrorResponse) {
+    this.reload();
+    this.message = error.error.message;
+    this.success = false;
   }
 
 }

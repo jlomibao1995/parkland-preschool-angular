@@ -56,6 +56,15 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
+  activateDeactivateAccount(id, active: boolean) {
+    const params = new HttpParams()
+    .set('active', active);
+
+    let url = this.baseUrl + "/" + id;
+    return this._http.put<any>(url, {}, {params})
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

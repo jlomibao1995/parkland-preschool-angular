@@ -30,6 +30,8 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.editMode = false;
     this.passwordMode = false;
+    this.message = null;
+    this.success = null;
 
     this.editForm = this._formBuilder.group({
       role: ['', Validators.required],
@@ -119,6 +121,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
 
   cancelEdit() {
     this.editMode = false;
+    this.getAccount();
   }
 
   changePasswordMode() {

@@ -1,4 +1,19 @@
 <div class="container">
+  <div [class.d-none]="message == null || !success"
+    class="alert alert-success d-flex align-items-center m-3" role="alert">
+    <span class="material-icons">check_circle</span>
+    <div>
+      {{message}}
+    </div>
+  </div>
+
+  <div [class.d-none]="message == null || success"
+    class="alert alert-danger d-flex align-items-center fade show m-3" role="alert">
+    <span class="material-icons">error</span>
+    <div>
+      {{message}}
+    </div>
+  </div>
 
   <form [formGroup]="pageForm">
     <div class="row mx-3">
@@ -11,7 +26,7 @@
         <button class="btn btn-outline-secondary" (click)="reload()">
           <span class="material-icons">
             update
-            </span>
+          </span>
         </button>
       </div>
 
@@ -36,7 +51,8 @@
       </div>
 
       <div class="col-lg p-3">
-        <input type="search" class="form-control" placeholder="🔍 Enter account name" formControlName="search" (keyup)="goToPage(1)">
+        <input type="search" class="form-control" placeholder="🔍 Enter account name" formControlName="search"
+          (keyup)="goToPage(1)">
       </div>
     </div>
   </form>
@@ -47,7 +63,8 @@
         <tr class="table-primary">
           <th colspan="6" class="p-3">Account Listing</th>
           <th>
-            <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal" data-bs-target="#addAccount">
+            <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
+              data-bs-target="#addAccount">
               Create New Account
             </button>
           </th>
@@ -79,14 +96,13 @@
             </button>
           </td>
           <td>
-            <button *ngIf="account.active" class="btn btn-outline-primary" data-bs-toggle="modal"
-              data-bs-target="#deactivateAccount">
+            <button *ngIf="account.active" class="btn btn-outline-primary" (click)="deactivateAccount(account.id)">
               <span class="material-icons">
                 lock_open
               </span>
             </button>
 
-            <button *ngIf="!account.active" class="btn btn-outline-secondary">
+            <button *ngIf="!account.active" class="btn btn-outline-secondary" (click)="activateAccount(account.id)">
               <span class="material-icons">
                 lock
               </span>
@@ -133,8 +149,8 @@
 </div>
 
 <!-- modal for editing account-->
-<div *ngIf="selectedId != null" class="modal fade" id="editAccount" tabindex="-1"
-  aria-labelledby="editAccountLabel" aria-hidden="true">
+<div *ngIf="selectedId != null" class="modal fade" id="editAccount" tabindex="-1" aria-labelledby="editAccountLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
