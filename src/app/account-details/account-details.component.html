@@ -1,3 +1,19 @@
+<div [class.d-none]="message == null || !success" class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <span class="material-icons">check_circle</span>
+    <div>
+      {{message}}
+    </div>
+  </div>
+
+  <div [class.d-none]="message == null || success" class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <span class="material-icons">error</span>
+    <div>
+        {{message}}
+    </div>
+  </div>
+
 <div *ngIf="!passwordMode" class="container">
 
     <div class="p-3 row">
@@ -10,7 +26,7 @@
         </div>
     </div>
 
-    <form class="p-3" [formGroup]="editForm">
+    <form class="p-3" [formGroup]="editForm" (ngSubmit)="saveAccountChanges()">
         <fieldset [disabled]="!editMode">
 
             <div class="row p-3">

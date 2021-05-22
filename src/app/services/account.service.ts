@@ -39,6 +39,22 @@ export class AccountService {
     return this._http.post<any>(this.baseUrl, account, { 'headers': this.headers})
     .pipe(catchError(this.errorHandler));
   }
+  
+  updateAccount(id, role, email, firstName, lastName, address, homeNumber, workNumber, cellNumber) {
+    const params = new HttpParams()
+    .set('role', role)
+    .set('email', email)
+    .set('firstName', firstName)
+    .set('lastName', lastName)
+    .set('address', address)
+    .set('homePhoneNumber', homeNumber)
+    .set('workPhoneNumber', workNumber)
+    .set('cellNumber', cellNumber);
+
+    let url = this.baseUrl + "/" + id;
+    return this._http.put<any>(url, {}, {params})
+    .pipe(catchError(this.errorHandler));
+  }
 
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
