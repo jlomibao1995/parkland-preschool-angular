@@ -6,6 +6,7 @@ export class Child {
     constructor(
         public id: number,
         public birthDate: String,
+        public gender: String,
         public firstName: String,
         public lastName: String,
         public address: String,
@@ -16,7 +17,7 @@ export class Child {
         public medicalPhoneNumber: String,
         public healthCareNumber: String,
         public allergy: String,
-        public medicalCOnditions: String,
+        public medicalConditions: String,
         public medications: boolean,
         public postalCode: String,
         public childContactList: ChildContact[],

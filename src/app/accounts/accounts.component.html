@@ -8,12 +8,17 @@
       </div>
 
       <div class="col-auto p-3">
-        <button class="btn btn-secondary" (click)="clearFilter()">Clear Filter</button>
+        <button class="btn btn-outline-secondary" (click)="reload()">
+          <span class="material-icons">
+            update
+            </span>
+        </button>
       </div>
 
       <div class="col-lg p-3">
         <select name="sort" class="form-select" formControlName="sort" (change)="goToPage(1)">
           <option value="" selected disabled hidden>Sort By</option>
+          <option value="">None</option>
           <option value="lastName">Last Name</option>
           <option value="lastLoginDate">Last Login</option>
           <option value="creationDate">Creation Date</option>
@@ -23,6 +28,7 @@
       <div class="col-lg p-3">
         <select name="role" class="form-select" formControlName="role" (change)="goToPage(1)">
           <option value="" selected disabled hidden>Role</option>
+          <option value="">All</option>
           <option value="ADMIN">Admin</option>
           <option value="STAFF">Staff</option>
           <option value="USER">User</option>
@@ -41,8 +47,7 @@
         <tr class="table-primary">
           <th colspan="6" class="p-3">Account Listing</th>
           <th>
-            <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal" data-bs-target="#addAccount"
-              data-bs-whatever="@mdo">
+            <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal" data-bs-target="#addAccount">
               Create New Account
             </button>
           </th>

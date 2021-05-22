@@ -84,7 +84,7 @@ export class AccountsComponent implements OnInit {
       });
   }
 
-  clearFilter() {
+  reload() {
     this.ngOnInit();
   }
 

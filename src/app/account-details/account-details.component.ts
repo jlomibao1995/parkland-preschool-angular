@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { passwordPatternValidator, passwordValidator } from '../helpers/password.validator';
 import { Account } from '../models/Account';
 
 @Component({
@@ -36,7 +37,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
     this.passwordForm = this._formBuilder.group({
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
-    })
+    }, {validators: [passwordValidator, passwordPatternValidator]})
   }
 
   get role() {

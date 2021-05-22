@@ -10,6 +10,7 @@ import { Account } from '../models/Account';
 })
 export class AccountService {
   private baseUrl = environment.baseUrl + '/account'
+  private headers = { 'content-type': 'application/json' };
 
   constructor(private _http: HttpClient) { }
 
@@ -31,6 +32,11 @@ export class AccountService {
   getAccount(id) {
     let url = this.baseUrl + '/' + id;
     return this._http.get<Account>(url)
+    .pipe(catchError(this.errorHandler));
+  }
+
+  addAccount(account: any) {   
+    return this._http.post<any>(this.baseUrl, account, { 'headers': this.headers})
     .pipe(catchError(this.errorHandler));
   }
 

@@ -1,5 +1,21 @@
 <div class="container">
-    <form class="p-3" [formGroup]="addForm">
+    <div [class.d-none]="message == null || !success" class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span class="material-icons">check_circle</span>
+        <div>
+          {{message}}
+        </div>
+      </div>
+
+      <div [class.d-none]="message == null || success" class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span class="material-icons">error</span>
+        <div>
+            {{message}}
+        </div>
+      </div>
+
+    <form class="p-3" [formGroup]="addForm" (ngSubmit)="addAccount()">
 
         <div class="row p-3">
             <div class="col form-group">
@@ -42,15 +58,22 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" formControlName="password"
-                [class.is-invalid]="password.invalid && password.touched">
+                [class.is-invalid]="password.invalid && password.touched || addForm.errors?.patternMismatch">
                 <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter password</small>
+                <div [class.d-none]="!addForm.errors?.patternMismatch" class="text-danger m-2">
+                    <small>Password must have the following:</small><br>
+                    <small>At least 8 characters</small><br>
+                    <small>At least one uppercase and lowercase letter</small><br>
+                    <small>At least one number</small><br>
+                    <small>At least one special character e.g. !@#?</small>
+                </div>
             </div>    
             
             <div class="form-group">
                 <label for="confirm password">Confirm Password</label>
                 <input type="password" class="form-control" formControlName="confirmPassword"
-                [class.is-invalid]="confirmPassword.invalid && confirmPassword.touched">
-                <small [class.d-none]="confirmPassword.valid || confirmPassword.untouched" class="text-danger">Enter password again</small>
+                [class.is-invalid]="addForm.errors?.mismatch">
+                <small [class.d-none]="!addForm.errors?.mismatch" class="text-danger">Passwords do not match</small>
             </div>
         </div>
 
