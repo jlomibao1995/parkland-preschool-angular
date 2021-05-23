@@ -40,13 +40,9 @@ export class AccountsComponent implements OnInit {
     this.goToPage(this.currentPage);  
   }
 
-  selectAccount(id) {
-    this.selectedId = id;
-    this._accountService.getAccount(id).subscribe(data => this.selectedAccount = data,
-      error => {
-        this.message = error.error.message
-        console.log(this.message);
-      });
+  selectAccount(index) {
+    this.selectedAccount = this.accounts[index];
+    this.selectedId = this.selectedAccount.id;
   }
 
   changeAccountNum() {

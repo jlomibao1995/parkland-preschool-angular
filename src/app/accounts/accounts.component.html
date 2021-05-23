@@ -78,7 +78,7 @@
         </tr>
       </thead>
       <tbody class="">
-        <tr *ngFor="let account of accounts; let i = index" (click)="selectAccount(account.id)"
+        <tr *ngFor="let account of accounts; let i = index" (click)="selectAccount(i)"
           [class.table-active]="account.id==selectedId">
           <td><a [href]="'mailto:' + account.email">{{account.email}}</a></td>
           <td>{{account.firstName}} {{account.lastName}}</td>
@@ -186,7 +186,7 @@
 </div>
 
 <!-- modal for adding deleting account -->
-<div *ngIf="selectedAccount != null" class="modal fade" id="deleteAccount" tabindex="-1"
+<div *ngIf="selectedId != null" class="modal fade" id="deleteAccount" tabindex="-1"
   aria-labelledby="deleteAccountLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
