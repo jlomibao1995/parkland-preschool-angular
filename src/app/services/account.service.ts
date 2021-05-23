@@ -70,6 +70,14 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
+  changePassword(id, password) {
+    const params = new HttpParams()
+    .set('password', password);
+
+    let url = this.baseUrl + "/" + id;
+    return this._http.put<any>(url, {}, {params})
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

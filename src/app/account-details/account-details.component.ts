@@ -142,6 +142,13 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
       );
   }
 
+  changePassword() {
+    this._accountService.changePassword(this.accountId, this.password.value).subscribe(
+      data => this.successMessage('Password has been changed successfully'),
+      error => (this.errorMessage(error))
+    );
+  }
+
   successMessage(successMesage: String) {
     this.ngOnInit();
     this.getAccount();
