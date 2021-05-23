@@ -50,12 +50,14 @@
                         </button>
                     </td>
                     <td>
-                        <button *ngIf="class.openRegistration" class="btn btn-outline-secondary">
+                        <button *ngIf="class.openRegistration" class="btn btn-outline-secondary" 
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Close Registration">
                             <span class="material-icons">
                                 lock_open
                             </span>
                         </button>
-                        <button *ngIf="!class.openRegistration" class="btn btn-outline-secondary">
+                        <button *ngIf="!class.openRegistration" class="btn btn-outline-secondary"
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Open Registration">
                             <span class="material-icons">
                                 lock
                             </span>
