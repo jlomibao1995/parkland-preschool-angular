@@ -49,6 +49,7 @@ export class ClassesComponent implements OnInit {
       data => {
         this.classes = data.content;
         this.totalPages = data.totalPages;
+        this.totalClasses = data.totalElements;
 
         //figure out which page buttons are visible
         let start = this.currentPage - 2;
@@ -57,6 +58,10 @@ export class ClassesComponent implements OnInit {
         }
 
         for (let i = 0; i < 5; i++) {
+          if (this.totalPages == 0) {
+            break;
+          }
+
           this.pages[i] = start + i;
 
           if (start + i == this.totalPages) {
@@ -64,7 +69,6 @@ export class ClassesComponent implements OnInit {
           }
         }
 
-        this.totalClasses = data.totalElements;
       },
       error => {
         this.message = error.error.message

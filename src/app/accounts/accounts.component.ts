@@ -1,5 +1,5 @@
 
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Account } from '../models/Account';
@@ -15,9 +15,9 @@ export class AccountsComponent implements OnInit {
   public success: boolean;
   public accounts: Account[];
   public selectedAccount: Account;
-  public selectedId:number;
-  public pages: number[] = [];
+  public selectedId: number;
 
+  public pages: number[] = [];
   public totalPages: number;
   public currentPage = 1;
   public numOfAccounts = 10;
@@ -37,7 +37,7 @@ export class AccountsComponent implements OnInit {
       role: ['']
     });
 
-    this.goToPage(this.currentPage);  
+    this.goToPage(this.currentPage);
   }
 
   selectAccount(index) {
@@ -61,7 +61,8 @@ export class AccountsComponent implements OnInit {
       data => {
         this.accounts = data.content;
         this.totalPages = data.totalPages;
-        
+        this.totalAccounts = data.totalElements;
+
         //figure out which page buttons are visible
         let start = this.currentPage - 2;
         if (start <= 0) {
@@ -69,6 +70,10 @@ export class AccountsComponent implements OnInit {
         }
 
         for (let i = 0; i < 5; i++) {
+          if (this.totalAccounts == 0) {
+            break;
+          }
+
           this.pages[i] = start + i;
 
           if (start + i == this.totalPages) {
@@ -76,7 +81,6 @@ export class AccountsComponent implements OnInit {
           }
         }
 
-        this.totalAccounts = data.totalElements;
       },
       error => {
         this.message = error.error.message
@@ -89,14 +93,18 @@ export class AccountsComponent implements OnInit {
   }
 
   activateAccount(accountId) {
-    this._accountService.activateDeactivateAccount(accountId, true).subscribe(
+    const params = new HttpParams()
+      .set('active', true);
+    this._accountService.updateAccount(accountId, params).subscribe(
       data => this.successMessage("Account has been activated"),
       error => this.errorMessage(error)
     );
   }
 
   deactivateAccount(accountId) {
-    this._accountService.activateDeactivateAccount(accountId, false).subscribe(
+    const params = new HttpParams()
+      .set('active', false);
+    this._accountService.updateAccount(accountId, params).subscribe(
       data => this.successMessage("Account has been deactivated"),
       error => this.errorMessage(error)
     );

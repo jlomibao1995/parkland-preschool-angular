@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordPatternValidator, passwordValidator } from '../helpers/password.validator';
@@ -130,20 +130,31 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
 
   saveAccountChanges() {
     let address = this.address.value ? this.address.value : '';
-    let homePhoneNumber = this.homePhoneNumber.value  ? this.homePhoneNumber.value : '';
+    let homePhoneNumber = this.homePhoneNumber.value ? this.homePhoneNumber.value : '';
     let workPhoneNumber = this.workPhoneNumber.value ? this.workPhoneNumber.value : '';
     let cellNumber = this.cellNumber.value ? this.cellNumber.value : '';
 
-    this._accountService.updateAccount(this.account.id, this.role.value, this.email.value,
-      this.firstName.value, this.lastName.value, address, homePhoneNumber,
-      workPhoneNumber, cellNumber).subscribe(
-        data => this.successMessage('Account changes have been saved successfully'),
-        error => (this.errorMessage(error))
-      );
+    const params = new HttpParams()
+      .set('role', this.role.value)
+      .set('email', this.email.value)
+      .set('firstName', this.firstName.value)
+      .set('lastName', this.lastName.value)
+      .set('address', address)
+      .set('homePhoneNumber', homePhoneNumber)
+      .set('workPhoneNumber', workPhoneNumber)
+      .set('cellNumber', cellNumber);
+
+    this._accountService.updateAccount(this.account.id, params).subscribe(
+      data => this.successMessage('Account changes have been saved successfully'),
+      error => (this.errorMessage(error))
+    );
   }
 
   changePassword() {
-    this._accountService.changePassword(this.accountId, this.password.value).subscribe(
+    const params = new HttpParams()
+      .set('password', this.password.value);
+
+    this._accountService.updateAccount(this.accountId, params).subscribe(
       data => this.successMessage('Password has been changed successfully'),
       error => (this.errorMessage(error))
     );

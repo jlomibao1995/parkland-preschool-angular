@@ -23,7 +23,7 @@
       </div>
 
       <div class="col-auto p-3">
-        <button class="btn btn-outline-secondary" (click)="reload()">
+        <button class="btn btn-outline-secondary" (click)="reload()" data-bs-toggle="tooltip" data-bs-placement="top" title="Update">
           <span class="material-icons">
             update
           </span>
@@ -89,7 +89,8 @@
             </ul>
           </td>
           <td>
-            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editAccount">
+            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editAccount"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Info">
               <span class="material-icons">
                 info
               </span>
@@ -97,12 +98,13 @@
           </td>
           <td>
             <button *ngIf="account.active" class="btn btn-outline-primary" (click)="deactivateAccount(account.id)">
-              <span class="material-icons">
+              <span class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Lock">
                 lock_open
               </span>
             </button>
 
-            <button *ngIf="!account.active" class="btn btn-outline-secondary" (click)="activateAccount(account.id)">
+            <button *ngIf="!account.active" class="btn btn-outline-secondary" (click)="activateAccount(account.id)"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Unlock">
               <span class="material-icons">
                 lock
               </span>
@@ -125,7 +127,7 @@
               Showing {{currentPage * numOfAccounts - numOfAccounts + 1}} to {{currentPage *numOfAccounts}} of
               {{totalAccounts}} entries</small>
 
-            <small *ngIf="totalAccounts < currentPage * numOfAccounts">Showing {{currentPage * numOfAccounts -
+            <small *ngIf="totalAccounts <= currentPage * numOfAccounts">Showing {{currentPage * numOfAccounts -
               numOfAccounts + 1}}
               to {{totalAccounts}} of {{totalAccounts}} entries</small>
           </td>

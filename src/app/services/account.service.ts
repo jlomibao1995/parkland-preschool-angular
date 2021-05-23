@@ -39,43 +39,15 @@ export class AccountService {
     return this._http.post<any>(this.baseUrl, account, { 'headers': this.headers})
     .pipe(catchError(this.errorHandler));
   }
-  
-  updateAccount(id, role, email, firstName, lastName, address, homeNumber, workNumber, cellNumber) {
-    const params = new HttpParams()
-    .set('role', role)
-    .set('email', email)
-    .set('firstName', firstName)
-    .set('lastName', lastName)
-    .set('address', address)
-    .set('homePhoneNumber', homeNumber)
-    .set('workPhoneNumber', workNumber)
-    .set('cellNumber', cellNumber);
 
-    let url = this.baseUrl + "/" + id;
-    return this._http.put<any>(url, {}, {params})
-    .pipe(catchError(this.errorHandler));
-  }
-
-  activateDeactivateAccount(id, active: boolean) {
-    const params = new HttpParams()
-    .set('active', active);
-
-    let url = this.baseUrl + "/" + id;
-    return this._http.put<any>(url, {}, {params})
+  updateAccount(id, params: HttpParams) {
+    return this._http.put<any>(this.baseUrl + "/" + id, {}, {params})
     .pipe(catchError(this.errorHandler));
   }
 
   deleteAccount(id) {
     return this._http.delete<any>(this.baseUrl + '/' + id)
     .pipe(catchError(this.errorHandler));
-  }
-
-  changePassword(id, password) {
-    const params = new HttpParams()
-    .set('password', password);
-
-    let url = this.baseUrl + "/" + id;
-    return this._http.put<any>(url, {}, {params})
   }
 
   errorHandler(error: HttpErrorResponse) {

@@ -78,7 +78,7 @@
                             of
                             {{totalClasses}} entries</small>
 
-                        <small *ngIf="totalClasses < currentPage * numOfClasses">Showing {{currentPage * numOfClasses -
+                        <small *ngIf="totalClasses <= currentPage * numOfClasses">Showing {{currentPage * numOfClasses -
                             numOfClasses + 1}}
                             to {{totalClasses}} of {{totalClasses}} entries</small>
                     </td>
