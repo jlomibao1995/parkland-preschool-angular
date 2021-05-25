@@ -20,6 +20,7 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { AddAccountComponent } from './add-account/add-account.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { RegistrationService } from './services/registration.service';
+import { SuccessErrorDialogComponent } from './success-error-dialog/success-error-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RegistrationService } from './services/registration.service';
     ClassDetailsComponent,
     AccountsComponent,
     AddAccountComponent,
-    AccountDetailsComponent
+    AccountDetailsComponent,
+    SuccessErrorDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,8 @@
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Classroom } from '../models/Classroom';
+import { ClassesService } from '../services/classroom.service';
 
 @Component({
   selector: 'app-class-details',
@@ -10,37 +12,64 @@ import { Classroom } from '../models/Classroom';
 export class ClassDetailsComponent implements OnInit, OnChanges {
   editForm: FormGroup;
   editMode = false;
-  @Input() class: Classroom;
+  public class: Classroom;
+  @Input() public classId;
+  public message: String;
+  public success: boolean;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder, private _classService: ClassesService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.editMode = false;
-    if (changes.class) {
-      //format time to display it correctly
-      let space = this.class.startDate.indexOf(' ');
-      let sDate = this.class.startDate.substr(0, space);
-      let sTime = this.class.startDate.substr(space+1);
+    this.ngOnInit();
+    this.getClass();
 
-      space = this.class.endDate.indexOf(' ');
-      let eDate = this.class.endDate.substr(0, space);
-      let eTime = this.class.endDate.substr(space+1);
-
-      this.editForm = this._formBuilder.group({
-        description: [this.class.description, Validators.required],
-        age: [this.class.ageGroup, Validators.required],
-        startDate: [sDate, Validators.required],
-        startTime: [sTime, Validators.required],
-        endTime: [eTime, Validators.required],
-        endDate: [eDate, Validators.required],
-        days: [this.class.days, Validators.required],
-        capacity: [this.class.capacity, Validators.required],
-        cost: [this.class.costPerMonth, Validators.required]
-      });
-    }
   }
 
   ngOnInit(): void {
+    this.editMode = false;
+    this.message = null;
+    this.success = null;
+    // this.editForm = this._formBuilder.group({
+    //   description: ['', Validators.required],
+    //   age: ['', Validators.required],
+    //   startDate: ['', Validators.required],
+    //   startTime: ['', Validators.required],
+    //   endTime: ['', Validators.required],
+    //   endDate: ['', Validators.required],
+    //   days: ['', Validators.required],
+    //   capacity: ['', Validators.required],
+    //   cost: ['', Validators.required]
+    // });
+  }
+
+  getClass() {
+    this._classService.getClass(this.classId).subscribe(
+      data => {
+        this.class = data;
+
+        //format time to display it correctly
+        let space = this.class.startDate.indexOf(' ');
+        let sDate = this.class.startDate.substr(0, space);
+        let sTime = this.class.startDate.substr(space + 1);
+
+        space = this.class.endDate.indexOf(' ');
+        let eDate = this.class.endDate.substr(0, space);
+        let eTime = this.class.endDate.substr(space + 1);
+
+        this.editForm = this._formBuilder.group({
+          description: [this.class.description, Validators.required],
+          age: [this.class.ageGroup, Validators.required],
+          startDate: [sDate, Validators.required],
+          startTime: [sTime, Validators.required],
+          endTime: [eTime, Validators.required],
+          endDate: [eDate, Validators.required],
+          days: [this.class.days, Validators.required],
+          capacity: [this.class.capacity, Validators.required],
+          cost: [this.class.costPerMonth, Validators.required]
+        });
+
+      }, error => this.message = error.error.message
+    );
   }
 
   get description() {
@@ -85,6 +114,18 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
 
   cancelEdit() {
     this.editMode = false;
+  }
+
+  successMessage(successMesage: String) {
+    this.ngOnInit();
+    this.getClass();
+    this.message = successMesage;
+    this.success = true;
+  }
+
+  errorMessage(error: HttpErrorResponse) {
+    this.message = error.error.message;
+    this.success = false;
   }
 
 }

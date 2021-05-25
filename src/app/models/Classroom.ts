@@ -1,3 +1,5 @@
+import { Registration } from "./Registration";
+
 export class Classroom {
     constructor(public id: number,
         public capacity: number,
@@ -11,5 +13,6 @@ export class Classroom {
         public full: boolean,
         public openRegistration: boolean,
         public picturePass: String,
-        public registrationList: []) {}
+        public registrationList: Registration[]) {}
+
 }

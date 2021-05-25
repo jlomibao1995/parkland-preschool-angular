@@ -33,16 +33,16 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
     this.message = null;
     this.success = null;
 
-    this.editForm = this._formBuilder.group({
-      role: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      address: [''],
-      homePhoneNumber: [''],
-      workPhoneNumber: [''],
-      cellNumber: [''],
-    });
+    // this.editForm = this._formBuilder.group({
+    //   role: ['', Validators.required],
+    //   firstName: ['', Validators.required],
+    //   lastName: ['', Validators.required],
+    //   email: ['', Validators.required],
+    //   address: [''],
+    //   homePhoneNumber: [''],
+    //   workPhoneNumber: [''],
+    //   cellNumber: [''],
+    // });
 
     this.passwordForm = this._formBuilder.group({
       password: ['', Validators.required],
@@ -69,7 +69,6 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
         },
         error => {
           this.message = error.error.message
-          console.log(this.message);
         });
     }
   }

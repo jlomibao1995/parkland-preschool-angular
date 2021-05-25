@@ -1,19 +1,5 @@
 <div class="container">
-  <div [class.d-none]="message == null || !success"
-    class="alert alert-success d-flex align-items-center m-3" role="alert">
-    <span class="material-icons">check_circle</span>
-    <div>
-      {{message}}
-    </div>
-  </div>
-
-  <div [class.d-none]="message == null || success"
-    class="alert alert-danger d-flex align-items-center fade show m-3" role="alert">
-    <span class="material-icons">error</span>
-    <div>
-      {{message}}
-    </div>
-  </div>
+  <app-success-error-dialog [message]="message" [success]="success"></app-success-error-dialog>
 
   <form [formGroup]="pageForm">
     <div class="row mx-3">
@@ -89,8 +75,7 @@
             </ul>
           </td>
           <td>
-            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editAccount"
-            data-bs-toggle="tooltip" data-bs-placement="top" title="Info">
+            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editAccount">
               <span class="material-icons">
                 info
               </span>

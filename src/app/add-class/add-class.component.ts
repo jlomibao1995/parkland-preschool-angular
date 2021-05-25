@@ -1,5 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Registration } from '../models/Registration';
+import { ClassesService } from '../services/classroom.service';
 
 @Component({
   selector: 'app-add-class',
@@ -7,9 +10,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-class.component.css']
 })
 export class AddClassComponent implements OnInit {
-  addForm: FormGroup;
+  public addForm: FormGroup;
+  public message: String;
+  public success: boolean;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder, public _classService: ClassesService) { }
 
   ngOnInit(): void {
     this.addForm = this._formBuilder.group({
@@ -59,6 +64,42 @@ export class AddClassComponent implements OnInit {
 
   get cost() {
     return this.addForm.get('cost');
+  }
+
+  addClassroom() {
+    let sDate = this.startDate.value + ' ' + this.startTime.value;
+    let eDate = this.endDate.value + ' ' + this.endTime.value
+
+    this._classService.addClassroom({
+      'capacity': this.capacity.value,
+      'ageGroup': this.age.value,
+      'startDate': sDate,
+      'endDate': eDate,
+      'days': this.days.value,
+      'costPerMonth': this.cost.value,
+      'description': this.description.value,
+      'openRegistration': false,
+      'id': 0,
+      'enrolled': 0,
+      'picturePass': '',
+      'registrationList': [],
+      'full': false
+    }).subscribe(
+      data => this.successMessage('Class was created'),
+      error => this.errorMessage(error)
+    )
+  }
+
+  successMessage(successMesage: String) {
+    this.ngOnInit();
+    this.message = successMesage;
+    this.success = true;
+  }
+
+  errorMessage(error: HttpErrorResponse) {
+    this.ngOnInit();
+    this.message = error.error.message;
+    this.success = false;
   }
 
 }

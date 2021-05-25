@@ -1,16 +1,4 @@
-<div [class.d-none]="message == null || !success" class="alert alert-success d-flex align-items-center" role="alert">
-    <span class="material-icons">check_circle</span>
-    <div>
-      {{message}}
-    </div>
-  </div>
-
-  <div [class.d-none]="message == null || success" class="alert alert-danger d-flex align-items-center" role="alert">
-    <span class="material-icons">error</span>
-    <div>
-        {{message}}
-    </div>
-  </div>
+<app-success-error-dialog [message]="message" [success]="success"></app-success-error-dialog>
 
 <div *ngIf="!passwordMode" class="container">
 

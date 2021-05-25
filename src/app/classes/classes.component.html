@@ -1,6 +1,8 @@
 <div class="container">
+    <app-success-error-dialog [message]="message" [success]="success"></app-success-error-dialog>
+
     <div class="row">
-        <div class="col m-3">
+        <div class="col-auto m-3">
             <form [formGroup]="classNumForm">
                 <div class="form-group">
                     <input type="number" min="1" class="form-control page-entries" formControlName="numOfClasses"
@@ -8,6 +10,13 @@
                 </div>
             </form>
         </div>
+        <div class="col m-3">
+            <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip" data-bs-placement="top" title="Update">
+              <span class="material-icons">
+                update
+              </span>
+            </button>
+          </div>
     </div>
 
     <div class="table-responsive-sm m-3">
@@ -16,7 +25,7 @@
                 <tr class="table-primary">
                     <th colspan="7" class="p-3">Classroom Listing</th>
                     <th>
-                        <button type="button" class="btn btn-success m-3 text-nowrap" data-bs-toggle="modal" data-bs-target="#addClass"
+                        <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal" data-bs-target="#addClass"
                         data-bs-whatever="@mdo">
                         Create New Class
                     </button>
@@ -33,7 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let class of classes; let i = index" (click)="selectClass(class.id)"
+                <tr *ngFor="let class of classes; let i = index" (click)="selectClass(i)"
                     [class.table-active]="class.id==selectedId">
                     <td>{{class.description}}</td>
                     <td>{{class.ageGroup}}</td>
@@ -50,22 +59,22 @@
                         </button>
                     </td>
                     <td>
-                        <button *ngIf="class.openRegistration" class="btn btn-outline-secondary" 
-                        data-bs-toggle="tooltip" data-bs-placement="top" title="Close Registration">
+                        <button *ngIf="class.openRegistration" class="btn btn-outline-primary" 
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Close Registration" (click)="closeRegistration(class.id)">
                             <span class="material-icons">
                                 lock_open
                             </span>
                         </button>
                         <button *ngIf="!class.openRegistration" class="btn btn-outline-secondary"
-                        data-bs-toggle="tooltip" data-bs-placement="top" title="Open Registration">
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Open Registration" (click)="openRegistration(class.id)">
                             <span class="material-icons">
                                 lock
                             </span>
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-danger">
-                            <span class="material-icons" data-bs-toggle="modal" data-bs-target="#deleteClass">
+                        <button type="button" *ngIf="!class.openRegistration" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteClass">
+                            <span class="material-icons">
                                 delete
                             </span>
                         </button>
@@ -105,7 +114,7 @@
 </div>
 
 <!-- modal for editing class-->
-<div class="modal fade" id="editClass" tabindex="-1" aria-labelledby="editClassLabel" aria-hidden="true">
+<div class="modal fade" *ngIf="selectedId != null" id="editClass" tabindex="-1" aria-labelledby="editClassLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -113,7 +122,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <app-class-details *ngIf="selectedClass != null" [class]="selectedClass"></app-class-details>
+                <app-class-details [classId]="selectedId"></app-class-details>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -157,7 +166,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-danger" (click)="deleteClass(selectedClass.id)" data-bs-dismiss="modal">Delete</button>
             </div>
         </div>
     </div>

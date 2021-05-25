@@ -1,3 +1,4 @@
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Classroom } from '../models/Classroom';
@@ -12,6 +13,7 @@ export class ClassesComponent implements OnInit {
   public classes: [];
   public selectedClass: Classroom;
   public message: String;
+  public success: boolean;
   public selectedId: number;
   public pages: number[] = [];
 
@@ -32,13 +34,9 @@ export class ClassesComponent implements OnInit {
     this.goToPage(this.currentPage);
   }
 
-  selectClass(id) {
-    this.selectedId = id;
-    this._classroomService.getClass(id).subscribe(data => this.selectedClass = data,
-      error => {
-        this.message = error.error.message
-        console.log(this.message);
-      })
+  selectClass(index) {
+    this.selectedClass = this.classes[index];
+    this.selectedId = this.selectedClass.id;
   }
 
   goToPage(page) {
@@ -72,13 +70,51 @@ export class ClassesComponent implements OnInit {
       },
       error => {
         this.message = error.error.message
-        console.log(this.message);
       });
   }
 
   changeClassesNum() {
     this.numOfClasses = this.classNumForm.get('numOfClasses').value;
     this.goToPage(1);
+  }
+
+  openRegistration(classId){
+    const params = new HttpParams()
+    .set('openRegistration', true);
+
+    this._classroomService.updateClassroom(classId, params).subscribe(
+      data => this.successMessage("Class is open for registration"),
+      error => this.errorMessage(error)
+    );
+  }
+
+  closeRegistration(classId){
+    const params = new HttpParams() 
+    .set('openRegistration', false);
+
+    this._classroomService.updateClassroom(classId, params).subscribe(
+      data => this.successMessage("Class is closed for registration"),
+      error => this.errorMessage(error)
+    );
+  }
+
+  deleteClass(classId) {
+    this._classroomService.deleteClassroom(classId).subscribe(
+      data => this.successMessage('Class has been deleted'),
+      error => this.errorMessage(error)
+    );
+  }
+
+  successMessage(successMesage: String) {
+    this.ngOnInit();
+    this.message = successMesage;
+    this.success = true;
+  }
+
+  errorMessage(error: HttpErrorResponse) {
+    this.ngOnInit();
+    this.message = error.error.message;
+    this.success = false;
   }
 
 }
