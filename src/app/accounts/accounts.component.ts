@@ -24,6 +24,17 @@ export class AccountsComponent implements OnInit {
   public totalAccounts: number;
 
   public pageForm: FormGroup;
+  public columnStates = {
+    contactInfo: true,
+    name: true,
+    role: false,
+    child: false,
+    actions: true,
+    lastLoginDate: false,
+    creationDate: false,
+    address: false,
+    phoneNumbers: false
+  }
 
   constructor(private _accountService: AccountService, private _formBuilder: FormBuilder) { }
 
@@ -131,6 +142,36 @@ export class AccountsComponent implements OnInit {
 
   messageChangedHandler(message: String) {
     this.message = null;
+  }
+
+  toggleColumnState(event) {
+    let checked = false;
+    if (event.target.checked) {
+      checked = true;
+    }
+
+    switch (event.srcElement.name) {
+      case 'name':
+        this.columnStates.name = checked;
+        break;
+      case 'contactInfo':
+        this.columnStates.contactInfo = checked;
+        break;
+      case 'role':
+        this.columnStates.role = checked;
+        break;
+      case 'child':
+        this.columnStates.child = checked;
+        break;
+      case 'lastLoginDate':
+        this.columnStates.lastLoginDate = checked;
+        break;
+      case 'creationDate':
+        this.columnStates.creationDate = checked;
+        break;
+      case 'actions':
+        this.columnStates.actions = checked;
+    }
   }
 
 }

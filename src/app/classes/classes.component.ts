@@ -24,6 +24,16 @@ export class ClassesComponent implements OnInit {
 
   public classNumForm: FormGroup;
 
+  public columnStates = {
+    description: true,
+    age: false,
+    dates: false,
+    times: true,
+    days: true,
+    spots: false,
+    actions: true
+  }
+
   constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -81,9 +91,9 @@ export class ClassesComponent implements OnInit {
     this.goToPage(1);
   }
 
-  openRegistration(classId){
+  openRegistration(classId) {
     const params = new HttpParams()
-    .set('openRegistration', true);
+      .set('openRegistration', true);
 
     this._classroomService.updateClassroom(classId, params).subscribe(
       data => this.successMessage("Class is open for registration"),
@@ -91,9 +101,9 @@ export class ClassesComponent implements OnInit {
     );
   }
 
-  closeRegistration(classId){
-    const params = new HttpParams() 
-    .set('openRegistration', false);
+  closeRegistration(classId) {
+    const params = new HttpParams()
+      .set('openRegistration', false);
 
     this._classroomService.updateClassroom(classId, params).subscribe(
       data => this.successMessage("Class is closed for registration"),
@@ -122,6 +132,36 @@ export class ClassesComponent implements OnInit {
 
   messageChangedHandler(message: String) {
     this.message = null;
+  }
+
+  toggleColumnState(event) {
+    let checked = false;
+    if (event.target.checked) {
+      checked = true;
+    }
+
+    switch (event.srcElement.name) {
+      case 'description':
+        this.columnStates.description = checked;
+        break;
+      case 'age':
+        this.columnStates.age = checked;
+        break;
+      case 'dates':
+        this.columnStates.dates = checked;
+        break;
+      case 'days':
+        this.columnStates.days = checked;
+        break;
+      case 'times':
+        this.columnStates.times = checked;
+        break;
+      case 'spots':
+        this.columnStates.spots = checked;
+        break;
+      case 'actions':
+        this.columnStates.actions = checked;
+    }
   }
 
 }

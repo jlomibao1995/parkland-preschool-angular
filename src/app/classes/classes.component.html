@@ -1,5 +1,6 @@
 <div class="container">
-    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)"></app-success-error-dialog>
+    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
+    </app-success-error-dialog>
 
     <div class="row">
         <div class="col-auto m-3">
@@ -11,69 +12,122 @@
             </form>
         </div>
         <div class="col m-3">
-            <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip" data-bs-placement="top" title="Update">
-              <span class="material-icons">
-                update
-              </span>
+            <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip"
+                data-bs-placement="top" title="Update">
+                <span class="material-icons">
+                    update
+                </span>
             </button>
-          </div>
+        </div>
     </div>
+
+    <div class="bg-light bg-gradient p-3">
+        <div class="row">
+            <div class="col mx-3">
+                <h3>Classroom Listing</h3>
+            </div>
+
+            <div class="col-auto mx-3">
+                <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
+                    data-bs-target="#addClass" data-bs-whatever="@mdo">
+                    Create New Class
+                </button>
+            </div>
+        </div>
+
+        <div class="mx-3">
+            <div class="form-check form-check-inline">
+                <input type="checkbox" checked class="form-check-input" name="description"
+                    (change)="toggleColumnState($event)">
+                <label for="">Description</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" name="age" (change)="toggleColumnState($event)">
+                <label for="">Age</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" name="dates" (change)="toggleColumnState($event)">
+                <label for="">Dates</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" checked class="form-check-input" name="times"
+                    (change)="toggleColumnState($event)">
+                <label for="">Times</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" checked class="form-check-input" name="days"
+                    (change)="toggleColumnState($event)">
+                <label for="">Days</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" name="spots" (click)="toggleColumnState($event)">
+                <label for="">Spots Available</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" checked class="form-check-input" name="actions"
+                    (click)="toggleColumnState($event)">
+                <label for="">Actions</label>
+            </div>
+        </div>
+    </div>
+
 
     <div class="table-responsive-sm m-3">
         <table class="table table-hover">
             <thead>
-                <tr class="table-primary">
-                    <th colspan="5" class="p-3">Classroom Listing</th>
-                    <th colspan="3">
-                        <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal" data-bs-target="#addClass"
-                        data-bs-whatever="@mdo">
-                        Create New Class
-                    </button>
-                </th>
-                </tr>
                 <tr>
-                    <th>Class</th>
-                    <th>Age</th>
-                    <!-- <th>Dates</th> -->
-                    <th>Times</th>
-                    <th>Days</th>
-                    <th>Spots Available</th>
-                    <th colspan="3">Actions</th>
+                    <th [class.d-none]="!columnStates.description">Class</th>
+                    <th [class.d-none]="!columnStates.age">Age</th>
+                    <th [class.d-none]="!columnStates.dates">Dates</th>
+                    <th [class.d-none]="!columnStates.times">Times</th>
+                    <th [class.d-none]="!columnStates.days">Days</th>
+                    <th [class.d-none]="!columnStates.spots">Spots Available</th>
+                    <th [class.d-none]="!columnStates.actions" colspan="3">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let class of classes; let i = index" (click)="selectClass(i)"
                     [class.table-active]="class.id==selectedId">
-                    <td>{{class.description}}</td>
-                    <td>{{class.ageGroup}}</td>
-                    <!-- <td>{{class.startDate | date:'shortDate'}} - {{class.endDate | date:'shortDate'}}</td> -->
-                    <td>{{class.startDate | date:'shortTime'}} - {{class.endDate | date:'shortTime'}}</td>
-                    <td *ngIf="class.days == 'MWF'">Monday/Wednesday/Friday</td>
-                    <td *ngIf="class.days == 'TTh'">Tuesday/Thursday</td>
-                    <td>{{class.enrolled}}/{{class.capacity}}</td>
-                    <td>
+                    <td [class.d-none]="!columnStates.description">{{class.description}}</td>
+                    <td [class.d-none]="!columnStates.age">{{class.ageGroup}}</td>
+                    <td [class.d-none]="!columnStates.dates">{{class.startDate | date:'shortDate'}} - {{class.endDate |
+                        date:'shortDate'}}</td>
+                    <td [class.d-none]="!columnStates.times">{{class.startDate | date:'shortTime'}} - {{class.endDate |
+                        date:'shortTime'}}</td>
+                    <td [class.d-none]="!columnStates.days" *ngIf="class.days == 'MWF'">Monday/Wednesday/Friday</td>
+                    <td [class.d-none]="!columnStates.days" *ngIf="class.days == 'TTh'">Tuesday/Thursday</td>
+                    <td [class.d-none]="!columnStates.spots">{{class.enrolled}}/{{class.capacity}}</td>
+                    <td [class.d-none]="!columnStates.actions">
                         <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editClass">
                             <span class="material-icons">
                                 info
                             </span>
                         </button>
                     </td>
-                    <td>
-                        <button *ngIf="class.openRegistration" class="btn btn-outline-primary" 
-                        data-bs-toggle="tooltip" data-bs-placement="top" title="Close Registration" (click)="closeRegistration(class.id)">
+                    <td [class.d-none]="!columnStates.actions">
+                        <button *ngIf="class.openRegistration" class="btn btn-outline-primary" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Close Registration" (click)="closeRegistration(class.id)">
                             <span class="material-icons">
                                 lock_open
                             </span>
                         </button>
                         <button *ngIf="!class.openRegistration" class="btn btn-outline-secondary"
-                        data-bs-toggle="tooltip" data-bs-placement="top" title="Open Registration" (click)="openRegistration(class.id)">
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Open Registration"
+                            (click)="openRegistration(class.id)">
                             <span class="material-icons">
                                 lock
                             </span>
                         </button>
                     </td>
-                    <td>
-                        <button type="button" *ngIf="!class.openRegistration" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteClass">
+                    <td [class.d-none]="!columnStates.actions">
+                        <button type="button" *ngIf="!class.openRegistration" class="btn btn-outline-danger"
+                            data-bs-toggle="modal" data-bs-target="#deleteClass">
                             <span class="material-icons">
                                 delete
                             </span>
@@ -81,40 +135,42 @@
                     </td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="5">
-                        <small *ngIf="totalClasses > currentPage * numOfClasses">
-                            Showing {{currentPage * numOfClasses - numOfClasses + 1}} to {{currentPage *numOfClasses}}
-                            of
-                            {{totalClasses}} entries</small>
-
-                        <small *ngIf="totalClasses <= currentPage * numOfClasses">Showing {{currentPage * numOfClasses -
-                            numOfClasses + 1}}
-                            to {{totalClasses}} of {{totalClasses}} entries</small>
-                    </td>
-                    <td colspan="3">
-                        <nav aria-label="Page navigation example" class="mt-3">
-                            <ul class="pagination">
-                                <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
-                                            aria-hidden="true">&laquo;</span></button></li>
-                                <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page"
-                                    class="page-item">
-                                    <button class="page-link" (click)=goToPage(page)>{{page}}</button>
-                                </li>
-                                <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
-                                            aria-hidden="true">&raquo;</span></button></li>
-                            </ul>
-                        </nav>
-                    </td>
-                </tr>
-            </tfoot>
+            <tfoot></tfoot>
         </table>
+
+        <div class="row">
+            <div class="col">
+                <small *ngIf="totalClasses > currentPage * numOfClasses">
+                    Showing {{currentPage * numOfClasses - numOfClasses + 1}} to {{currentPage *numOfClasses}}
+                    of
+                    {{totalClasses}} entries</small>
+
+                <small *ngIf="totalClasses <= currentPage * numOfClasses">Showing {{currentPage * numOfClasses -
+                    numOfClasses + 1}}
+                    to {{totalClasses}} of {{totalClasses}} entries</small>
+            </div>
+
+            <div class="col-auto">
+                <nav aria-label="Page navigation example" class="mt-3">
+                    <ul class="pagination">
+                        <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
+                                    aria-hidden="true">&laquo;</span></button></li>
+                        <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page"
+                            class="page-item">
+                            <button class="page-link" (click)=goToPage(page)>{{page}}</button>
+                        </li>
+                        <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
+                                    aria-hidden="true">&raquo;</span></button></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- modal for editing class-->
-<div class="modal fade" *ngIf="selectedId != null" id="editClass" tabindex="-1" aria-labelledby="editClassLabel" aria-hidden="true">
+<div class="modal fade" *ngIf="selectedId != null" id="editClass" tabindex="-1" aria-labelledby="editClassLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -166,7 +222,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" (click)="deleteClass(selectedClass.id)" data-bs-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-danger" (click)="deleteClass(selectedClass.id)"
+                    data-bs-dismiss="modal">Delete</button>
             </div>
         </div>
     </div>
