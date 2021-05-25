@@ -102,4 +102,8 @@ export class AddClassComponent implements OnInit {
     this.success = false;
   }
 
+  messageChangedHandler(message: String) {
+    this.message = null;
+  }
+
 }

@@ -1,5 +1,5 @@
 <div class="container">
-    <app-success-error-dialog [message]="message" [success]="success"></app-success-error-dialog>
+    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)"></app-success-error-dialog>
 
     <form class="p-3" [formGroup]="addForm" (ngSubmit)="addAccount()">
 

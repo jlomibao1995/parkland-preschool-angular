@@ -169,6 +169,11 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
   errorMessage(error: HttpErrorResponse) {
     this.message = error.error.message;
     this.success = false;
+    this.getAccount();
+  }
+
+  messageChangedHandler(message: String) {
+    this.message = null;
   }
 
 }

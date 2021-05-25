@@ -73,4 +73,8 @@ export class AddAccountComponent implements OnInit {
       });
   }
 
+  messageChangedHandler(message: String) {
+    this.message = null;
+  }
+
 }

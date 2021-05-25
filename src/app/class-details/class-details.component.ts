@@ -112,8 +112,23 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
     this.editMode = true
   }
 
-  cancelEdit() {
-    this.editMode = false;
+  updateClassroom() {
+    let sDate = this.startDate.value + ' ' + this.startTime.value;
+    let eDate = this.endDate.value + ' ' + this.endTime.value
+
+    const params = new HttpParams()
+    .set('capacity', this.capacity.value)
+    .set('ageGroup', this.age.value)
+    .set('startDate', sDate)
+    .set('endDate', eDate)
+    .set('days', this.days.value)
+    .set('costPerMonth', this.cost.value)
+    .set('description', this.description.value);
+
+    this._classService.updateClassroom(this.classId, params).subscribe(
+      data => this.successMessage('Class changes have been saved'),
+      error => this.errorMessage(error)
+    )
   }
 
   successMessage(successMesage: String) {
@@ -126,6 +141,11 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
   errorMessage(error: HttpErrorResponse) {
     this.message = error.error.message;
     this.success = false;
+    this.getClass();
+  }
+
+  messageChangedHandler(message: String) {
+    this.message = null;
   }
 
 }

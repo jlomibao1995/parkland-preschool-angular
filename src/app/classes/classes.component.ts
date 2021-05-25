@@ -27,6 +27,9 @@ export class ClassesComponent implements OnInit {
   constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.message = null;
+    this.success = null;
+    this.selectedId = null;
     this.classNumForm = this._formBuilder.group({
       numOfClasses: [10]
     });
@@ -115,6 +118,10 @@ export class ClassesComponent implements OnInit {
     this.ngOnInit();
     this.message = error.error.message;
     this.success = false;
+  }
+
+  messageChangedHandler(message: String) {
+    this.message = null;
   }
 
 }

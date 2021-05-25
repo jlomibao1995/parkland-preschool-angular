@@ -1,15 +1,6 @@
-<div [class.d-none]="message == null || !success" class="alert alert-success d-flex align-items-center m-3 fade alert-dismissible fade show"
-    role="alert">
+<div *ngIf="message != null" [class.d-none]="close" [class.alert-success]="success" [class.alert-danger]="!success"
+    class="alert d-flex align-items-center m-3.fade alert-dismissible fade show" role="alert">
     <span class="material-icons">check_circle</span>
-    <div>
-        {{message}}
-    </div>
-    <button type="button" class="btn-close" aria-label="Close" (click)="closeDialog()"></button>
-</div>
-
-<div [class.d-none]="message == null || success" class="alert alert-danger d-flex align-items-center m-3 alert-dismissible fade show"
-    role="alert">
-    <span class="material-icons">error</span>
     <div>
         {{message}}
     </div>

@@ -129,4 +129,8 @@ export class AccountsComponent implements OnInit {
     this.success = false;
   }
 
+  messageChangedHandler(message: String) {
+    this.message = null;
+  }
+
 }

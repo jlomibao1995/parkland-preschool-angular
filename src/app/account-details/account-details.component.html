@@ -1,4 +1,4 @@
-<app-success-error-dialog [message]="message" [success]="success"></app-success-error-dialog>
+<app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)"></app-success-error-dialog>
 
 <div *ngIf="!passwordMode" class="container">
 
