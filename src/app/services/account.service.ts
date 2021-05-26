@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Account } from '../models/Account';
 
@@ -11,6 +11,11 @@ import { Account } from '../models/Account';
 export class AccountService {
   private baseUrl = environment.baseUrl + '/account'
   private headers = { 'content-type': 'application/json' };
+  public roles = {
+    admin : 'ADMIN',
+    staff : 'STAFF',
+    user : 'USER'
+  }
 
   constructor(private _http: HttpClient) { }
 

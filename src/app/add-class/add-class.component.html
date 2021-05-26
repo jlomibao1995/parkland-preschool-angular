@@ -59,8 +59,8 @@
                 <select name="days" class="form-select" formControlName="days"
                     [class.is-invalid]="days.invalid && days.touched">
                     <option value="" selected disabled hidden>Select days</option>
-                    <option value="MWF">Monday/Wednesday/Friday</option>
-                    <option value="TTh">Tuesday/Thursday</option>
+                    <option [value]="day.mwf">Monday/Wednesday/Friday</option>
+                    <option [value]="day.tth">Tuesday/Thursday</option>
                 </select>
                 <small [class.d-none]="days.valid || days.untouched" class="text-danger">Enter dyas class is in
                     session</small>

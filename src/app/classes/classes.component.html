@@ -100,8 +100,8 @@
                         date:'shortDate'}}</td>
                     <td [class.d-none]="!columnStates.times">{{class.startDate | date:'shortTime'}} - {{class.endDate |
                         date:'shortTime'}}</td>
-                    <td [class.d-none]="!columnStates.days" *ngIf="class.days == 'MWF'">Monday/Wednesday/Friday</td>
-                    <td [class.d-none]="!columnStates.days" *ngIf="class.days == 'TTh'">Tuesday/Thursday</td>
+                    <td [class.d-none]="!columnStates.days" *ngIf="class.days == days.mwf">Monday/Wednesday/Friday</td>
+                    <td [class.d-none]="!columnStates.days" *ngIf="class.days == days.tth">Tuesday/Thursday</td>
                     <td [class.d-none]="!columnStates.spots">{{class.enrolled}}/{{class.capacity}}</td>
                     <td [class.d-none]="!columnStates.actions">
                         <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editClass">

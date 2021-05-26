@@ -12,6 +12,7 @@ import { ClassesService } from '../services/classroom.service';
 export class ClassesComponent implements OnInit {
   public classes: [];
   public selectedClass: Classroom;
+  public days;
   public message: String;
   public success: boolean;
   public selectedId: number;
@@ -37,11 +38,13 @@ export class ClassesComponent implements OnInit {
   constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.days = this._classroomService.days;
+    
     this.message = null;
     this.success = null;
     this.selectedId = null;
     this.classNumForm = this._formBuilder.group({
-      numOfClasses: [10]
+      numOfClasses: [this.numOfClasses]
     });
 
     this.goToPage(this.currentPage);
@@ -64,6 +67,11 @@ export class ClassesComponent implements OnInit {
 
         //figure out which page buttons are visible
         let start = this.currentPage - 2;
+
+        if(this.currentPage + 2 > this.totalPages) {
+          start = this.currentPage - 3;
+        }
+        
         if (start <= 0) {
           start = 1;
         }
@@ -119,13 +127,13 @@ export class ClassesComponent implements OnInit {
   }
 
   successMessage(successMesage: String) {
-    this.ngOnInit();
+    this.goToPage(this.currentPage);
     this.message = successMesage;
     this.success = true;
   }
 
   errorMessage(error: HttpErrorResponse) {
-    this.ngOnInit();
+    this.goToPage(this.currentPage);
     this.message = error.error.message;
     this.success = false;
   }

@@ -1,0 +1,44 @@
+<div class="container">
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Description:</th>
+                <td>{{payment.description}}</td>
+            </tr>
+            <tr>
+                <th>Class:</th>
+                <td>{{payment.registration.classroom.description}}</td>
+            </tr>
+            <tr>
+                <th>Payment for:</th>
+                <td>{{payment.registration.child.firstName}} {{payment.registration.child.lastName}}</td>
+            </tr>
+            <tr [class.d-none]="payment.paymentStatus == status.unpaid">
+                <th>Invoice #:</th>
+                <td>{{payment.invoiceId}}</td>
+            </tr>
+            <tr [class.d-none]="payment.paymentStatus == status.unpaid">
+                <th>Payee:</th>
+                <td>{{payment.payee}}</td>
+            </tr>
+            <tr [class.d-none]="payment.paymentStatus == status.unpaid">
+                <th>Payer:</th>
+                <td>{{payment.payer}}</td>
+            </tr>
+            <tr [class.d-none]="payment.paymentStatus == status.unpaid">
+                <th>Paid on:</th>
+                <td>{{payment.datePaid}}</td>
+            </tr>
+            <tr>
+                <th>Total:</th>
+                <td>{{payment.total | currency:'CAD'}}</td>
+            </tr>
+            <tr [class.d-none]="payment.paymentStatus == status.unpaid">
+                <th>Method:</th>
+                <td>{{payment.paymentMethod}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-primary">Pay</button>
+</div>

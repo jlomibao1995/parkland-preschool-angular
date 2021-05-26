@@ -27,21 +27,18 @@ export class RegistrationsComponent implements OnInit {
 
   public pageForm: FormGroup;
 
-  public status = {
-    registered : 'REGISTERED',
-    waitlisted: 'WAIT_LISTED',
-    pending: 'PENDING',
-    unregistered: 'UNREGISTERED'
-  };
+  public status;
 
   constructor(private _registrationService: RegistrationService, private _formBuilder: FormBuilder,
-    private _classroomService: ClassesService) { }
+    private _classroomService: ClassesService) {
+      this.status = this._registrationService.status;
+     }
 
   ngOnInit(): void {
     this.message = null;
     this.success = null;
     this.pageForm = this._formBuilder.group({
-      numOfRegistrations: [10],
+      numOfRegistrations: [this.numOfRegistrations],
       search: [''],
       classroom: [0],
       status: ['']
@@ -74,6 +71,11 @@ export class RegistrationsComponent implements OnInit {
         
         //figure out which page buttons are visible
         let start = this.currentPage - 2;
+
+        if(this.currentPage + 2 > this.totalPages) {
+          start = this.currentPage - 3;
+        }
+        
         if (start <= 0) {
           start = 1;
         }
@@ -127,13 +129,13 @@ export class RegistrationsComponent implements OnInit {
   }
 
   successMessage(successMesage: String) {
-    this.reload();
+    this.goToPage(this.currentPage);
     this.message = successMesage;
     this.success = true;
   }
 
   errorMessage(error: HttpErrorResponse) {
-    this.reload();
+    this.goToPage(this.currentPage);
     this.message = error.error.message;
     this.success = false;
   }

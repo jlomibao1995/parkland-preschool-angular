@@ -11,6 +11,10 @@ import { Classroom } from '../models/Classroom';
 export class ClassesService {
   public baseUrl = environment.baseUrl + '/classroom';
   private headers = { 'content-type': 'application/json' };
+  public days = {
+    mwf : 'MWF',
+    tth : 'TTh'
+  }
 
   constructor(private _http: HttpClient) { }
 

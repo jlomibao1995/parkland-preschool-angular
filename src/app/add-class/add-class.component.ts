@@ -13,8 +13,11 @@ export class AddClassComponent implements OnInit {
   public addForm: FormGroup;
   public message: String;
   public success: boolean;
+  public day;
 
-  constructor(private _formBuilder: FormBuilder, public _classService: ClassesService) { }
+  constructor(private _formBuilder: FormBuilder, public _classService: ClassesService) {
+    this.day = this._classService.days;
+   }
 
   ngOnInit(): void {
     this.addForm = this._formBuilder.group({

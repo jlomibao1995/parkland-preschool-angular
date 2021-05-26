@@ -16,8 +16,11 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
   @Input() public classId;
   public message: String;
   public success: boolean;
+  public day;
 
-  constructor(private _formBuilder: FormBuilder, private _classService: ClassesService) { }
+  constructor(private _formBuilder: FormBuilder, private _classService: ClassesService) { 
+    this.day = this._classService.days;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.ngOnInit();

@@ -32,9 +32,9 @@
         <select name="role" class="form-select" formControlName="role" (change)="goToPage(1)">
           <option value="" selected disabled hidden>Role</option>
           <option value="">All</option>
-          <option value="ADMIN">Admin</option>
-          <option value="STAFF">Staff</option>
-          <option value="USER">User</option>
+          <option [value]="roles.admin">Admin</option>
+          <option [value]="roles.staff">Staff</option>
+          <option [value]="roles.user">User</option>
         </select>
       </div>
 
@@ -162,31 +162,31 @@
       </tbody>
       <tfoot></tfoot>
     </table>
+  </div>
 
-    <div class="row">
-      <div class="col">
-        <small *ngIf="totalAccounts > currentPage * numOfAccounts">
-          Showing {{currentPage * numOfAccounts - numOfAccounts + 1}} to {{currentPage *numOfAccounts}} of
-          {{totalAccounts}} entries</small>
+  <div class="row">
+    <div class="col">
+      <small *ngIf="totalAccounts > currentPage * numOfAccounts">
+        Showing {{currentPage * numOfAccounts - numOfAccounts + 1}} to {{currentPage *numOfAccounts}} of
+        {{totalAccounts}} entries</small>
 
-        <small *ngIf="totalAccounts <= currentPage * numOfAccounts">Showing {{currentPage * numOfAccounts -
-          numOfAccounts + 1}}
-          to {{totalAccounts}} of {{totalAccounts}} entries</small>
-      </div>
+      <small *ngIf="totalAccounts <= currentPage * numOfAccounts">Showing {{currentPage * numOfAccounts -
+        numOfAccounts + 1}}
+        to {{totalAccounts}} of {{totalAccounts}} entries</small>
+    </div>
 
-      <div class="col-auto">
-        <nav aria-label="Page navigation example" class="mt-3">
-          <ul class="pagination">
-            <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
-                  aria-hidden="true">&laquo;</span></button></li>
-            <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page" class="page-item">
-              <button class="page-link" (click)=goToPage(page)>{{page}}</button>
-            </li>
-            <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
-                  aria-hidden="true">&raquo;</span></button></li>
-          </ul>
-        </nav>
-      </div>
+    <div class="col-auto">
+      <nav aria-label="Page navigation example" class="mt-3">
+        <ul class="pagination">
+          <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
+                aria-hidden="true">&laquo;</span></button></li>
+          <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page" class="page-item">
+            <button class="page-link" (click)=goToPage(page)>{{page}}</button>
+          </li>
+          <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
+                aria-hidden="true">&raquo;</span></button></li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

@@ -1,0 +1,241 @@
+<div class="container">
+    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
+    </app-success-error-dialog>
+
+    <form [formGroup]="pageForm">
+        <div class="row mx-3">
+            <div class="col-lg p-3">
+                <input type="number" min="1" class="form-control page-entries" formControlName="numOfPayments"
+                    (change)="changePaymentNum()"> records
+            </div>
+
+            <div class="col-auto p-3">
+                <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Update">
+                    <span class="material-icons">
+                        update
+                    </span>
+                </button>
+            </div>
+
+            <div class="col-lg p-3">
+                <select name="sort" class="form-select" formControlName="sort" (change)="goToPage(1)">
+                    <option value="" selected disabled hidden>Sort By</option>
+                    <option value="">None</option>
+                    <option value="datePaid">Date Paid</option>
+                    <option value="paymentStatus">Status</option>
+                    <option value="description">Description</option>
+                    <option value="total">Total</option>
+                    <option value="paymentMethod">Method</option>
+                </select>
+            </div>
+
+            <div class="col-lg p-3">
+                <select name="role" class="form-select" formControlName="class" (change)="goToPage(1)">
+                    <option value="" selected disabled hidden>Class</option>
+                    <option value="0">All</option>
+                </select>
+            </div>
+
+            <div class="col-lg p-3">
+                <select name="role" class="form-select" formControlName="month" (change)="goToPage(1)">
+                    <option value="" selected disabled hidden>Month</option>
+                    <option value="">All</option>
+                    <option value="JANUARY">Jan</option>
+                    <option value="FEBRUARY">Feb</option>
+                    <option value="MARCH">Mar</option>
+                    <option value="APRIL">Apr</option>
+                    <option value="MAY">May </option>
+                    <option value="JUNE">Jun</option>
+                    <option value="JULY">Jul</option>
+                    <option value="AUGUST">Aug</option>
+                    <option value="SEPTEMBER">Sept</option>
+                    <option value="OCTOBER">Oct</option>
+                    <option value="NOVEMBER">Nov</option>
+                    <option value="DECEMBER">Dec</option>
+                </select>
+            </div>
+
+            <div class="col-lg p-3">
+                <input type="number" min="1" class="form-control" formControlName="year" (keyup)="goToPage(1)"
+                    placeholder="Year">
+            </div>
+
+
+            <div class="col-lg p-3">
+                <input type="search" class="form-control" placeholder="🔍 Enter child name" formControlName="search"
+                    (keyup)="goToPage(1)">
+            </div>
+        </div>
+    </form>
+
+    <div class="bg-light bg-gradient p-3">
+        <div class="row">
+            <div class="col mx-3">
+                <h3>Payment Records</h3>
+            </div>
+
+            <div class="col-auto mx-3">
+                <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
+                    data-bs-target="#addFee">
+                    Create Fee
+                </button>
+            </div>
+        </div>
+
+        <div class="mx-3">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" checked name="name" (change)="toggleColumnState($event)">
+            <label for="">Name</label>
+          </div>
+    
+          <div class="form-check form-check-inline">
+            <input type="checkbox" checked class="form-check-input" name="description" (change)="toggleColumnState($event)">
+            <label for="">Description</label>
+          </div>
+          
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="invoice" (change)="toggleColumnState($event)">
+            <label for="">Invoice #</label>
+          </div>
+    
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="payee" (change)="toggleColumnState($event)">
+            <label for="">Payee</label>
+          </div>
+    
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="payer" (click)="toggleColumnState($event)">
+            <label for="">Payer</label>
+          </div>
+    
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="datePaid" (click)="toggleColumnState($event)">
+            <label for="">Date Paid</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="method" (click)="toggleColumnState($event)">
+            <label for="">Method</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input type="checkbox" checked class="form-check-input" name="status" (click)="toggleColumnState($event)">
+            <label for="">Status</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input type="checkbox" checked class="form-check-input" name="total" (click)="toggleColumnState($event)">
+            <label for="">Total</label>
+          </div>
+    
+          <div class="form-check form-check-inline">
+            <input type="checkbox" checked checked class="form-check-input" name="actions" (click)="toggleColumnState($event)">
+            <label for="">Actions</label>
+          </div>
+        </div>
+    </div>
+
+    <div class="table-responsive-lg p-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th [class.d-none]="!columnStates.name">Child</th>
+                    <th [class.d-none]="!columnStates.description">Description</th>
+                    <th [class.d-none]="!columnStates.invoiceId">Invoice</th>
+                    <th [class.d-none]="!columnStates.payee">Payee</th>
+                    <th [class.d-none]="!columnStates.payer">Payer</th>
+                    <th [class.d-none]="!columnStates.datePaid">Date Paid</th>
+                    <th [class.d-none]="!columnStates.total">Total</th>
+                    <th [class.d-none]="!columnStates.paymentStatus">Paid/Unpaid</th>
+                    <th [class.d-none]="!columnStates.paymentMethod">Method</th>
+                    <th [class.d-none]="!columnStates.actions" colspan="3"></th>
+                </tr>
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let payment of payments; let i = index" (click)="selectPayment(i)"
+                    [class.table-active]="payment.id==selectedId">
+                    <td [class.d-none]="!columnStates.name">{{payment.registration.child.firstName}} {{payment.registration.child.lastName}}</td>
+                    <td [class.d-none]="!columnStates.description">{{payment.description}}</td>
+                    <td [class.d-none]="!columnStates.invoiceId">{{payment.invoiceId}}</td>
+                    <td [class.d-none]="!columnStates.payee">{{payment.payee}}</td>
+                    <td [class.d-none]="!columnStates.payer">{{payment.payer}}</td>
+                    <td [class.d-none]="!columnStates.datePaid">{{payment.datePaid}}</td>
+                    <td [class.d-none]="!columnStates.total">{{payment.total | currency}}</td>
+                    <td [class.d-none]="!columnStates.paymentStatus">{{payment.paymentStatus}}</td>
+                    <td [class.d-none]="!columnStates.paymentMethod">{{payment.paymentMethod}}</td>
+                    <td [class.d-none]="!columnStates.actions">
+                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#paymentDetails">
+                            <span class="material-icons">
+                                info
+                            </span>
+                        </button>
+                    </td>
+                    <td [class.d-none]="!columnStates.actions"></td>
+                    <td [class.d-none]="!columnStates.actions"></td>
+                </tr>
+            </tbody>
+            <tfoot></tfoot>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="col">
+          <small *ngIf="totalPayments > currentPage * numOfPayments">
+            Showing {{currentPage * numOfPayments - numOfPayments + 1}} to {{currentPage *numOfPayments}} of
+            {{totalPayments}} entries</small>
+  
+          <small *ngIf="totalPayments <= currentPage * numOfPayments">Showing {{currentPage * numOfPayments -
+            numOfPayments + 1}}
+            to {{totalPayments}} of {{totalPayments}} entries</small>
+        </div>
+  
+        <div class="col-auto">
+          <nav aria-label="Page navigation example" class="mt-3">
+            <ul class="pagination">
+              <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
+                    aria-hidden="true">&laquo;</span></button></li>
+              <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page" class="page-item">
+                <button class="page-link" (click)=goToPage(page)>{{page}}</button>
+              </li>
+              <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
+                    aria-hidden="true">&raquo;</span></button></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+    <!-- modal for adding a fee-->
+    <div class="modal fade" id="addFee" tabindex="-1" aria-labelledby="addFeeLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addFeeLabel">Create New Fee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal for editing a fee-->
+    <div *ngIf="selectedId != null" class="modal fade" id="paymentDetails" tabindex="-1" aria-labelledby="paymentDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentDetailsLabel">Payment Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <app-payment-details [paymentId]="selectedId"></app-payment-details>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>

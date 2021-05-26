@@ -9,6 +9,12 @@ import { environment } from 'src/environments/environment';
 })
 export class RegistrationService {
   private baseUrl = environment.baseUrl + '/registration';
+  public status = {
+    registered : 'REGISTERED',
+    waitlisted: 'WAIT_LISTED',
+    pending: 'PENDING',
+    unregistered: 'UNREGISTERED'
+  };
 
   constructor(private _http: HttpClient) { }
 

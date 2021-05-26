@@ -15,6 +15,7 @@ export class AccountsComponent implements OnInit {
   public success: boolean;
   public accounts: Account[];
   public selectedAccount: Account;
+  public roles;
   public selectedId: number;
 
   public pages: number[] = [];
@@ -39,10 +40,12 @@ export class AccountsComponent implements OnInit {
   constructor(private _accountService: AccountService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.roles = this._accountService.roles;
+    
     this.message = null;
     this.success = null;
     this.pageForm = this._formBuilder.group({
-      numOfAccounts: [10],
+      numOfAccounts: [this.numOfAccounts],
       sort: [''],
       search: [''],
       role: ['']
@@ -76,6 +79,11 @@ export class AccountsComponent implements OnInit {
 
         //figure out which page buttons are visible
         let start = this.currentPage - 2;
+
+        if(this.currentPage + 2 > this.totalPages) {
+          start = this.currentPage - 3;
+        }
+
         if (start <= 0) {
           start = 1;
         }
@@ -92,11 +100,8 @@ export class AccountsComponent implements OnInit {
           }
         }
 
-      },
-      error => {
-        this.message = error.error.message
-        console.log(this.message);
-      });
+      }, error => console.log(error.error.message)
+    );
   }
 
   reload() {
@@ -129,13 +134,13 @@ export class AccountsComponent implements OnInit {
   }
 
   successMessage(successMesage: String) {
-    this.reload();
+    this.goToPage(this.currentPage);
     this.message = successMesage;
     this.success = true;
   }
 
   errorMessage(error: HttpErrorResponse) {
-    this.reload();
+    this.goToPage(this.currentPage);
     this.message = error.error.message;
     this.success = false;
   }
