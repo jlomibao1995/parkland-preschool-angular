@@ -23,6 +23,16 @@ export class PaymentsService {
     .pipe(catchError(this.errorHandler));
   }
 
+  addPayment(payment: any) {
+    return this._http.post<any>(this.baseUrl, payment, {'headers': this.headers})
+    .pipe(catchError(this.errorHandler));
+  }
+
+  addPaymentForClass(classId: number, payment: any) {
+    return this._http.post<any>(this.baseUrl + '/class_payments/' + classId, payment, {'headers': this.headers})
+    .pipe(catchError(this.errorHandler));
+  }
+
   getPayment(id){
     return this._http.get<PaymentDetails>(this.baseUrl + "/" + id)
     .pipe(catchError(this.errorHandler));

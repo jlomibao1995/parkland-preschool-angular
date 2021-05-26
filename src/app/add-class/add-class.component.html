@@ -65,11 +65,19 @@
                 <small [class.d-none]="days.valid || days.untouched" class="text-danger">Enter dyas class is in
                     session</small>
             </div>
+
             <div class="col form-group">
                 <label for="cost">Cost</label>
-                <input type="number" class="form-control" formControlName="cost"
-                    [class.is-invalid]="cost.invalid && cost.touched">
+                <input type="number" class="form-control" formControlName="cost" step=".01"
+                    [class.is-invalid]="cost.invalid && cost.touched" placeholder="$">
                 <small [class.d-none]="cost.valid || cost.untouched" class="text-danger">Enter cost per month</small>
+            </div>
+
+            <div class="col form-group">
+                <label for="service fees">Service Fees</label>
+                <input type="number" class="form-control" formControlName="serviceFee" step=".01"
+                    [class.is-invalid]="serviceFee.invalid && serviceFee.touched" placeholder="$">
+                <small [class.d-none]="serviceFee.valid || serviceFee.untouched" class="text-danger">Enter service fee for paypal payments</small>
             </div>
         </div>
 
@@ -83,8 +91,8 @@
             </div>
         </div>
 
-        <div class="row p-3">
-            <div class="col form-group">
+        <div class="row p-3 justify-content-end">
+            <div class="col-auto form-group">
                 <input type="submit" class="btn btn-success" value="Add Class" [disabled]="addForm.invalid">
             </div>
         </div>

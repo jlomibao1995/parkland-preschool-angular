@@ -29,7 +29,8 @@ export class AddClassComponent implements OnInit {
       endDate:['', Validators.required],
       days:['', Validators.required],
       capacity:['', Validators.required],
-      cost:['', Validators.required]
+      cost:['', Validators.required],
+      serviceFee: ['', Validators.required]
     });
   }
 
@@ -69,6 +70,10 @@ export class AddClassComponent implements OnInit {
     return this.addForm.get('cost');
   }
 
+  get serviceFee() {
+    return this.addForm.get('serviceFee');
+  }
+
   addClassroom() {
     let sDate = this.startDate.value + ' ' + this.startTime.value;
     let eDate = this.endDate.value + ' ' + this.endTime.value
@@ -86,7 +91,8 @@ export class AddClassComponent implements OnInit {
       'enrolled': 0,
       'picturePass': '',
       'registrationList': [],
-      'full': false
+      'full': false,
+      'serviceFee': this.serviceFee.value
     }).subscribe(
       data => this.successMessage('Class was created'),
       error => this.errorMessage(error)

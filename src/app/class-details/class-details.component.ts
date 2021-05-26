@@ -68,7 +68,8 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
           endDate: [eDate, Validators.required],
           days: [this.class.days, Validators.required],
           capacity: [this.class.capacity, Validators.required],
-          cost: [this.class.costPerMonth, Validators.required]
+          cost: [this.class.costPerMonth, Validators.required],
+          serviceFee: [this.class.serviceFee, Validators.required]
         });
 
       }, error => this.message = error.error.message
@@ -111,6 +112,10 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
     return this.editForm.get('cost');
   }
 
+  get serviceFee() {
+    return this.editForm.get('serviceFee');
+  }
+
   goToEditMode() {
     this.editMode = true
   }
@@ -126,6 +131,7 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
     .set('endDate', eDate)
     .set('days', this.days.value)
     .set('costPerMonth', this.cost.value)
+    .set('serviceFee', this.serviceFee.value)
     .set('description', this.description.value);
 
     this._classService.updateClassroom(this.classId, params).subscribe(

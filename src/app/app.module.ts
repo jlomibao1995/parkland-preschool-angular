@@ -23,6 +23,7 @@ import { RegistrationService } from './services/registration.service';
 import { SuccessErrorDialogComponent } from './success-error-dialog/success-error-dialog.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';
+import { AddPaymentComponent } from './add-payment/add-payment.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PaymentDetailsComponent } from './payment-details/payment-details.compo
     AccountDetailsComponent,
     SuccessErrorDialogComponent,
     PaymentsComponent,
-    PaymentDetailsComponent
+    PaymentDetailsComponent,
+    AddPaymentComponent
   ],
   imports: [
     BrowserModule,

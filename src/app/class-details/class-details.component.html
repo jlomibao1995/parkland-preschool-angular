@@ -77,8 +77,8 @@
                     <label for="days">Days</label>
                     <select name="days" class="form-control" formControlName="days"
                         [class.is-invalid]="days.invalid && days.touched">
-                        <option value="day.mwf">Monday/Wednesday/Friday</option>
-                        <option value="day.tth">Tuesday/Thursday</option>
+                        <option [value]="day.mwf">Monday/Wednesday/Friday</option>
+                        <option [value]="day.tth">Tuesday/Thursday</option>
                     </select>
                     <small [class.d-none]="days.valid || days.untouched" class="text-danger">Enter dyas class is in
                         session</small>
@@ -90,12 +90,19 @@
                     <small [class.d-none]="cost.valid || cost.untouched" class="text-danger">Enter cost per
                         month</small>
                 </div>
+
+                <div class="col form-group">
+                    <label for="service fees">Service Fees</label>
+                    <input type="number" class="form-control" formControlName="serviceFee" step=".01"
+                        [class.is-invalid]="serviceFee.invalid && serviceFee.touched">
+                    <small [class.d-none]="serviceFee.valid || serviceFee.untouched" class="text-danger">Enter service fee for paypal payments</small>
+                </div>
             </div>
 
             <div class="row p-3">
                 <div class="col form-group">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" formControlName="description"
+                    <input type="text" class="form-control" formControlName="description" step=".01"
                         [class.is-invalid]="description.invalid && description.touched">
                     <small [class.d-none]="description.valid || description.untouched" class="text-danger">Enter class
                         description</small>
