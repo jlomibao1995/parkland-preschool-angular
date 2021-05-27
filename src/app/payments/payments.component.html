@@ -230,7 +230,7 @@
         </div>
     </div>
 
-    <!-- modal for editing a fee-->
+    <!-- modal viewing payment details-->
     <div *ngIf="selectedId != null" class="modal fade" id="paymentDetails" tabindex="-1" aria-labelledby="paymentDetailsLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -248,7 +248,7 @@
         </div>
     </div>
 
-    <!-- modal entering other payment method-->
+    <!-- modal for manually processing payment-->
     <div *ngIf="selectedId != null" class="modal fade" id="otherMethod" tabindex="-1" aria-labelledby="otherMethodLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -257,7 +257,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <app-payment-details [paymentId]="selectedId"></app-payment-details>
                     <app-manual-pay [paymentId]="selectedId"></app-manual-pay>
                 </div>
                 <div class="modal-footer">

@@ -66,7 +66,7 @@ export class AddPaymentComponent implements OnInit {
     let index = this.class.value;
     this.selectedClassroom = this.classrooms[index];
     this.registrations = this.selectedClassroom.registrationList;
-    //this.registrations = this.registrations.filter(registration => registration.active && registration.status == this._registrationService.status.registered);
+    this.registrations = this.registrations.filter(registration => registration.active && registration.status == this._registrationService.status.registered);
   }
 
   addPayment(){

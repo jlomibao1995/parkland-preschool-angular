@@ -66,7 +66,7 @@
 
             <div class="form-check form-check-inline">
                 <input type="checkbox" class="form-check-input" name="spots" (click)="toggleColumnState($event)">
-                <label for="">Spots Available</label>
+                <label for="">Spots Filled</label>
             </div>
 
             <div class="form-check form-check-inline">
@@ -87,7 +87,7 @@
                     <th [class.d-none]="!columnStates.dates">Dates</th>
                     <th [class.d-none]="!columnStates.times">Times</th>
                     <th [class.d-none]="!columnStates.days">Days</th>
-                    <th [class.d-none]="!columnStates.spots">Spots Available</th>
+                    <th [class.d-none]="!columnStates.spots">Spots Filled</th>
                     <th [class.d-none]="!columnStates.actions" colspan="3">Actions</th>
                 </tr>
             </thead>

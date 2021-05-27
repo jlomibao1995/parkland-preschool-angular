@@ -2,6 +2,7 @@
     <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
     </app-success-error-dialog>
 
+    <app-payment-details [paymentId]="paymentId"></app-payment-details>
     <form [class.d-none]="paymentDetails.paymentStatus == status.paid" [formGroup]="paymentForm" (ngSubmit)="processPayment()">
         <div class="row">
             <div class="col form-group">

@@ -44,6 +44,7 @@ export class PaymentsComponent implements OnInit {
   ngOnInit(): void {
     this.message = null;
     this.success = null;
+    this.selectedId = null;
     this.pageForm = this._formBuilder.group({
       numOfPayments: [this.numOfPayments],
       sort: [''],

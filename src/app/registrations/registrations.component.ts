@@ -119,13 +119,28 @@ export class RegistrationsComponent implements OnInit {
   }
 
   deactivateRegistration(registrationId) {
-    let params = new HttpParams()
-    .set('active', false);
+    let params = new HttpParams().set('active', false);
 
     this._registrationService.updateRegistration(registrationId, params).subscribe(
       data => this.successMessage("Registration deactivated"),
       error => this.errorMessage(error)
     );
+  }
+
+  acceptRegistration(registrationId) {
+    let params = new HttpParams().set('status', this.status.registered);
+    this._registrationService.updateRegistration(registrationId, params).subscribe(
+      data => this.successMessage('Registration confirmed and accepted'),
+      error => this.errorMessage(error)
+    )
+  }
+
+  offerSpot(registrationId) {
+    let params = new HttpParams().set('status', this.status.unregistered);
+    this._registrationService.updateRegistration(registrationId, params).subscribe(
+      data => this.successMessage('Spot offered to child: Email sent to account'),
+      error => this.errorMessage(error)
+    )
   }
 
   successMessage(successMesage: String) {

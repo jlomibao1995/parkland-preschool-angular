@@ -32,9 +32,9 @@ export class ManualPayComponent implements OnInit, OnChanges {
   ngOnInit(): void {
 
     this.paymentForm = this._formBuilder.group({
-      payee : ['', Validators.required],
-      payer : ['', Validators.required],
-      method : ['', Validators.required]
+      payee : ['Admin', Validators.required],
+      payer : ['Parent', Validators.required],
+      method : ['Cash', Validators.required]
     })
 
     if (this.paymentId) {

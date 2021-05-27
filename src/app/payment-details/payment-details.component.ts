@@ -23,7 +23,7 @@ export class PaymentDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.status = this._paymentService.status;
+    
   }
 
 }
