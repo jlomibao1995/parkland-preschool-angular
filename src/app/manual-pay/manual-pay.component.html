@@ -1,0 +1,33 @@
+<div class="container">
+    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
+    </app-success-error-dialog>
+
+    <form [class.d-none]="paymentDetails.paymentStatus == status.paid" [formGroup]="paymentForm" (ngSubmit)="processPayment()">
+        <div class="row">
+            <div class="col form-group">
+                <label for="">Received by</label>
+                <input type="text" class="form-control" formControlName="payee">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col form-group">
+                <label for="">Payer</label>
+                <input type="text" class="form-control" formControlName="payer">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col form-group">
+                <label for="">Method</label>
+                <input type="text" class="form-control" placeholder="PayPal, Cash, E-Transfer, Cheque..." formControlName="method">
+            </div>
+        </div>
+
+        <div class="row p-3 justify-content-end">
+            <div class="col-auto form-group">
+                <input type="submit" value="Process Payment" class="btn btn-primary" [disabled]="paymentForm.invalid">
+            </div>
+        </div>
+    </form>
+</div>

@@ -149,7 +149,7 @@
                     <th [class.d-none]="!columnStates.total">Total</th>
                     <th [class.d-none]="!columnStates.paymentStatus">Paid/Unpaid</th>
                     <th [class.d-none]="!columnStates.paymentMethod">Method</th>
-                    <th [class.d-none]="!columnStates.actions" colspan="3"></th>
+                    <th [class.d-none]="!columnStates.actions" colspan="2"></th>
                 </tr>
             </thead>
             <tbody class="">
@@ -165,14 +165,21 @@
                     <td [class.d-none]="!columnStates.paymentStatus">{{payment.paymentStatus}}</td>
                     <td [class.d-none]="!columnStates.paymentMethod">{{payment.paymentMethod}}</td>
                     <td [class.d-none]="!columnStates.actions">
-                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#paymentDetails">
+                        <button *ngIf="payment.paymentStatus == status.paid" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#paymentDetails">
                             <span class="material-icons">
                                 info
                             </span>
                         </button>
+
+                        <button *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#otherMethod">
+                            <span class="material-icons">
+                                paid
+                            </span>
+                        </button>
                     </td>
-                    <td [class.d-none]="!columnStates.actions"></td>
-                    <td [class.d-none]="!columnStates.actions"></td>
+                    <td [class.d-none]="!columnStates.actions">
+                        
+                    </td>
                 </tr>
             </tbody>
             <tfoot></tfoot>
@@ -233,6 +240,25 @@
                 </div>
                 <div class="modal-body">
                     <app-payment-details [paymentId]="selectedId"></app-payment-details>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal entering other payment method-->
+    <div *ngIf="selectedId != null" class="modal fade" id="otherMethod" tabindex="-1" aria-labelledby="otherMethodLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="otherMethodLabel">Manually Process Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <app-payment-details [paymentId]="selectedId"></app-payment-details>
+                    <app-manual-pay [paymentId]="selectedId"></app-manual-pay>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

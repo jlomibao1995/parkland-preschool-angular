@@ -30,6 +30,14 @@
                 <td>{{payment.datePaid}}</td>
             </tr>
             <tr>
+                <th>Subtotal:</th>
+                <td>{{payment.subTotal | currency:'CAD'}}</td>
+            </tr>
+            <tr>
+                <th>Service Fees:</th>
+                <td>{{payment.serviceFees | currency:'CAD'}}</td>
+            </tr>
+            <tr>
                 <th>Total:</th>
                 <td>{{payment.total | currency:'CAD'}}</td>
             </tr>
@@ -39,6 +47,4 @@
             </tr>
         </tbody>
     </table>
-
-    <button *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-primary">Pay</button>
 </div>

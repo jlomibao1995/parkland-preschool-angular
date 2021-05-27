@@ -12,6 +12,7 @@ import { PaymentsService } from '../services/payments.service';
 export class PaymentsComponent implements OnInit {
   public message: String;
   public success: boolean;
+  public status;
   public payments: PaymentDetails[];
   private selectedPayment: PaymentDetails;
   public selectedId: number;
@@ -36,7 +37,9 @@ export class PaymentsComponent implements OnInit {
     actions: true
   };
 
-  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder) { }
+  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder) {
+    this.status = this._paymentService.status;
+   }
 
   ngOnInit(): void {
     this.message = null;

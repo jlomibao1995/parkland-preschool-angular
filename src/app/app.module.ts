@@ -24,6 +24,7 @@ import { SuccessErrorDialogComponent } from './success-error-dialog/success-erro
 import { PaymentsComponent } from './payments/payments.component';
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
+import { ManualPayComponent } from './manual-pay/manual-pay.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AddPaymentComponent } from './add-payment/add-payment.component';
     SuccessErrorDialogComponent,
     PaymentsComponent,
     PaymentDetailsComponent,
-    AddPaymentComponent
+    AddPaymentComponent,
+    ManualPayComponent
   ],
   imports: [
     BrowserModule,

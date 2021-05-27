@@ -8,6 +8,7 @@ export class PaymentDetails {
         public payer: String,
         public paymentStatus: String,
         public subTotal: number,
+        public serviceFees: number,
         public total: number,
         public datePaid: String,
         public paymentMonth: String,

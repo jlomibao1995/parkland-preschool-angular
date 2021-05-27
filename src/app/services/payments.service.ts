@@ -33,6 +33,11 @@ export class PaymentsService {
     .pipe(catchError(this.errorHandler));
   }
 
+  processPayment(invoiceId: String, params: HttpParams) {
+    return this._http.put<any>(this.baseUrl + '/' + invoiceId, {}, {params})
+    .pipe(catchError(this.errorHandler));
+  }
+
   getPayment(id){
     return this._http.get<PaymentDetails>(this.baseUrl + "/" + id)
     .pipe(catchError(this.errorHandler));
