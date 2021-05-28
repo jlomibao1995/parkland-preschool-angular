@@ -8,6 +8,7 @@ export class AuthorizationInterceptor implements HttpInterceptor {
   constructor( private _cookieService: CookieService) { }
  
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
     const token = this._cookieService.get('authorization');
     if (token) {
       req = req.clone({

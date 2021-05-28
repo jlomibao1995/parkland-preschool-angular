@@ -7,7 +7,8 @@ export class ChildContact{
         public workPhoneNumber: String,
         public cellNumber: String,
         public address: String,
-        public relationToChild: String
+        public relationToChild: String,
+        public type: String
     ){
 
     }

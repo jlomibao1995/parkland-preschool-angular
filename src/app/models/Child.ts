@@ -5,7 +5,7 @@ import { Registration } from "./Registration";
 export class Child {
     constructor(
         public id: number,
-        public birthDate: String,
+        public birthdate: String,
         public gender: String,
         public firstName: String,
         public lastName: String,
@@ -20,7 +20,7 @@ export class Child {
         public medicalConditions: String,
         public medications: boolean,
         public postalCode: String,
-        public childContactList: ChildContact[],
+        public childContactsList: ChildContact[],
         public account: Account,
         public registrationList: Registration[]
     ) {}

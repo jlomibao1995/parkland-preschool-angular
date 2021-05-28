@@ -25,6 +25,9 @@ import { PaymentsComponent } from './payments/payments.component';
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 import { AddPaymentComponent } from './add-payment/add-payment.component';
 import { ManualPayComponent } from './manual-pay/manual-pay.component';
+import { ErrorInterceptor } from './helpers/error.interceptor';
+import { ChildInfoComponent } from './child-info/child-info.component';
+import { RegistrationDetailsComponent } from './registration-details/registration-details.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,9 @@ import { ManualPayComponent } from './manual-pay/manual-pay.component';
     PaymentsComponent,
     PaymentDetailsComponent,
     AddPaymentComponent,
-    ManualPayComponent
+    ManualPayComponent,
+    ChildInfoComponent,
+    RegistrationDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,8 @@ import { ManualPayComponent } from './manual-pay/manual-pay.component';
     HttpClientModule
   ],
   providers: [AuthenticationService, ClassesService, CookieService, RegistrationService,
-  {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true}],
+  {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true}, 
+  {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

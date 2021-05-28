@@ -1,0 +1,177 @@
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="4">Child Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{child.firstName}} {{child.lastName}}</td>
+                <th>Birthdate</th>
+                <td>{{child.birthdate | date:"MMM d, yyyy"}}</td>
+            </tr>
+
+            <tr>
+                <th>Address</th>
+                <td>{{child.address}}</td>
+                <th>Postal Code</th>
+                <td>{{child.postalCode}}</td>
+            </tr>
+
+            <tr [ngSwitch]="child.gender">
+                <th>Gender</th>
+                <td colspan="3" *ngSwitchCase="gender.boy">Boy</td>
+                <td colspan="3" *ngSwitchCase="gender.girl">Girl</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="4">Medical Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Allergy</th>
+                <td>{{child.allergy}}</td>
+                <th>AB Health Care #</th>
+                <td>{{child.healthCareNumber}}</td>
+            </tr>
+
+            <tr>
+                <th>Doctor/Walk-in Clinic</th>
+                <td>{{child.doctorClinic}}</td>
+                <th>Phone</th>
+                <td>{{child.medicalPhoneNumber}}</td>
+            </tr>
+
+            <tr>
+                <th>Immunization shots up to date?</th>
+                <td *ngIf="child.immunizations">Yes</td>
+                <td *ngIf="!child.immunizations">No</td>
+                <th>Child has had chicken pox?</th>
+                <td *ngIf="child.chickenPox">Yes</td>
+                <td *ngIf="!child.chickenPox">No</td>
+            </tr>
+
+            <tr>
+                <th>Special conditions?</th>
+                <td colspan="3" *ngIf="child.medicalConditions != null && child.medicalConditions != ''">{{child.medicalConditions}}</td>
+                <td colspan="3" *ngIf="child.medicalConditions == null || child.medicalConditions == ''">No</td>
+            </tr>
+
+            <tr>
+                <th>Medications</th>
+                <td colspan="3" *ngIf="child.medications">Yes</td>
+                <td colspan="3" *ngIf="!child.medications">No</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="4">Guardian Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Main Contact Email</th>
+                <td colspan="3">{{child.account.email}}</td>
+            </tr>
+
+            <tr class="table-light">
+                <th>{{child.account.relationToChild}}</th>
+                <td colspan="3">{{child.account.firstName}} {{child.account.lastName}}</td>
+            </tr>
+
+            <tr>
+                <th>Address</th>
+                <td>{{child.account.address}}</td>
+                <th>Phone</th>
+                <td>
+                    <ul class="list-unstyled">
+                        <li>H: {{child.account.homePhoneNumber}}</li>
+                        <li>W: {{child.account.workPhoneNumber}}</li>
+                        <li>C: {{child.account.cellNumber}}</li>
+                    </ul>
+                </td>
+            </tr>
+            
+            <tr class="table-light" *ngFor="let guardian of getChildContacts(this.contactsType.guardian)">
+                <th>{{guardian.relationToChild}}</th>
+                <td colspan="3">{{guardian.firstName}} {{guardian.lastName}}</td>
+            </tr>
+
+            <tr *ngFor="let guardian of getChildContacts(this.contactsType.guardian)">
+                <th>Address</th>
+                <td>{{guardian.address}}</td>
+                <th>Phone</th>
+                <td>
+                    <ul class="list-unstyled">
+                        <li>H: {{guardian.homePhoneNumber}}</li>
+                        <li>W: {{guardian.workPhoneNumber}}</li>
+                        <li>C: {{guardian.cellNumber}}</li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr class="table-light" *ngFor="let other of getChildContacts(this.contactsType.other)">
+                <th>Other Caregiver</th>
+                <td colspan="3">{{other.firstName}} {{other.lastName}}</td>
+            </tr>
+
+            <tr *ngFor="let other of getChildContacts(this.contactsType.other)">
+                <th>Address</th>
+                <td>{{other.address}}</td>
+                <th>Phone</th>
+                <td>{{other.homePhoneNumber}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="4">Emergency Contact</th>
+            </tr>
+        </thead>
+        <tbody> 
+            <tr class="table-light" *ngFor="let emergency of getChildContacts(this.contactsType.emergency)">
+                <th>{{emergency.relationToChild}}</th>
+                <td colspan="3">{{emergency.firstName}} {{emergency.lastName}}</td>
+            </tr>
+
+            <tr *ngFor="let emergency of getChildContacts(this.contactsType.emergency)">
+                <th>Address</th>
+                <td>{{emergency.address}}</td>
+                <th>Phone</th>
+                <td>
+                    <ul class="list-unstyled">
+                        <li>H: {{emergency.homePhoneNumber}}</li>
+                        <li>W: {{emergency.workPhoneNumber}}</li>
+                        <li>C: {{emergency.cellNumber}}</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="4">Authorized Pickup</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pickup of getChildContacts(this.contactsType.pickup)">
+                <th>Name</th>
+                <td>{{pickup.firstName}} {{pickup.lastName}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

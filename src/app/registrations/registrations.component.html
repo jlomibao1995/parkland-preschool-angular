@@ -82,7 +82,7 @@
             <tbody>
                 <tr *ngFor="let registration of registrations; let i = index" (click)="selectRegistration(i)"
                     [class.table-active]="registration.id==selectedId">
-                    <td>{{registration.child.firstName}} {{registration.child.lastName}}</td>
+                    <td><button class="btn btn-link" data-bs-toggle="modal"data-bs-target="#childInfo">{{registration.child.firstName}} {{registration.child.lastName}}</button></td>
                     <td>{{registration.classroom.description}}</td>
                     <td>{{registration.registrationDate}}</td>
                     <td *ngIf="registration.status == status.registered">Registered</td>
@@ -162,3 +162,21 @@
         </div>
     </div>
 </div>
+
+<!-- modal for viewing registration info-->
+<div *ngIf="selectedId != null" class="modal fade" id="childInfo" tabindex="-1" aria-labelledby="childInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="childInfoLabel">Registration Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <app-child-info [childId]="selectedRegistration.child.id"></app-child-info>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
