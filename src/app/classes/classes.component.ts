@@ -35,11 +35,11 @@ export class ClassesComponent implements OnInit {
     actions: true
   }
 
-  constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder) { }
+  constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder) { 
+    this.days = this._classroomService.days;
+  }
 
   ngOnInit(): void {
-    this.days = this._classroomService.days;
-    
     this.message = null;
     this.success = null;
     this.selectedId = null;

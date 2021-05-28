@@ -51,6 +51,11 @@ export class ClassesService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getClassroomForChild(childId) {
+    return this._http.get<Classroom[]>(this.baseUrl + '/classrooms_child/' + childId)
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Classroom } from '../models/Classroom';
 import { Registration } from '../models/Registration';
 import { ClassesService } from '../services/classroom.service';
@@ -18,6 +18,8 @@ export class RegistrationsComponent implements OnInit {
   public classrooms: Classroom[];
   public selectedId: number;
   public selectedRegistration: Registration;
+  public registrationUpdated: boolean;
+  public childClassrooms: Classroom[];
 
   public pages: number[] = [];
   public totalPages: number;
@@ -28,6 +30,8 @@ export class RegistrationsComponent implements OnInit {
   public pageForm: FormGroup;
 
   public status;
+
+  public moveForm: FormGroup;
 
   constructor(private _registrationService: RegistrationService, private _formBuilder: FormBuilder,
     private _classroomService: ClassesService) {
@@ -44,10 +48,15 @@ export class RegistrationsComponent implements OnInit {
       status: ['']
     });
 
+    this.moveForm = this._formBuilder.group({
+      class: ['', Validators.required]
+    });
+
     this._classroomService.getClassList().subscribe(data => this.classrooms = data,
       error => this.errorMessage(error));
 
-    this.goToPage(this.currentPage)
+    this.goToPage(this.currentPage);
+    this.registrationUpdated = false;
   }
 
   changeRegistrationsNum() {
@@ -102,6 +111,7 @@ export class RegistrationsComponent implements OnInit {
   selectRegistration(index) {
     this.selectedRegistration = this.registrations[index];
     this.selectedId = this.selectedRegistration.id;
+    this.getClassForChild();
   }
 
   reload() {
@@ -141,6 +151,24 @@ export class RegistrationsComponent implements OnInit {
       data => this.successMessage('Spot offered to child: Email sent to account'),
       error => this.errorMessage(error)
     )
+  }
+
+  getClassForChild() {
+    this._classroomService.getClassroomForChild(this.selectedRegistration.child.id).subscribe(
+      data => this.childClassrooms = data,
+      error => error.error.message
+    );
+  }
+
+  moveClass() {
+    this.registrationUpdated = false;
+    this._registrationService.updateRegistration(this.selectedId, new HttpParams().set('classId', this.moveForm.get('class').value))
+    .subscribe(data => {
+      this.ngOnInit();
+      this.successMessage('Registration was transfered to a different class');
+      this.registrationUpdated = true;
+      this.getClassForChild();
+    }, error => this.errorMessage(error));
   }
 
   successMessage(successMesage: String) {

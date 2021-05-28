@@ -1,1 +1,29 @@
-<p>registration-details works!</p>
+<div class="container p-3 lead">
+    <div class="row">
+        <div class="col-auto">Class:</div>
+        <div class="col">{{registration.classroom.description}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-auto">Days:</div>
+        <div class="col" *ngIf="registration.classroom.days == days.mwf">Monday/Wednesday/Friday</div>
+        <div class="col" *ngIf="registration.classroom.days == days.tth">Tuesday/Thursday</div>
+    </div>
+
+    <div class="row">
+        <div class="col-auto">Date:</div>
+        <div class="col">{{registration.classroom.startDate | date:'shortDate'}} - {{registration.classroom.endDate | date:'shortDate'}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-auto">Time:</div>
+        <div class="col">{{registration.classroom.startDate | date:'shortTime'}} - {{registration.classroom.endDate | date:'shortTime'}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-auto">
+            Registered on:
+        </div>
+        <div class="col">{{registration.registrationDate | date:'MM/d/yy HH:mm'}}</div>
+    </div>
+</div>

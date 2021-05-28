@@ -172,6 +172,23 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+            <app-registration-details [registrationId]="selectedId" [updated]="registrationUpdated"></app-registration-details>
+
+            <form class="m-3" [formGroup]="moveForm" (ngSubmit)="moveClass()">
+                <div class="row">
+                    <div class="col">
+                        <select class="form-select" formControlName="class">
+                            <option value="" selected disabled hidden>Move to another class</option>
+                            <option *ngFor="let class of childClassrooms" [value]="class.id">{{class.description}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-auto">
+                        <input type="submit" [disabled]="moveForm.invalid" class="btn btn-primary" value="Save">
+                    </div>
+                </div>
+            </form>
+
           <app-child-info [childId]="selectedRegistration.child.id"></app-child-info>
         </div>
         <div class="modal-footer">
