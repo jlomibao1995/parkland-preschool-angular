@@ -171,6 +171,13 @@ export class RegistrationsComponent implements OnInit {
     }, error => this.errorMessage(error));
   }
 
+  deleteRegistration() {
+    this._registrationService.deleteRegistration(this.selectedId).subscribe(
+      data => this.successMessage('Registration deleted'),
+      error => this.errorMessage(error)
+    )
+  }
+
   successMessage(successMesage: String) {
     this.goToPage(this.currentPage);
     this.message = successMesage;

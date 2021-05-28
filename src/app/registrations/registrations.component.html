@@ -52,12 +52,12 @@
                 <h3>Registration Listing</h3>
             </div>
 
-            <div class="col-auto mx-3">
+            <!-- <div class="col-auto mx-3">
                 <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
                     data-bs-target="#addRegistration" data-bs-whatever="@mdo">
                     Add Registration
                 </button>
-            </div>
+            </div> -->
         </div>
 
         <div class="mx-3">
@@ -82,12 +82,15 @@
             <tbody>
                 <tr *ngFor="let registration of registrations; let i = index" (click)="selectRegistration(i)"
                     [class.table-active]="registration.id==selectedId">
-                    <td><button class="btn btn-link" data-bs-toggle="modal"data-bs-target="#childInfo">{{registration.child.firstName}} {{registration.child.lastName}}</button></td>
+                    <td><button class="btn btn-link" data-bs-toggle="modal"
+                            data-bs-target="#childInfo">{{registration.child.firstName}}
+                            {{registration.child.lastName}}</button></td>
                     <td>{{registration.classroom.description}}</td>
                     <td>{{registration.registrationDate}}</td>
                     <td *ngIf="registration.status == status.registered">Registered</td>
                     <td *ngIf="registration.status == status.unregistered">Pending registration fee payment</td>
-                    <td *ngIf="registration.status == status.pending">Pending admin confirmation: View registration details</td>
+                    <td *ngIf="registration.status == status.pending">Pending admin confirmation: View registration
+                        details</td>
                     <td *ngIf="registration.status == status.waitlisted">Wait Listed</td>
                     <td>
                         <button *ngIf="registration.active" class="btn btn-outline-primary"
@@ -107,15 +110,17 @@
                         </button>
                     </td>
                     <td>
-                        <button *ngIf="registration.active && registration.status == status.waitlisted" (click)="offerSpot(registration.id)"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Spot">
+                        <button *ngIf="registration.active && registration.status == status.waitlisted"
+                            (click)="offerSpot(registration.id)" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Offer Spot">
                             <span class="material-icons">
                                 queue
                             </span>
                         </button>
-                        <button *ngIf="registration.active && registration.status == status.pending" (click)="acceptRegistration(registration.id)"
-                            class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#deleteAccount"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Accept Registration">
+                        <button *ngIf="registration.active && registration.status == status.pending"
+                            (click)="acceptRegistration(registration.id)" class="btn btn-outline-success"
+                            data-bs-toggle="modal" data-bs-target="#deleteAccount" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Accept Registration">
                             <span class="material-icons">
                                 check
                             </span>
@@ -164,36 +169,63 @@
 </div>
 
 <!-- modal for viewing registration info-->
-<div *ngIf="selectedId != null" class="modal fade" id="childInfo" tabindex="-1" aria-labelledby="childInfoLabel" aria-hidden="true">
+<div *ngIf="selectedId != null" class="modal fade" id="childInfo" tabindex="-1" aria-labelledby="childInfoLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="childInfoLabel">Registration Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <app-registration-details [registrationId]="selectedId" [updated]="registrationUpdated"></app-registration-details>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="childInfoLabel">Registration Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-registration-details [registrationId]="selectedId" [updated]="registrationUpdated">
+                </app-registration-details>
 
-            <form class="m-3" [formGroup]="moveForm" (ngSubmit)="moveClass()">
-                <div class="row">
-                    <div class="col">
-                        <select class="form-select" formControlName="class">
-                            <option value="" selected disabled hidden>Move to another class</option>
-                            <option *ngFor="let class of childClassrooms" [value]="class.id">{{class.description}}</option>
-                        </select>
+                <form class="m-3" [formGroup]="moveForm" (ngSubmit)="moveClass()">
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-select" formControlName="class">
+                                <option value="" selected disabled hidden>Move to another class</option>
+                                <option *ngFor="let class of childClassrooms" [value]="class.id">{{class.description}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-auto">
+                            <input type="submit" [disabled]="moveForm.invalid" class="btn btn-primary" value="Save">
+                        </div>
                     </div>
+                </form>
 
-                    <div class="col-auto">
-                        <input type="submit" [disabled]="moveForm.invalid" class="btn btn-primary" value="Save">
-                    </div>
-                </div>
-            </form>
-
-          <app-child-info [childId]="selectedRegistration.child.id"></app-child-info>
+                <app-child-info [childId]="selectedRegistration.child.id"></app-child-info>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
+<!--modal for deletig registration-->
+<div *ngIf="selectedId != null" class="modal fade" id="deleteRegistration" tabindex="-1"
+    aria-labelledby="deleteRegistrationLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteRegistrationLabel">Delete {{selectedRegistration.child.firstName}}
+                    {{selectedRegistration.child.lastName}}'s registration for
+                    {{selectedRegistration.classroom.description}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deleting the registraiton will result in permanently removing the data associated with it.
+                Are you sure you want to delete {{selectedRegistration.child.firstName}}
+                {{selectedRegistration.child.lastName}}'s registration?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteRegistration()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

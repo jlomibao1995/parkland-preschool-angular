@@ -81,7 +81,7 @@
         <tbody>
             <tr>
                 <th>Main Contact Email</th>
-                <td colspan="3">{{child.account.email}}</td>
+                <td colspan="3"><a [href]="'mailto:' + child.account.email">{{child.account.email}}</a></td>
             </tr>
 
             <tr class="table-light">
