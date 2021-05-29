@@ -1,4 +1,4 @@
-<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
 <div class="container">
     <fieldset [class.overlay]="loading" [disabled]="loading">
         <app-success-error-dialog [message]="message" [success]="success"
