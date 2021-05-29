@@ -16,6 +16,7 @@ export class ClassesComponent implements OnInit {
   public days;
   public message: String;
   public success: boolean;
+  public loading: boolean;
   public selectedId: number;
   public pages: number[] = [];
 
@@ -41,6 +42,7 @@ export class ClassesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = false;
     this.message = null;
     this.success = null;
     this.selectedId = null;
@@ -57,6 +59,7 @@ export class ClassesComponent implements OnInit {
   }
 
   goToPage(page) {
+    this.loading = true;
     this.pages = [];
     this.currentPage = page;
 
@@ -88,10 +91,12 @@ export class ClassesComponent implements OnInit {
             break;
           }
         }
+        this.loading = false;
 
       },
       error => {
         this.message = error.error.message
+        this.loading = false;
       });
   }
 
@@ -101,6 +106,7 @@ export class ClassesComponent implements OnInit {
   }
 
   openRegistration(classId) {
+    this.loading = true;
     const params = new HttpParams()
       .set('openRegistration', true);
 
@@ -111,6 +117,7 @@ export class ClassesComponent implements OnInit {
   }
 
   closeRegistration(classId) {
+    this.loading = true;
     const params = new HttpParams()
       .set('openRegistration', false);
 
@@ -121,6 +128,7 @@ export class ClassesComponent implements OnInit {
   }
 
   deleteClass(classId) {
+    this.loading = true;
     this._classroomService.deleteClassroom(classId).subscribe(
       data => this.successMessage('Class has been deleted'),
       error => this.errorMessage(error)
@@ -137,9 +145,9 @@ export class ClassesComponent implements OnInit {
     this.success = true;
   }
 
-  errorMessage(error: HttpErrorResponse) {
+  errorMessage(error) {
     this.goToPage(this.currentPage);
-    this.message = error.error.message;
+    this.message = error;
     this.success = false;
   }
 

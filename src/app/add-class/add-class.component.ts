@@ -14,12 +14,14 @@ export class AddClassComponent implements OnInit {
   public message: String;
   public success: boolean;
   public day;
+  public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, public _classService: ClassesService) {
     this.day = this._classService.days;
    }
 
   ngOnInit(): void {
+    this.loading = false;
     this.addForm = this._formBuilder.group({
       description:['', Validators.required],
       age:['', Validators.required],
@@ -75,6 +77,7 @@ export class AddClassComponent implements OnInit {
   }
 
   addClassroom() {
+    this.loading = true;
     let sDate = this.startDate.value + ' ' + this.startTime.value;
     let eDate = this.endDate.value + ' ' + this.endTime.value
 
@@ -105,9 +108,9 @@ export class AddClassComponent implements OnInit {
     this.success = true;
   }
 
-  errorMessage(error: HttpErrorResponse) {
+  errorMessage(error) {
     this.ngOnInit();
-    this.message = error.error.message;
+    this.message = error;
     this.success = false;
   }
 

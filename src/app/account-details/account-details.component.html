@@ -1,6 +1,8 @@
-<app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)"></app-success-error-dialog>
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
+<app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
+</app-success-error-dialog>
 
-<div *ngIf="!passwordMode" class="container">
+<div *ngIf="!passwordMode" class="container" [class.overlay]="loading">
 
     <div class="p-3 row">
         <div class="col">
@@ -12,9 +14,9 @@
         </div>
     </div>
 
-    <form class="p-3" [formGroup]="editForm" (ngSubmit)="saveAccountChanges()">
-        <fieldset [disabled]="!editMode">
+    <fieldset [disabled]="!editMode || loading">
 
+        <form class="p-3" [formGroup]="editForm" (ngSubmit)="saveAccountChanges()">
             <div class="row p-3">
                 <div class="col form-group">
                     <label for="days">Account Type</label>
@@ -24,7 +26,8 @@
                         <option value="USER">Regular User</option>
                         <option value="STAFF">Staff</option>
                     </select>
-                    <small [class.d-none]="role.valid || role.untouched" class="text-danger">Select account type</small>
+                    <small [class.d-none]="role.valid || role.untouched" class="text-danger">Select account
+                        type</small>
                 </div>
 
                 <div class="col form-group">
@@ -90,90 +93,54 @@
                         [hidden]="!editMode">
                 </div>
             </div>
-
-        </fieldset>
-    </form>
+        </form>
+    </fieldset>
 </div>
 
 <div class="container" *ngIf="passwordMode">
-    <div class="row p-3">
-        <div class="col">
-            <button class="btn btn-outline-primary" (click)="goToEditMode()">
-                <span class="material-icons">
-                    arrow_back_ios_new
-                </span>
-            </button>
-        </div>
-    </div>
-
-    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+    <fieldset [disabled]="!editMode || loading" [class.overlay]="loading">
         <div class="row p-3">
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" formControlName="password"
-                    [class.is-invalid]="password.invalid && password.touched || passwordForm.errors?.patternMismatch">
-                <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter password</small>
-                <div [class.d-none]="!passwordForm.errors?.patternMismatch" class="text-danger m-2">
-                    <small>Password must have the following:</small><br>
-                    <small>At least 8 characters</small><br>
-                    <small>At least one uppercase and lowercase letter</small><br>
-                    <small>At least one number</small><br>
-                    <small>At least one special character e.g. !@#?</small>
+            <div class="col">
+                <button class="btn btn-outline-primary" (click)="goToEditMode()">
+                    <span class="material-icons">
+                        arrow_back_ios_new
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+            <div class="row p-3">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" formControlName="password"
+                        [class.is-invalid]="password.invalid && password.touched || passwordForm.errors?.patternMismatch">
+                    <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter
+                        password</small>
+                    <div [class.d-none]="!passwordForm.errors?.patternMismatch" class="text-danger m-2">
+                        <small>Password must have the following:</small><br>
+                        <small>At least 8 characters</small><br>
+                        <small>At least one uppercase and lowercase letter</small><br>
+                        <small>At least one number</small><br>
+                        <small>At least one special character e.g. !@#?</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm password">Confirm Password</label>
+                    <input type="password" class="form-control" formControlName="confirmPassword"
+                        [class.is-invalid]="passwordForm.errors?.mismatch">
+                    <small [class.d-none]="!passwordForm.errors?.mismatch" class="text-danger">Passwords do not
+                        match</small>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="confirm password">Confirm Password</label>
-                <input type="password" class="form-control" formControlName="confirmPassword"
-                    [class.is-invalid]="passwordForm.errors?.mismatch">
-                <small [class.d-none]="!passwordForm.errors?.mismatch" class="text-danger">Passwords do not match</small>
+            <div class="row p-3">
+                <div class="col form-group">
+                    <input type="submit" class="btn btn-primary" value="Change password"
+                        [disabled]="passwordForm.invalid">
+                </div>
             </div>
-        </div>
-
-        <div class="row p-3">
-            <div class="col form-group">
-                <input type="submit" class="btn btn-primary" value="Change password" [disabled]="passwordForm.invalid">
-            </div>
-        </div>
-    </form>
+        </form>
+    </fieldset>
 </div>
-
-<!-- modal for changing password -->
-<!-- <div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="changePasswordLabel">Change Password</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form [formGroup]="passwordForm">
-                <div class="row p-3">
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" formControlName="password"
-                        [class.is-invalid]="password.invalid && password.touched">
-                        <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter password</small>
-                    </div>    
-                    
-                    <div class="form-group">
-                        <label for="confirm password">Confirm Password</label>
-                        <input type="password" class="form-control" formControlName="confirmPassword"
-                        [class.is-invalid]="confirmPassword.invalid && confirmPassword.touched">
-                        <small [class.d-none]="confirmPassword.valid || confirmPassword.untouched" class="text-danger">Enter password again</small>
-                    </div>
-                </div>
-
-                <div class="row p-3">
-                    <div class="col form-group">
-                        <input type="submit" class="btn btn-success" value="Change password" [disabled]="passwordForm.invalid">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div> -->

@@ -17,6 +17,7 @@ export class ClassListComponent implements OnInit {
   public classEmail: string = "";
   public status;
   public days;
+  public loading: boolean;
 
   constructor(private _classroomService: ClassesService, private _route: ActivatedRoute,
     private _registrationService: RegistrationService) {
@@ -25,6 +26,7 @@ export class ClassListComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    this.loading = false;
     this._route.params.subscribe(params => {
       this.classId = params['classId'];
       console.log("Class Id: " + this.classId);

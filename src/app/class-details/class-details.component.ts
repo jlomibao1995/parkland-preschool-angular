@@ -17,6 +17,7 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
   public message: String;
   public success: boolean;
   public day;
+  public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, private _classService: ClassesService) { 
     this.day = this._classService.days;
@@ -32,6 +33,7 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
     this.editMode = false;
     this.message = null;
     this.success = null;
+    this.loading = false;
     // this.editForm = this._formBuilder.group({
     //   description: ['', Validators.required],
     //   age: ['', Validators.required],
@@ -46,6 +48,7 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
   }
 
   getClass() {
+    this.loading = true;
     this._classService.getClass(this.classId).subscribe(
       data => {
         this.class = data;
@@ -72,7 +75,12 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
           serviceFee: [this.class.serviceFee, Validators.required]
         });
 
-      }, error => this.message = error.error.message
+        this.loading = false;
+
+      }, error => {
+        this.message = error.error.message;
+        this.loading = false;
+      }
     );
   }
 
@@ -121,6 +129,7 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
   }
 
   updateClassroom() {
+    this.loading = true;
     let sDate = this.startDate.value + ' ' + this.startTime.value;
     let eDate = this.endDate.value + ' ' + this.endTime.value
 

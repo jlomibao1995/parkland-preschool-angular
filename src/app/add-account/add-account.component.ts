@@ -13,10 +13,12 @@ export class AddAccountComponent implements OnInit {
   public addForm: FormGroup;
   public message: String;
   public success: boolean;
+  public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, private _accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.loading = false;
     this.addForm = this._formBuilder.group({
       role:['', Validators.required],
       firstName:['', Validators.required],
@@ -52,6 +54,7 @@ export class AddAccountComponent implements OnInit {
   }
 
   addAccount() {
+    this.loading = true;
     let newAccount = {
       role: this.role.value,
       email: this.email.value,
@@ -68,8 +71,9 @@ export class AddAccountComponent implements OnInit {
         this.message = "Account has been added successfully";
       },
       error => {
+        this.loading = false;
         this.success = false;
-        this.message = error.error.message;
+        this.message = error;
       });
   }
 

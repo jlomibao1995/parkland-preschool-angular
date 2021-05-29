@@ -1,73 +1,80 @@
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
 <div class="container">
-    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)"></app-success-error-dialog>
+
+    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
+    </app-success-error-dialog>
 
     <form class="p-3" [formGroup]="addForm" (ngSubmit)="addAccount()">
-
-        <div class="row p-3">
-            <div class="col form-group">
-                <label for="days">Account Type</label>
-                <select name="days" class="form-select" formControlName="role"
-                [class.is-invalid]="role.invalid && role.touched">
-                <option value="" selected disabled hidden>Select type</option>
-                    <option value="ADMIN">Admin</option>
-                    <option value="USER">Regular User</option>
-                    <option value="STAFF">Staff</option>
-                </select>
-                <small [class.d-none]="role.valid || role.untouched" class="text-danger">Select account type</small>
-            </div>
-
-            <div class="col form-group">
-                <label for="start date">Email</label>
-                <input type="email" class="form-control" formControlName="email"
-                [class.is-invalid]="email.invalid && email.touched">
-                <small [class.d-none]="email.valid || email.untouched" class="text-danger">Enter email</small>
-            </div>
-        </div>
-
-        <div class="row p-3">
-            <div class="col form-group">
-                <label for="description">First Name</label>
-                <input type="text" class="form-control" formControlName="firstName"
-                [class.is-invalid]="firstName.invalid && firstName.touched">
-                <small [class.d-none]="firstName.valid || firstName.untouched" class="text-danger">Enter first name</small>
-            </div>
-
-            <div class="col form-group">
-                <label for="age group">Last Name</label>
-                <input type="text" class="form-control" formControlName="lastName"
-                [class.is-invalid]="lastName.invalid && lastName.touched">
-                <small [class.d-none]="lastName.valid || lastName.untouched" class="text-danger">Enter last name</small>
-            </div>
-        </div>
-
-        <div class="row p-3">
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" formControlName="password"
-                [class.is-invalid]="password.invalid && password.touched || addForm.errors?.patternMismatch">
-                <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter password</small>
-                <div [class.d-none]="!addForm.errors?.patternMismatch" class="text-danger m-2">
-                    <small>Password must have the following:</small><br>
-                    <small>At least 8 characters</small><br>
-                    <small>At least one uppercase and lowercase letter</small><br>
-                    <small>At least one number</small><br>
-                    <small>At least one special character e.g. !@#?</small>
+        <fieldset [class.overlay]="loading" [disabled]="loading">
+            <div class="row p-3">
+                <div class="col form-group">
+                    <label for="days">Account Type</label>
+                    <select name="days" class="form-select" formControlName="role"
+                        [class.is-invalid]="role.invalid && role.touched">
+                        <option value="" selected disabled hidden>Select type</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="USER">Regular User</option>
+                        <option value="STAFF">Staff</option>
+                    </select>
+                    <small [class.d-none]="role.valid || role.untouched" class="text-danger">Select account type</small>
                 </div>
-            </div>    
-            
-            <div class="form-group">
-                <label for="confirm password">Confirm Password</label>
-                <input type="password" class="form-control" formControlName="confirmPassword"
-                [class.is-invalid]="addForm.errors?.mismatch">
-                <small [class.d-none]="!addForm.errors?.mismatch" class="text-danger">Passwords do not match</small>
-            </div>
-        </div>
 
-        <div class="row p-3 justify-content-end">
-            <div class="col-auto form-group">
-                <input type="submit" class="btn btn-success" value="Add Account" [disabled]="addForm.invalid">
+                <div class="col form-group">
+                    <label for="start date">Email</label>
+                    <input type="email" class="form-control" formControlName="email"
+                        [class.is-invalid]="email.invalid && email.touched">
+                    <small [class.d-none]="email.valid || email.untouched" class="text-danger">Enter email</small>
+                </div>
             </div>
-        </div>
 
+            <div class="row p-3">
+                <div class="col form-group">
+                    <label for="description">First Name</label>
+                    <input type="text" class="form-control" formControlName="firstName"
+                        [class.is-invalid]="firstName.invalid && firstName.touched">
+                    <small [class.d-none]="firstName.valid || firstName.untouched" class="text-danger">Enter first
+                        name</small>
+                </div>
+
+                <div class="col form-group">
+                    <label for="age group">Last Name</label>
+                    <input type="text" class="form-control" formControlName="lastName"
+                        [class.is-invalid]="lastName.invalid && lastName.touched">
+                    <small [class.d-none]="lastName.valid || lastName.untouched" class="text-danger">Enter last
+                        name</small>
+                </div>
+            </div>
+
+            <div class="row p-3">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" formControlName="password"
+                        [class.is-invalid]="password.invalid && password.touched || addForm.errors?.patternMismatch">
+                    <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter
+                        password</small>
+                    <div [class.d-none]="!addForm.errors?.patternMismatch" class="text-danger m-2">
+                        <small>Password must have the following:</small><br>
+                        <small>At least 8 characters</small><br>
+                        <small>At least one uppercase and lowercase letter</small><br>
+                        <small>At least one number</small><br>
+                        <small>At least one special character e.g. !@#?</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm password">Confirm Password</label>
+                    <input type="password" class="form-control" formControlName="confirmPassword"
+                        [class.is-invalid]="addForm.errors?.mismatch">
+                    <small [class.d-none]="!addForm.errors?.mismatch" class="text-danger">Passwords do not match</small>
+                </div>
+            </div>
+
+            <div class="row p-3 justify-content-end">
+                <div class="col-auto form-group">
+                    <input type="submit" class="btn btn-success" value="Add Account" [disabled]="addForm.invalid">
+                </div>
+            </div>
+        </fieldset>
     </form>
+
 </div>

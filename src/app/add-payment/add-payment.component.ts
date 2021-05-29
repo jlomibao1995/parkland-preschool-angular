@@ -18,11 +18,13 @@ export class AddPaymentComponent implements OnInit {
   public selectedClassroom: Classroom;
   public message: String;
   public success: boolean;
+  public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, private _paymentService: PaymentsService, private _registrationService: RegistrationService,
     private _classroomService: ClassesService) { }
 
   ngOnInit(): void {
+    this.loading = false;
     this.addForm = this._formBuilder.group({
       description: ['', Validators.required],
       month: ['', Validators.required],
@@ -33,9 +35,17 @@ export class AddPaymentComponent implements OnInit {
     });
 
     this._classroomService.getClassList().subscribe(
-      data => this.classrooms = data,
-      error => console.log(error.error.message)
-    )
+      data => {
+        this.classrooms = data;
+        this.loading = false;
+      },
+      error => {
+        console.log(error.error.message);
+        this.loading = false;
+      }
+    );
+
+    this.loading = true;
   }
 
   get description(){
@@ -106,6 +116,7 @@ export class AddPaymentComponent implements OnInit {
         }
       )
     }
+    this.loading = true;
   }
 
   messageChangedHandler(message: String) {

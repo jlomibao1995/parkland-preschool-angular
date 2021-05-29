@@ -11,6 +11,7 @@ import { AccountService } from '../services/account.service';
   styleUrls: ['./accounts.component.css']
 })
 export class AccountsComponent implements OnInit {
+  public loading: boolean;
   public message: String;
   public success: boolean;
   public accounts: Account[];
@@ -41,6 +42,7 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit(): void {
     this.roles = this._accountService.roles;
+    this.loading = false;
     
     this.message = null;
     this.success = null;
@@ -65,6 +67,7 @@ export class AccountsComponent implements OnInit {
   }
 
   goToPage(page) {
+    this.loading = true;
     this.pages = [];
     this.currentPage = page;
     let sort: String = this.pageForm.get('sort').value;
@@ -99,6 +102,7 @@ export class AccountsComponent implements OnInit {
             break;
           }
         }
+        this.loading = false;
 
       }, error => console.log(error.error.message)
     );
@@ -106,9 +110,11 @@ export class AccountsComponent implements OnInit {
 
   reload() {
     this.ngOnInit();
+    this.selectedId = null;
   }
 
   activateAccount(accountId) {
+    this.loading = true;
     const params = new HttpParams()
       .set('active', true);
     this._accountService.updateAccount(accountId, params).subscribe(
@@ -118,6 +124,7 @@ export class AccountsComponent implements OnInit {
   }
 
   deactivateAccount(accountId) {
+    this.loading = true;
     const params = new HttpParams()
       .set('active', false);
     this._accountService.updateAccount(accountId, params).subscribe(
@@ -127,6 +134,7 @@ export class AccountsComponent implements OnInit {
   }
 
   deleteAccount(accountId) {
+    this.loading = true;
     this._accountService.deleteAccount(accountId).subscribe(
       data => this.successMessage("Account has been deleted"),
       error => this.errorMessage(error)
@@ -139,9 +147,9 @@ export class AccountsComponent implements OnInit {
     this.success = true;
   }
 
-  errorMessage(error: HttpErrorResponse) {
+  errorMessage(error) {
     this.goToPage(this.currentPage);
-    this.message = error.error.message;
+    this.message = error;
     this.success = false;
   }
 

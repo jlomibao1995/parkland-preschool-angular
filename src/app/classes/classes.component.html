@@ -1,174 +1,180 @@
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
 <div class="container">
-    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
-    </app-success-error-dialog>
+    <fieldset [class.overlay]="loading" [disabled]="loading">
+        <app-success-error-dialog [message]="message" [success]="success"
+            (messageChanged)="messageChangedHandler($event)">
+        </app-success-error-dialog>
 
-    <div class="row">
-        <div class="col-auto m-3">
-            <form [formGroup]="classNumForm">
-                <div class="form-group">
-                    <input type="number" min="1" class="form-control page-entries" formControlName="numOfClasses"
-                        (change)="changeClassesNum()"> classes per page
-                </div>
-            </form>
-        </div>
-        <div class="col m-3">
-            <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip"
-                data-bs-placement="top" title="Update">
-                <span class="material-icons">
-                    update
-                </span>
-            </button>
-        </div>
-    </div>
-
-    <div class="bg-light bg-gradient p-3">
         <div class="row">
-            <div class="col mx-3">
-                <h3>Classroom Listing</h3>
+            <div class="col-auto m-3">
+                <form [formGroup]="classNumForm">
+                    <div class="form-group">
+                        <input type="number" min="1" class="form-control page-entries" formControlName="numOfClasses"
+                            (change)="changeClassesNum()"> classes per page
+                    </div>
+                </form>
             </div>
-
-            <div class="col-auto mx-3">
-                <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
-                    data-bs-target="#addClass" data-bs-whatever="@mdo">
-                    Create New Class
+            <div class="col m-3">
+                <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Update">
+                    <span class="material-icons">
+                        update
+                    </span>
                 </button>
             </div>
         </div>
 
-        <div class="mx-3">
-            <div class="form-check form-check-inline">
-                <input type="checkbox" checked class="form-check-input" name="description"
-                    (change)="toggleColumnState($event)">
-                <label for="">Description</label>
+        <div class="bg-light bg-gradient p-3">
+            <div class="row">
+                <div class="col mx-3">
+                    <h3>Classroom Listing</h3>
+                </div>
+
+                <div class="col-auto mx-3">
+                    <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
+                        data-bs-target="#addClass" data-bs-whatever="@mdo">
+                        Create New Class
+                    </button>
+                </div>
             </div>
 
-            <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" name="age" (change)="toggleColumnState($event)">
-                <label for="">Age</label>
-            </div>
+            <div class="mx-3">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" checked class="form-check-input" name="description"
+                        (change)="toggleColumnState($event)">
+                    <label for="">Description</label>
+                </div>
 
-            <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" name="dates" (change)="toggleColumnState($event)">
-                <label for="">Dates</label>
-            </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" name="age" (change)="toggleColumnState($event)">
+                    <label for="">Age</label>
+                </div>
 
-            <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" name="times"
-                    (change)="toggleColumnState($event)">
-                <label for="">Times</label>
-            </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" name="dates" (change)="toggleColumnState($event)">
+                    <label for="">Dates</label>
+                </div>
 
-            <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" name="days"
-                    (change)="toggleColumnState($event)">
-                <label for="">Days</label>
-            </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" name="times" (change)="toggleColumnState($event)">
+                    <label for="">Times</label>
+                </div>
 
-            <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" name="spots" (click)="toggleColumnState($event)">
-                <label for="">Spots Filled</label>
-            </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" name="days" (change)="toggleColumnState($event)">
+                    <label for="">Days</label>
+                </div>
 
-            <div class="form-check form-check-inline">
-                <input type="checkbox" checked class="form-check-input" name="actions"
-                    (click)="toggleColumnState($event)">
-                <label for="">Actions</label>
-            </div>
-        </div>
-    </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" name="spots" (click)="toggleColumnState($event)">
+                    <label for="">Spots Filled</label>
+                </div>
 
-
-    <div class="table-responsive-lg m-3">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th [class.d-none]="!columnStates.description">Class</th>
-                    <th [class.d-none]="!columnStates.age">Age</th>
-                    <th [class.d-none]="!columnStates.dates">Dates</th>
-                    <th [class.d-none]="!columnStates.times">Times</th>
-                    <th [class.d-none]="!columnStates.days">Days</th>
-                    <th [class.d-none]="!columnStates.spots">Spots Filled</th>
-                    <th [class.d-none]="!columnStates.actions" colspan="3">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let class of classes; let i = index" (click)="selectClass(i)"
-                    [class.table-active]="class.id==selectedId">
-                    <td [class.d-none]="!columnStates.description">
-                        <button class="btn btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="View Class List" 
-                        (click)="viewClassList(class.id)">{{class.description}}</button>
-                    </td>
-                    <td [class.d-none]="!columnStates.age">{{class.ageGroup}}</td>
-                    <td [class.d-none]="!columnStates.dates">{{class.startDate | date:'shortDate'}} - {{class.endDate |
-                        date:'shortDate'}}</td>
-                    <td [class.d-none]="!columnStates.times">{{class.startDate | date:'shortTime'}} - {{class.endDate |
-                        date:'shortTime'}}</td>
-                    <td [class.d-none]="!columnStates.days" *ngIf="class.days == days.mwf">Monday/Wednesday/Friday</td>
-                    <td [class.d-none]="!columnStates.days" *ngIf="class.days == days.tth">Tuesday/Thursday</td>
-                    <td [class.d-none]="!columnStates.spots">{{class.enrolled}}/{{class.capacity}}</td>
-                    <td [class.d-none]="!columnStates.actions">
-                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editClass">
-                            <span class="material-icons">
-                                info
-                            </span>
-                        </button>
-                    </td>
-                    <td [class.d-none]="!columnStates.actions">
-                        <button *ngIf="class.openRegistration" class="btn btn-outline-primary" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Close Registration" (click)="closeRegistration(class.id)">
-                            <span class="material-icons">
-                                lock_open
-                            </span>
-                        </button>
-                        <button *ngIf="!class.openRegistration" class="btn btn-outline-secondary"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Open Registration"
-                            (click)="openRegistration(class.id)">
-                            <span class="material-icons">
-                                lock
-                            </span>
-                        </button>
-                    </td>
-                    <td [class.d-none]="!columnStates.actions">
-                        <button type="button" *ngIf="!class.openRegistration" class="btn btn-outline-danger"
-                            data-bs-toggle="modal" data-bs-target="#deleteClass">
-                            <span class="material-icons">
-                                delete
-                            </span>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot></tfoot>
-        </table>
-
-        <div class="row">
-            <div class="col">
-                <small *ngIf="totalClasses > currentPage * numOfClasses">
-                    Showing {{currentPage * numOfClasses - numOfClasses + 1}} to {{currentPage *numOfClasses}}
-                    of
-                    {{totalClasses}} entries</small>
-
-                <small *ngIf="totalClasses <= currentPage * numOfClasses">Showing {{currentPage * numOfClasses -
-                    numOfClasses + 1}}
-                    to {{totalClasses}} of {{totalClasses}} entries</small>
-            </div>
-
-            <div class="col-auto">
-                <nav aria-label="Page navigation example" class="mt-3">
-                    <ul class="pagination">
-                        <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
-                                    aria-hidden="true">&laquo;</span></button></li>
-                        <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page"
-                            class="page-item">
-                            <button class="page-link" (click)=goToPage(page)>{{page}}</button>
-                        </li>
-                        <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
-                                    aria-hidden="true">&raquo;</span></button></li>
-                    </ul>
-                </nav>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" checked class="form-check-input" name="actions"
+                        (click)="toggleColumnState($event)">
+                    <label for="">Actions</label>
+                </div>
             </div>
         </div>
-    </div>
+
+
+        <div class="table-responsive-lg m-3">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th [class.d-none]="!columnStates.description">Class</th>
+                        <th [class.d-none]="!columnStates.age">Age</th>
+                        <th [class.d-none]="!columnStates.dates">Dates</th>
+                        <th [class.d-none]="!columnStates.times">Times</th>
+                        <th [class.d-none]="!columnStates.days">Days</th>
+                        <th [class.d-none]="!columnStates.spots">Spots Filled</th>
+                        <th [class.d-none]="!columnStates.actions" colspan="3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let class of classes; let i = index" (click)="selectClass(i)"
+                        [class.table-active]="class.id==selectedId">
+                        <td [class.d-none]="!columnStates.description">
+                            <button class="btn btn-link" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="View Class List" (click)="viewClassList(class.id)">{{class.description}}</button>
+                        </td>
+                        <td [class.d-none]="!columnStates.age">{{class.ageGroup}}</td>
+                        <td [class.d-none]="!columnStates.dates">{{class.startDate | date:'shortDate'}} -
+                            {{class.endDate |
+                            date:'shortDate'}}</td>
+                        <td [class.d-none]="!columnStates.times">{{class.startDate | date:'shortTime'}} -
+                            {{class.endDate |
+                            date:'shortTime'}}</td>
+                        <td [class.d-none]="!columnStates.days" *ngIf="class.days == days.mwf">Monday/Wednesday/Friday
+                        </td>
+                        <td [class.d-none]="!columnStates.days" *ngIf="class.days == days.tth">Tuesday/Thursday</td>
+                        <td [class.d-none]="!columnStates.spots">{{class.enrolled}}/{{class.capacity}}</td>
+                        <td [class.d-none]="!columnStates.actions">
+                            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editClass">
+                                <span class="material-icons">
+                                    info
+                                </span>
+                            </button>
+                        </td>
+                        <td [class.d-none]="!columnStates.actions">
+                            <button *ngIf="class.openRegistration" class="btn btn-outline-primary"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Close Registration"
+                                (click)="closeRegistration(class.id)">
+                                <span class="material-icons">
+                                    lock_open
+                                </span>
+                            </button>
+                            <button *ngIf="!class.openRegistration" class="btn btn-outline-secondary"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Open Registration"
+                                (click)="openRegistration(class.id)">
+                                <span class="material-icons">
+                                    lock
+                                </span>
+                            </button>
+                        </td>
+                        <td [class.d-none]="!columnStates.actions">
+                            <button type="button" *ngIf="!class.openRegistration" class="btn btn-outline-danger"
+                                data-bs-toggle="modal" data-bs-target="#deleteClass">
+                                <span class="material-icons">
+                                    delete
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot></tfoot>
+            </table>
+
+            <div class="row">
+                <div class="col">
+                    <small *ngIf="totalClasses > currentPage * numOfClasses">
+                        Showing {{currentPage * numOfClasses - numOfClasses + 1}} to {{currentPage *numOfClasses}}
+                        of
+                        {{totalClasses}} entries</small>
+
+                    <small *ngIf="totalClasses <= currentPage * numOfClasses">Showing {{currentPage * numOfClasses -
+                        numOfClasses + 1}}
+                        to {{totalClasses}} of {{totalClasses}} entries</small>
+                </div>
+
+                <div class="col-auto">
+                    <nav aria-label="Page navigation example" class="mt-3">
+                        <ul class="pagination">
+                            <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
+                                        aria-hidden="true">&laquo;</span></button></li>
+                            <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page"
+                                class="page-item">
+                                <button class="page-link" (click)=goToPage(page)>{{page}}</button>
+                            </li>
+                            <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
+                                        aria-hidden="true">&raquo;</span></button></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </fieldset>
 </div>
 
 <!-- modal for editing class-->
@@ -184,8 +190,7 @@
                 <app-class-details [classId]="selectedId"></app-class-details>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Send message</button> -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ngOnInit()">Close</button>
             </div>
         </div>
     </div>
@@ -203,8 +208,7 @@
                 <app-add-class></app-add-class>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Send message</button> -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ngOnInit()">Close</button>
             </div>
         </div>
     </div>

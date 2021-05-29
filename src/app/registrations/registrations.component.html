@@ -5,7 +5,7 @@
             (messageChanged)="messageChangedHandler($event)">
         </app-success-error-dialog>
 
-        <form [formGroup]="pageForm">
+        <form [formGroup]="pageForm" (keydown.enter)="$event.preventDefault(); goToPage(1)">
             <div class="row mx-3">
                 <div class="col-lg p-3">
                     <input type="number" min="1" class="form-control page-entries" formControlName="numOfRegistrations"
@@ -43,8 +43,7 @@
                 </div>
 
                 <div class="col-lg p-3">
-                    <input type="search" class="form-control" placeholder="🔍 Enter child name" formControlName="search"
-                        (keyup)="goToPage(1)">
+                    <input type="search" class="form-control" placeholder="🔍 Enter child name" formControlName="search">
                 </div>
             </div>
         </form>

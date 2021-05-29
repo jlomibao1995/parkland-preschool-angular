@@ -19,6 +19,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
   public passwordMode = false;
   public message: String;
   public success: boolean;
+  public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, private _accountService: AccountService) { }
 
@@ -32,6 +33,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
     this.passwordMode = false;
     this.message = null;
     this.success = null;
+    this.loading = false;
 
     // this.editForm = this._formBuilder.group({
     //   role: ['', Validators.required],
@@ -51,6 +53,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
   }
 
   getAccount() {
+    this.loading = true;
     if (this.accountId) {
       this._accountService.getAccount(this.accountId).subscribe(
         data => {
@@ -66,6 +69,8 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
             workPhoneNumber: [this.account.workPhoneNumber],
             cellNumber: [this.account.cellNumber],
           });
+
+          this.loading = false;
         },
         error => {
           this.message = error.error.message
@@ -128,6 +133,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
   }
 
   saveAccountChanges() {
+    this.loading = true;
     let address = this.address.value ? this.address.value : '';
     let homePhoneNumber = this.homePhoneNumber.value ? this.homePhoneNumber.value : '';
     let workPhoneNumber = this.workPhoneNumber.value ? this.workPhoneNumber.value : '';
@@ -166,9 +172,10 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
     this.success = true;
   }
 
-  errorMessage(error: HttpErrorResponse) {
-    this.message = error.error.message;
+  errorMessage(error) {
+    this.message = error;
     this.success = false;
+    this.loading = false;
     this.getAccount();
   }
 

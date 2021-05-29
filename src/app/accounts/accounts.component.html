@@ -1,198 +1,203 @@
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
 <div class="container">
-  <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
-  </app-success-error-dialog>
+  <fieldset [class.overlay]="loading" [disabled]="loading">
 
-  <form [formGroup]="pageForm">
-    <div class="row mx-3">
-      <div class="col-lg p-3">
-        <input type="number" min="1" class="form-control page-entries" formControlName="numOfAccounts"
-          (change)="changeAccountNum()"> accounts per page
+    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
+    </app-success-error-dialog>
+
+    <form [formGroup]="pageForm" (keydown.enter)="$event.preventDefault(); goToPage(1)">
+      <div class="row mx-3">
+        <div class="col-lg p-3">
+          <input type="number" min="1" class="form-control page-entries" formControlName="numOfAccounts"
+            (change)="changeAccountNum()"> accounts per page
+        </div>
+
+        <div class="col-auto p-3">
+          <button class="btn btn-outline-secondary" (click)="reload()" data-bs-toggle="tooltip" data-bs-placement="top"
+            title="Update">
+            <span class="material-icons">
+              update
+            </span>
+          </button>
+        </div>
+
+        <div class="col-lg p-3">
+          <select name="sort" class="form-select" formControlName="sort" (change)="goToPage(1)">
+            <option value="" selected disabled hidden>Sort By</option>
+            <option value="">None</option>
+            <option value="lastName">Last Name</option>
+            <option value="lastLoginDate">Last Login</option>
+            <option value="creationDate">Creation Date</option>
+          </select>
+        </div>
+
+        <div class="col-lg p-3">
+          <select name="role" class="form-select" formControlName="role" (change)="goToPage(1)">
+            <option value="" selected disabled hidden>Role</option>
+            <option value="">All</option>
+            <option [value]="roles.admin">Admin</option>
+            <option [value]="roles.staff">Staff</option>
+            <option [value]="roles.user">User</option>
+          </select>
+        </div>
+
+        <div class="col-lg p-3">
+          <input type="search" class="form-control" placeholder="🔍 Enter account name" formControlName="search">
+        </div>
+      </div>
+    </form>
+
+    <div class="bg-light bg-gradient p-3">
+      <div class="row">
+        <div class="col mx-3">
+          <h3>Account Listing</h3>
+        </div>
+
+        <div class="col-auto mx-3">
+          <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal" data-bs-target="#addAccount">
+            Create New Account
+          </button>
+        </div>
       </div>
 
-      <div class="col-auto p-3">
-        <button class="btn btn-outline-secondary" (click)="reload()" data-bs-toggle="tooltip" data-bs-placement="top"
-          title="Update">
-          <span class="material-icons">
-            update
-          </span>
-        </button>
-      </div>
+      <div class="mx-3">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" checked name="name" (change)="toggleColumnState($event)">
+          <label for="">Name</label>
+        </div>
 
-      <div class="col-lg p-3">
-        <select name="sort" class="form-select" formControlName="sort" (change)="goToPage(1)">
-          <option value="" selected disabled hidden>Sort By</option>
-          <option value="">None</option>
-          <option value="lastName">Last Name</option>
-          <option value="lastLoginDate">Last Login</option>
-          <option value="creationDate">Creation Date</option>
-        </select>
-      </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" checked class="form-check-input" name="contactInfo"
+            (change)="toggleColumnState($event)">
+          <label for="">Contact Info</label>
+        </div>
 
-      <div class="col-lg p-3">
-        <select name="role" class="form-select" formControlName="role" (change)="goToPage(1)">
-          <option value="" selected disabled hidden>Role</option>
-          <option value="">All</option>
-          <option [value]="roles.admin">Admin</option>
-          <option [value]="roles.staff">Staff</option>
-          <option [value]="roles.user">User</option>
-        </select>
-      </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" name="child" (change)="toggleColumnState($event)">
+          <label for="">Child</label>
+        </div>
 
-      <div class="col-lg p-3">
-        <input type="search" class="form-control" placeholder="🔍 Enter account name" formControlName="search"
-          (keyup)="goToPage(1)">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" name="role" (change)="toggleColumnState($event)">
+          <label for="">Role</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" name="lastLoginDate" (click)="toggleColumnState($event)">
+          <label for="">Last Login</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" name="creationDate" (click)="toggleColumnState($event)">
+          <label for="">Date Created</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" checked class="form-check-input" name="actions" (click)="toggleColumnState($event)">
+          <label for="">Actions</label>
+        </div>
       </div>
     </div>
-  </form>
 
-  <div class="bg-light bg-gradient p-3">
+    <div class="table-responsive-lg p-3">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th [class.d-none]="!columnStates.name">Name</th>
+            <th [class.d-none]="!columnStates.contactInfo">Contact Info</th>
+            <th [class.d-none]="!columnStates.child">Child</th>
+            <th [class.d-none]="!columnStates.role">Role</th>
+            <th [class.d-none]="!columnStates.lastLoginDate">Login Date</th>
+            <th [class.d-none]="!columnStates.creationDate">Date Created</th>
+            <th [class.d-none]="!columnStates.actions" colspan="3">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr *ngFor="let account of accounts; let i = index" (click)="selectAccount(i)"
+            [class.table-active]="account.id==selectedId">
+            <td [class.d-none]="!columnStates.name">{{account.firstName}} {{account.lastName}}</td>
+            <td [class.d-none]="!columnStates.contactInfo">
+              <ul class="list-unstyled">
+                <li>E: <a [href]="'mailto:' + account.email">{{account.email}}</a></li>
+                <li>H: {{account.homePhoneNumber}}</li>
+                <li>W: {{account.workPhoneNumber}}</li>
+                <li>C: {{account.cellNumber}}</li>
+              </ul>
+            </td>
+            <td [class.d-none]="!columnStates.child">
+              <ul class="list-unstyled">
+                <li *ngFor="let child of account.childList">{{child.firstName}} {{child.lastName}}</li>
+              </ul>
+            </td>
+            <td [class.d-none]="!columnStates.role">{{account.role}}</td>
+            <td [class.d-none]="!columnStates.lastLoginDate">{{account.lastLoginDate}}</td>
+            <td [class.d-none]="!columnStates.creationDate">{{account.creationDate}}</td>
+            <td [class.d-none]="!columnStates.actions">
+              <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editAccount">
+                <span class="material-icons">
+                  info
+                </span>
+              </button>
+            </td>
+            <td [class.d-none]="!columnStates.actions">
+              <button *ngIf="account.active" class="btn btn-outline-primary" (click)="deactivateAccount(account.id)">
+                <span class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Lock">
+                  lock_open
+                </span>
+              </button>
+
+              <button *ngIf="!account.active" class="btn btn-outline-secondary" (click)="activateAccount(account.id)"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Unlock">
+                <span class="material-icons">
+                  lock
+                </span>
+              </button>
+            </td>
+            <td [class.d-none]="!columnStates.actions">
+              <button *ngIf="!account.active" class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#deleteAccount">
+                <span class="material-icons">
+                  delete
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+
     <div class="row">
-      <div class="col mx-3">
-        <h3>Account Listing</h3>
+      <div class="col">
+        <small *ngIf="totalAccounts > currentPage * numOfAccounts">
+          Showing {{currentPage * numOfAccounts - numOfAccounts + 1}} to {{currentPage *numOfAccounts}} of
+          {{totalAccounts}} entries</small>
+
+        <small *ngIf="totalAccounts <= currentPage * numOfAccounts">Showing {{currentPage * numOfAccounts -
+          numOfAccounts + 1}}
+          to {{totalAccounts}} of {{totalAccounts}} entries</small>
       </div>
 
-      <div class="col-auto mx-3">
-        <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal" data-bs-target="#addAccount">
-          Create New Account
-        </button>
-      </div>
-    </div>
-
-    <div class="mx-3">
-      <div class="form-check form-check-inline">
-        <input type="checkbox" class="form-check-input" checked name="name" (change)="toggleColumnState($event)">
-        <label for="">Name</label>
-      </div>
-
-      <div class="form-check form-check-inline">
-        <input type="checkbox" checked class="form-check-input" name="contactInfo" (change)="toggleColumnState($event)">
-        <label for="">Contact Info</label>
-      </div>
-      
-      <div class="form-check form-check-inline">
-        <input type="checkbox" class="form-check-input" name="child" (change)="toggleColumnState($event)">
-        <label for="">Child</label>
-      </div>
-
-      <div class="form-check form-check-inline">
-        <input type="checkbox" class="form-check-input" name="role" (change)="toggleColumnState($event)">
-        <label for="">Role</label>
-      </div>
-
-      <div class="form-check form-check-inline">
-        <input type="checkbox" class="form-check-input" name="lastLoginDate" (click)="toggleColumnState($event)">
-        <label for="">Last Login</label>
-      </div>
-
-      <div class="form-check form-check-inline">
-        <input type="checkbox" class="form-check-input" name="creationDate" (click)="toggleColumnState($event)">
-        <label for="">Date Created</label>
-      </div>
-
-      <div class="form-check form-check-inline">
-        <input type="checkbox" checked class="form-check-input" name="actions" (click)="toggleColumnState($event)">
-        <label for="">Actions</label>
+      <div class="col-auto">
+        <nav aria-label="Page navigation example" class="mt-3">
+          <ul class="pagination">
+            <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
+                  aria-hidden="true">&laquo;</span></button></li>
+            <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page" class="page-item">
+              <button class="page-link" (click)=goToPage(page)>{{page}}</button>
+            </li>
+            <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
+                  aria-hidden="true">&raquo;</span></button></li>
+          </ul>
+        </nav>
       </div>
     </div>
-  </div>
 
-  <div class="table-responsive-lg p-3">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th [class.d-none]="!columnStates.name">Name</th>
-          <th [class.d-none]="!columnStates.contactInfo">Contact Info</th>
-          <th [class.d-none]="!columnStates.child">Child</th>
-          <th [class.d-none]="!columnStates.role">Role</th>
-          <th [class.d-none]="!columnStates.lastLoginDate">Login Date</th>
-          <th [class.d-none]="!columnStates.creationDate">Date Created</th>
-          <th [class.d-none]="!columnStates.actions" colspan="3">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="">
-        <tr *ngFor="let account of accounts; let i = index" (click)="selectAccount(i)"
-          [class.table-active]="account.id==selectedId">
-          <td [class.d-none]="!columnStates.name">{{account.firstName}} {{account.lastName}}</td>
-          <td [class.d-none]="!columnStates.contactInfo">
-            <ul class="list-unstyled">
-              <li>E: <a [href]="'mailto:' + account.email">{{account.email}}</a></li>
-              <li>H: {{account.homePhoneNumber}}</li>
-              <li>W: {{account.workPhoneNumber}}</li>
-              <li>C: {{account.cellNumber}}</li>
-            </ul>
-          </td>
-          <td [class.d-none]="!columnStates.child">
-            <ul class="list-unstyled">
-              <li *ngFor="let child of account.childList">{{child.firstName}} {{child.lastName}}</li>
-            </ul>
-          </td>
-          <td [class.d-none]="!columnStates.role">{{account.role}}</td>
-          <td [class.d-none]="!columnStates.lastLoginDate">{{account.lastLoginDate}}</td>
-          <td [class.d-none]="!columnStates.creationDate">{{account.creationDate}}</td>
-          <td [class.d-none]="!columnStates.actions">
-            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editAccount">
-              <span class="material-icons">
-                info
-              </span>
-            </button>
-          </td>
-          <td [class.d-none]="!columnStates.actions">
-            <button *ngIf="account.active" class="btn btn-outline-primary" (click)="deactivateAccount(account.id)">
-              <span class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Lock">
-                lock_open
-              </span>
-            </button>
-
-            <button *ngIf="!account.active" class="btn btn-outline-secondary" (click)="activateAccount(account.id)"
-              data-bs-toggle="tooltip" data-bs-placement="top" title="Unlock">
-              <span class="material-icons">
-                lock
-              </span>
-            </button>
-          </td>
-          <td [class.d-none]="!columnStates.actions">
-            <button *ngIf="!account.active" class="btn btn-outline-danger" data-bs-toggle="modal"
-              data-bs-target="#deleteAccount">
-              <span class="material-icons">
-                delete
-              </span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot></tfoot>
-    </table>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <small *ngIf="totalAccounts > currentPage * numOfAccounts">
-        Showing {{currentPage * numOfAccounts - numOfAccounts + 1}} to {{currentPage *numOfAccounts}} of
-        {{totalAccounts}} entries</small>
-
-      <small *ngIf="totalAccounts <= currentPage * numOfAccounts">Showing {{currentPage * numOfAccounts -
-        numOfAccounts + 1}}
-        to {{totalAccounts}} of {{totalAccounts}} entries</small>
-    </div>
-
-    <div class="col-auto">
-      <nav aria-label="Page navigation example" class="mt-3">
-        <ul class="pagination">
-          <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
-                aria-hidden="true">&laquo;</span></button></li>
-          <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page" class="page-item">
-            <button class="page-link" (click)=goToPage(page)>{{page}}</button>
-          </li>
-          <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
-                aria-hidden="true">&raquo;</span></button></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
+  </fieldset>
 </div>
 
 <!-- modal for editing account-->
-<div *ngIf="selectedId != null" class="modal fade" id="editAccount" tabindex="-1" aria-labelledby="editAccountLabel"
+<div *ngIf="selectedId != null" class="modal fade" data-bs-backdrop="static" id="editAccount" tabindex="-1" aria-labelledby="editAccountLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
@@ -204,14 +209,14 @@
         <app-account-details [accountId]="selectedId"></app-account-details>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reload()">Close</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- modal for adding a new account-->
-<div class="modal fade" id="addAccount" tabindex="-1" aria-labelledby="addAccountLabel" aria-hidden="true">
+<div class="modal fade" id="addAccount" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addAccountLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -222,7 +227,7 @@
         <app-add-account></app-add-account>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reload()">Close</button>
       </div>
     </div>
   </div>

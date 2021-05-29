@@ -11,7 +11,7 @@ export class LoadingSpinnerComponent implements OnInit, OnChanges {
 
   constructor() { }
   ngOnChanges(changes: SimpleChanges): void {
-    throw new Error('Method not implemented.');
+    
   }
 
   ngOnInit(): void {

@@ -1,7 +1,9 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Classroom } from '../models/Classroom';
 import { PaymentDetails } from '../models/PaymentDetails';
+import { ClassesService } from '../services/classroom.service';
 import { PaymentsService } from '../services/payments.service';
 
 @Component({
@@ -10,6 +12,7 @@ import { PaymentsService } from '../services/payments.service';
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent implements OnInit {
+  public loading:boolean;
   public message: String;
   public success: boolean;
   public status;
@@ -36,12 +39,14 @@ export class PaymentsComponent implements OnInit {
     paymentMethod: false,
     actions: true
   };
+  public classrooms: Classroom[];
 
-  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder) {
+  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder, private _classroomService: ClassesService) {
     this.status = this._paymentService.status;
    }
 
   ngOnInit(): void {
+    this.loading = false;
     this.message = null;
     this.success = null;
     this.selectedId = null;
@@ -53,6 +58,9 @@ export class PaymentsComponent implements OnInit {
       month: [''],
       year: ['']
     });
+
+    this._classroomService.getClassList().subscribe(data => this.classrooms = data,
+      error => this.errorMessage(error));
 
     this.goToPage(this.currentPage);
   }
@@ -68,6 +76,7 @@ export class PaymentsComponent implements OnInit {
   }
 
   goToPage(page: number) {
+    this.loading = true;
     this.pages = [];
     this.currentPage = page;
     let year = this.pageForm.get('year').value ? this.pageForm.get('year').value : 0;
@@ -109,12 +118,14 @@ export class PaymentsComponent implements OnInit {
           }
         }
 
+        this.loading = false;
+
       }, error => console.log(error.error.message)
     );
   }
 
-  messageChangedHandler(event) {
-
+  messageChangedHandler(message: String) {
+    this.message = null;
   }
 
   successMessage(successMesage: String) {

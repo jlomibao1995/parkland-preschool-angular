@@ -124,6 +124,7 @@ export class RegistrationsComponent implements OnInit {
   }
 
   activateRegistration(registrationId) {
+    this.loading = true;
     let params = new HttpParams()
     .set('active', true);
 
@@ -134,6 +135,7 @@ export class RegistrationsComponent implements OnInit {
   }
 
   deactivateRegistration(registrationId) {
+    this.loading = true;
     let params = new HttpParams().set('active', false);
 
     this._registrationService.updateRegistration(registrationId, params).subscribe(
@@ -143,6 +145,7 @@ export class RegistrationsComponent implements OnInit {
   }
 
   acceptRegistration(registrationId) {
+    this.loading = true;
     let params = new HttpParams().set('status', this.status.registered);
     this._registrationService.updateRegistration(registrationId, params).subscribe(
       data => this.successMessage('Registration confirmed and accepted'),
@@ -151,6 +154,7 @@ export class RegistrationsComponent implements OnInit {
   }
 
   offerSpot(registrationId) {
+    this.loading = true;
     let params = new HttpParams().set('status', this.status.unregistered);
     this._registrationService.updateRegistration(registrationId, params).subscribe(
       data => this.successMessage('Spot offered to child: Email sent to account'),
@@ -166,6 +170,7 @@ export class RegistrationsComponent implements OnInit {
   }
 
   moveClass() {
+    this.loading = true;
     this.registrationUpdated = false;
     this._registrationService.updateRegistration(this.selectedId, new HttpParams().set('classId', this.moveForm.get('class').value))
     .subscribe(data => {
@@ -177,6 +182,7 @@ export class RegistrationsComponent implements OnInit {
   }
 
   deleteRegistration() {
+    this.loading = true;
     this._registrationService.deleteRegistration(this.selectedId).subscribe(
       data => this.successMessage('Registration deleted'),
       error => this.errorMessage(error)
