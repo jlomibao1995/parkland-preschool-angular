@@ -28,6 +28,7 @@ import { ManualPayComponent } from './manual-pay/manual-pay.component';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { ChildInfoComponent } from './child-info/child-info.component';
 import { RegistrationDetailsComponent } from './registration-details/registration-details.component';
+import { ClassListComponent } from './class-list/class-list.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { RegistrationDetailsComponent } from './registration-details/registratio
     AddPaymentComponent,
     ManualPayComponent,
     ChildInfoComponent,
-    RegistrationDetailsComponent
+    RegistrationDetailsComponent,
+    ClassListComponent
   ],
   imports: [
     BrowserModule,

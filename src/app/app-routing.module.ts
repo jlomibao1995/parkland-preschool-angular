@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountsComponent } from './accounts/accounts.component';
+import { ClassListComponent } from './class-list/class-list.component';
 import { ClassesComponent } from './classes/classes.component';
 import { LoginComponent } from './login/login.component';
 import { PaymentsComponent } from './payments/payments.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'admin/classes', component: ClassesComponent},
   {path: 'admin/accounts', component: AccountsComponent},
   {path: 'admin/payments', component: PaymentsComponent},
+  {path: 'staff/classlist/:classId', component: ClassListComponent},
   {path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 

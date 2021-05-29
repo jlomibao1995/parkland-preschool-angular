@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Classroom } from '../models/Classroom';
 import { ClassesService } from '../services/classroom.service';
 
@@ -29,13 +30,13 @@ export class ClassesComponent implements OnInit {
     description: true,
     age: false,
     dates: false,
-    times: true,
-    days: true,
+    times: false,
+    days: false,
     spots: false,
     actions: true
   }
 
-  constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder) { 
+  constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder, private _router: Router) { 
     this.days = this._classroomService.days;
   }
 
@@ -124,6 +125,10 @@ export class ClassesComponent implements OnInit {
       data => this.successMessage('Class has been deleted'),
       error => this.errorMessage(error)
     );
+  }
+
+  viewClassList(id) {
+    this._router.navigate(['staff/classlist', id]);
   }
 
   successMessage(successMesage: String) {

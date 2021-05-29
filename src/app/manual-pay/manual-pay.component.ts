@@ -17,6 +17,7 @@ export class ManualPayComponent implements OnInit, OnChanges {
   public paymentDetails: PaymentDetails;
   public status;
   public paymentForm: FormGroup;
+  public loading: boolean;
 
   constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder) {
     this.status = this._paymentService.status;
@@ -35,14 +36,16 @@ export class ManualPayComponent implements OnInit, OnChanges {
       payee : ['Admin', Validators.required],
       payer : ['Parent', Validators.required],
       method : ['Cash', Validators.required]
-    })
+    });
 
     if (this.paymentId) {
       this._paymentService.getPayment(this.paymentId).subscribe(
         data => this.paymentDetails = data,
         error => console.log(error.error.message)
-      )
+      );
     }
+
+    this.loading = false;
   }
 
   get payee(){
@@ -58,6 +61,7 @@ export class ManualPayComponent implements OnInit, OnChanges {
   }
 
   processPayment() {
+    this.loading = true;
     let date = new Date();
     let datePaipe = new DatePipe('en-CA');
     let formattedDate: string = datePaipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
@@ -71,7 +75,7 @@ export class ManualPayComponent implements OnInit, OnChanges {
     this._paymentService.processPayment(this.paymentDetails.invoiceId, params).subscribe(
       data => this.successMessage('Payment changes have been processed'),
       error => this.errorMessage(error)
-    )
+    );
   }
 
   successMessage(successMesage: String) {

@@ -3,32 +3,40 @@
     </app-success-error-dialog>
 
     <app-payment-details [paymentId]="paymentId"></app-payment-details>
-    <form [class.d-none]="paymentDetails.paymentStatus == status.paid" [formGroup]="paymentForm" (ngSubmit)="processPayment()">
-        <div class="row">
-            <div class="col form-group">
-                <label for="">Received by</label>
-                <input type="text" class="form-control" formControlName="payee">
+    <form [class.d-none]="paymentDetails.paymentStatus == status.paid" [formGroup]="paymentForm"
+        (ngSubmit)="processPayment()">
+        <fieldset [disabled]="loading">
+            <div class="row">
+                <div class="col form-group">
+                    <label for="">Received by</label>
+                    <input type="text" class="form-control" formControlName="payee">
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col form-group">
-                <label for="">Payer</label>
-                <input type="text" class="form-control" formControlName="payer">
+            <div class="row">
+                <div class="col form-group">
+                    <label for="">Payer</label>
+                    <input type="text" class="form-control" formControlName="payer">
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col form-group">
-                <label for="">Method</label>
-                <input type="text" class="form-control" placeholder="PayPal, Cash, E-Transfer, Cheque..." formControlName="method">
+            <div class="row">
+                <div class="col form-group">
+                    <label for="">Method</label>
+                    <input type="text" class="form-control" placeholder="PayPal, Cash, E-Transfer, Cheque..."
+                        formControlName="method">
+                </div>
             </div>
-        </div>
 
-        <div class="row p-3 justify-content-end">
-            <div class="col-auto form-group">
-                <input type="submit" value="Process Payment" class="btn btn-primary" [disabled]="paymentForm.invalid">
+            <div class="row p-3 justify-content-end">
+                <div class="col-auto form-group">
+                    <button type="submit" value="Process Payment" class="btn btn-primary" [disabled]="paymentForm.invalid || loading">
+                        <span [class.visually-hidden]="!loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span [class.visually-hidden]="!loading">Loading...</span>
+                        <span [class.visually-hidden]="loading">Process Payment</span>
+                    </button>
+                </div>
             </div>
-        </div>
+        </fieldset>
     </form>
 </div>
