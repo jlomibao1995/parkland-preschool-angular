@@ -31,3 +31,9 @@ input[type=number].page-entries {
     display: inline;
     text-align: center;
 }
+
+.overlay {
+    background: white;
+    opacity: 0.5;
+    overflow: hidden;
+}

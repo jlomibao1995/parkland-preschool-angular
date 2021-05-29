@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" >
     <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
     </app-success-error-dialog>
 
@@ -249,7 +249,7 @@
     </div>
 
     <!-- modal for manually processing payment-->
-    <div *ngIf="selectedId != null" class="modal fade" id="otherMethod" tabindex="-1" aria-labelledby="otherMethodLabel" aria-hidden="true">
+    <div *ngIf="selectedId != null" class="modal fade" id="otherMethod" tabindex="-1" aria-labelledby="otherMethodLabel" data-bs-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -260,7 +260,7 @@
                     <app-manual-pay [paymentId]="selectedId"></app-manual-pay>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ngOnInit()">Close</button>
                 </div>
             </div>
         </div>

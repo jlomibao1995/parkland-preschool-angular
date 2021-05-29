@@ -29,6 +29,7 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
 import { ChildInfoComponent } from './child-info/child-info.component';
 import { RegistrationDetailsComponent } from './registration-details/registration-details.component';
 import { ClassListComponent } from './class-list/class-list.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ClassListComponent } from './class-list/class-list.component';
     ManualPayComponent,
     ChildInfoComponent,
     RegistrationDetailsComponent,
-    ClassListComponent
+    ClassListComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

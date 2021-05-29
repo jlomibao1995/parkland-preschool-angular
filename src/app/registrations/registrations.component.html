@@ -1,171 +1,175 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
 <div class="container">
-    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
-    </app-success-error-dialog>
+    <fieldset [class.overlay]="loading" [disabled]="loading">
+        <app-success-error-dialog [message]="message" [success]="success"
+            (messageChanged)="messageChangedHandler($event)">
+        </app-success-error-dialog>
 
-    <form [formGroup]="pageForm">
-        <div class="row mx-3">
-            <div class="col-lg p-3">
-                <input type="number" min="1" class="form-control page-entries" formControlName="numOfRegistrations"
-                    (change)="changeRegistrationsNum()">
-                registrations per page
+        <form [formGroup]="pageForm">
+            <div class="row mx-3">
+                <div class="col-lg p-3">
+                    <input type="number" min="1" class="form-control page-entries" formControlName="numOfRegistrations"
+                        (change)="changeRegistrationsNum()">
+                    registrations per page
+                </div>
+
+                <div class="col-auto p-3">
+                    <button class="btn btn-outline-secondary" (click)="reload()" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Update">
+                        <span class="material-icons">
+                            update
+                        </span>
+                    </button>
+                </div>
+
+                <div class="col-lg p-3">
+                    <select name="role" class="form-select" formControlName="classroom" (change)="goToPage(1)">
+                        <option value="" selected disabled hidden>Class</option>
+                        <option value="0">All Classes</option>
+                        <option *ngFor="let classroom of classrooms" [value]="classroom.id">{{classroom.description}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-lg p-3">
+                    <select name="sort" class="form-select" formControlName="status" (change)="goToPage(1)">
+                        <option value="" selected disabled hidden>Status</option>
+                        <option value="">All</option>
+                        <option [value]="status.registered">Registered</option>
+                        <option [value]="status.waitlisted">Wait List</option>
+                        <option [value]="status.unregistered">Pending Payment</option>
+                        <option [value]="status.pending">Pending Confirmation</option>
+                    </select>
+                </div>
+
+                <div class="col-lg p-3">
+                    <input type="search" class="form-control" placeholder="🔍 Enter child name" formControlName="search"
+                        (keyup)="goToPage(1)">
+                </div>
+            </div>
+        </form>
+
+        <div class="bg-light bg-gradient p-3">
+            <div class="row">
+                <div class="col mx-3">
+                    <h3>Registration Listing</h3>
+                </div>
+
+                <!-- <div class="col-auto mx-3">
+                    <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
+                        data-bs-target="#addRegistration" data-bs-whatever="@mdo">
+                        Add Registration
+                    </button>
+                </div> -->
             </div>
 
-            <div class="col-auto p-3">
-                <button class="btn btn-outline-secondary" (click)="reload()" data-bs-toggle="tooltip"
-                    data-bs-placement="top" title="Update">
-                    <span class="material-icons">
-                        update
-                    </span>
-                </button>
-            </div>
-
-            <div class="col-lg p-3">
-                <select name="role" class="form-select" formControlName="classroom" (change)="goToPage(1)">
-                    <option value="" selected disabled hidden>Class</option>
-                    <option value="0">All Classes</option>
-                    <option *ngFor="let classroom of classrooms" [value]="classroom.id">{{classroom.description}}
-                    </option>
-                </select>
-            </div>
-
-            <div class="col-lg p-3">
-                <select name="sort" class="form-select" formControlName="status" (change)="goToPage(1)">
-                    <option value="" selected disabled hidden>Status</option>
-                    <option value="">All</option>
-                    <option [value]="status.registered">Registered</option>
-                    <option [value]="status.waitlisted">Wait List</option>
-                    <option [value]="status.unregistered">Pending Payment</option>
-                    <option [value]="status.pending">Pending Confirmation</option>
-                </select>
-            </div>
-
-            <div class="col-lg p-3">
-                <input type="search" class="form-control" placeholder="🔍 Enter child name" formControlName="search"
-                    (keyup)="goToPage(1)">
+            <div class="mx-3">
+                <!-- <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" checked name="name" (change)="toggleColumnState($event)">
+                    <label for="">Name</label>
+                  </div> -->
             </div>
         </div>
-    </form>
 
-    <div class="bg-light bg-gradient p-3">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Child</th>
+                        <th>Class</th>
+                        <th>Registration Date</th>
+                        <th>Status</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let registration of registrations; let i = index" (click)="selectRegistration(i)"
+                        [class.table-active]="registration.id==selectedId">
+                        <td><button class="btn btn-link" data-bs-toggle="modal"
+                                data-bs-target="#childInfo">{{registration.child.firstName}}
+                                {{registration.child.lastName}}</button></td>
+                        <td>{{registration.classroom.description}}</td>
+                        <td>{{registration.registrationDate}}</td>
+                        <td *ngIf="registration.status == status.registered">Registered</td>
+                        <td *ngIf="registration.status == status.unregistered">Pending registration fee payment</td>
+                        <td *ngIf="registration.status == status.pending">Pending admin confirmation: View registration
+                            details</td>
+                        <td *ngIf="registration.status == status.waitlisted">Wait Listed</td>
+                        <td>
+                            <button *ngIf="registration.active" class="btn btn-outline-primary"
+                                (click)="deactivateRegistration(registration.id)" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Activate">
+                                <span class="material-icons">
+                                    lock_open
+                                </span>
+                            </button>
+
+                            <button *ngIf="!registration.active" class="btn btn-outline-secondary"
+                                (click)="activateRegistration(registration.id)" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Deactivate">
+                                <span class="material-icons">
+                                    lock
+                                </span>
+                            </button>
+                        </td>
+                        <td>
+                            <button *ngIf="registration.active && registration.status == status.waitlisted"
+                                (click)="offerSpot(registration.id)" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Offer Spot">
+                                <span class="material-icons">
+                                    queue
+                                </span>
+                            </button>
+                            <button *ngIf="registration.active && registration.status == status.pending"
+                                (click)="acceptRegistration(registration.id)" class="btn btn-outline-success"
+                                data-bs-toggle="modal" data-bs-target="#deleteAccount" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Accept Registration">
+                                <span class="material-icons">
+                                    check
+                                </span>
+                            </button>
+                            <button *ngIf="!registration.active" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteRegistration">
+                                <span class="material-icons">
+                                    delete
+                                </span>
+                            </button>
+                        </td>
+                </tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+
         <div class="row">
-            <div class="col mx-3">
-                <h3>Registration Listing</h3>
+            <div class="col">
+                <small *ngIf="totalRegistrations > currentPage * numOfRegistrations">
+                    Showing {{currentPage * numOfRegistrations - numOfRegistrations + 1}} to {{currentPage
+                    *numOfRegistrations}} of
+                    {{totalRegistrations}} entries</small>
+
+                <small *ngIf="totalRegistrations <= currentPage * numOfRegistrations">Showing {{currentPage *
+                    numOfRegistrations
+                    -
+                    numOfRegistrations + 1}}
+                    to {{totalRegistrations}} of {{totalRegistrations}} entries</small>
             </div>
 
-            <!-- <div class="col-auto mx-3">
-                <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
-                    data-bs-target="#addRegistration" data-bs-whatever="@mdo">
-                    Add Registration
-                </button>
-            </div> -->
+            <div class="col-auto">
+                <nav aria-label="Page navigation example" class="mt-3">
+                    <ul class="pagination">
+                        <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
+                                    aria-hidden="true">&laquo;</span></button></li>
+                        <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page"
+                            class="page-item">
+                            <button class="page-link" (click)=goToPage(page)>{{page}}</button>
+                        </li>
+                        <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
+                                    aria-hidden="true">&raquo;</span></button></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-
-        <div class="mx-3">
-            <!-- <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" checked name="name" (change)="toggleColumnState($event)">
-                <label for="">Name</label>
-              </div> -->
-        </div>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Child</th>
-                    <th>Class</th>
-                    <th>Registration Date</th>
-                    <th>Status</th>
-                    <th colspan="2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let registration of registrations; let i = index" (click)="selectRegistration(i)"
-                    [class.table-active]="registration.id==selectedId">
-                    <td><button class="btn btn-link" data-bs-toggle="modal"
-                            data-bs-target="#childInfo">{{registration.child.firstName}}
-                            {{registration.child.lastName}}</button></td>
-                    <td>{{registration.classroom.description}}</td>
-                    <td>{{registration.registrationDate}}</td>
-                    <td *ngIf="registration.status == status.registered">Registered</td>
-                    <td *ngIf="registration.status == status.unregistered">Pending registration fee payment</td>
-                    <td *ngIf="registration.status == status.pending">Pending admin confirmation: View registration
-                        details</td>
-                    <td *ngIf="registration.status == status.waitlisted">Wait Listed</td>
-                    <td>
-                        <button *ngIf="registration.active" class="btn btn-outline-primary"
-                            (click)="deactivateRegistration(registration.id)" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Activate">
-                            <span class="material-icons">
-                                lock_open
-                            </span>
-                        </button>
-
-                        <button *ngIf="!registration.active" class="btn btn-outline-secondary"
-                            (click)="activateRegistration(registration.id)" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Deactivate">
-                            <span class="material-icons">
-                                lock
-                            </span>
-                        </button>
-                    </td>
-                    <td>
-                        <button *ngIf="registration.active && registration.status == status.waitlisted"
-                            (click)="offerSpot(registration.id)" data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="Offer Spot">
-                            <span class="material-icons">
-                                queue
-                            </span>
-                        </button>
-                        <button *ngIf="registration.active && registration.status == status.pending"
-                            (click)="acceptRegistration(registration.id)" class="btn btn-outline-success"
-                            data-bs-toggle="modal" data-bs-target="#deleteAccount" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Accept Registration">
-                            <span class="material-icons">
-                                check
-                            </span>
-                        </button>
-                        <button *ngIf="!registration.active" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            data-bs-target="#deleteRegistration">
-                            <span class="material-icons">
-                                delete
-                            </span>
-                        </button>
-                    </td>
-            </tbody>
-            <tfoot></tfoot>
-        </table>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <small *ngIf="totalRegistrations > currentPage * numOfRegistrations">
-                Showing {{currentPage * numOfRegistrations - numOfRegistrations + 1}} to {{currentPage
-                *numOfRegistrations}} of
-                {{totalRegistrations}} entries</small>
-
-            <small *ngIf="totalRegistrations <= currentPage * numOfRegistrations">Showing {{currentPage *
-                numOfRegistrations
-                -
-                numOfRegistrations + 1}}
-                to {{totalRegistrations}} of {{totalRegistrations}} entries</small>
-        </div>
-
-        <div class="col-auto">
-            <nav aria-label="Page navigation example" class="mt-3">
-                <ul class="pagination">
-                    <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
-                                aria-hidden="true">&laquo;</span></button></li>
-                    <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page"
-                        class="page-item">
-                        <button class="page-link" (click)=goToPage(page)>{{page}}</button>
-                    </li>
-                    <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
-                                aria-hidden="true">&raquo;</span></button></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    </fieldset>
 </div>
 
 <!-- modal for viewing registration info-->
@@ -224,7 +228,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteRegistration()">Delete</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                    (click)="deleteRegistration()">Delete</button>
             </div>
         </div>
     </div>

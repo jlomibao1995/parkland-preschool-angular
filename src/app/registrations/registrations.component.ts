@@ -14,6 +14,7 @@ import { RegistrationService } from '../services/registration.service';
 export class RegistrationsComponent implements OnInit {
   public message: String;
   public success: boolean;
+  public loading: boolean;
   public registrations: Registration[];
   public classrooms: Classroom[];
   public selectedId: number;
@@ -39,6 +40,7 @@ export class RegistrationsComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    this.loading = false;
     this.message = null;
     this.success = null;
     this.pageForm = this._formBuilder.group({
@@ -65,6 +67,7 @@ export class RegistrationsComponent implements OnInit {
   }
 
   goToPage(page) {
+    this.loading = true;
     this.pages = [];
     this.currentPage = page;
     let searchQuery: String = this.pageForm.get('search').value;
@@ -100,6 +103,8 @@ export class RegistrationsComponent implements OnInit {
             break;
           }
         }
+
+        this.loading = false;
 
       },
       error => {
