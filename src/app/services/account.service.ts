@@ -55,6 +55,11 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
+  registerAccount(account: any, fallBackUrl) {
+   return this._http.post<any>(environment.baseUrl + '/out/account/register?fallBackUrl=' + fallBackUrl, account, { 'headers': this.headers})
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

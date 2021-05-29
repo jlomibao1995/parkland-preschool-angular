@@ -11,6 +11,7 @@ import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'signup/:uuid', component: SignupComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'passwordreset', component: ResetPasswordComponent},
   {path: 'admin/registrations', component: RegistrationsComponent},

@@ -1,17 +1,9 @@
-form.out {
-    background-color: white;
-    width: 350px;
+div.card.out {
     margin: auto;
 }
 
-div.container-fluid.out {
-    background-color: rgb(225, 233, 236);
-    height: 100vh;
-}
-
-
 button.out {
-    width: 320px;
+    width: 100%;
 }
 
 input.out {

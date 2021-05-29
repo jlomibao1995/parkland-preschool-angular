@@ -1,40 +1,60 @@
-<div class="container-fluid out py-5">
-    <form class="out py-3" [formGroup]="loginForm" (ngSubmit)="authenticate()">
-        <div class="">
-            <div class="my-5 text-center">
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
+<div class="container col-sm-3">
+    <div class="card my-5 out">
+        <div class="row">
+            <div class="col m-3 text-center">
                 <span class="material-icons">
                     account_circle
-                    </span>
-            </div>
-
-            <div class="m-3 form-group">
-                <input type="text" class="form-control out" formControlName="email"
-                [class.is-invalid]="email.invalid && email.touched" placeholder="Email">
-                <small [class.d-none]="email.valid || email.untouched" class="text-danger">Enter your email</small>
-            </div>
-
-            <div class="m-3 form-group">
-                <input type="password" class="form-control out" formControlName="password" 
-                [class.is-invalid]="password.invalid && password.touched" placeholder="Password">
-                <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter a password</small>
-            </div>
-
-            <div class="m-3 text-center">
-                <small *ngIf="message != null" class="text-danger">{{message}}</small>
-            </div>
-
-            <div class="m-3 text-center">
-                <small><a href="/passwordreset">Forgot your email or password?</a></small>
-            </div>
-
-            <div class="my-4 mx-3">
-                <button class="btn btn-primary btn-lg out" [disabled]="!loginForm.valid">Log In</button>
-            </div>
-
-            <div class="my-3 text-center">
-                <small>Don't have an account? <a href="/signup">Sign up here</a></small>
+                </span>
             </div>
         </div>
+        <div class="card-body">
+            <fieldset [class.overlay]="loading" [disabled]="loading">
+                <form class="out py-3" [formGroup]="loginForm" (ngSubmit)="authenticate()">
+                    <div class="row">
+                        <div class="col m-3 form-group">
+                            <input type="text" class="form-control out" formControlName="email"
+                                [class.is-invalid]="email.invalid && email.touched" placeholder="Email">
+                            <small [class.d-none]="email.valid || email.untouched" class="text-danger">Enter your
+                                email</small>
+                        </div>
+                    </div>
 
-    </form>
+                    <div class="row">
+                        <div class="col m-3 form-group">
+                            <input type="password" class="form-control out" formControlName="password"
+                                [class.is-invalid]="password.invalid && password.touched" placeholder="Password">
+                            <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter a
+                                password</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col m-3 text-center">
+                            <small *ngIf="message != null" class="text-danger">{{message}}</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col m-3 text-center">
+                            <small><a href="/passwordreset">Forgot your email or password?</a></small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col m-3">
+                            <button type="submit" class="btn btn-outline-primary btn-lg out"
+                                [disabled]="!loginForm.valid">Log In</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col m-3 text-center">
+                            <small>Don't have an account? <a href="/signup">Sign up here</a></small>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
 </div>

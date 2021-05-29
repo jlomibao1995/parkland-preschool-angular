@@ -1,38 +1,111 @@
-<div class="container-fluid out py-5">
-    <form class="out py-3">
-        <div class="">
-            <div class="my-5 text-center">
-                <h1 class="display-5">Sign Up</h1>
-            </div>
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
+<div class="container col-sm-3">
+    <div class="card my-5 out">
+        <div class="card-body">
+            <fieldset [class.overlay]="loading" [disabled]="loading">
+                <form *ngIf="success == null" class="py-3" [formGroup]="registerForm" (ngSubmit)="registerAccount()">
+                    <div class="row">
+                        <div class="col m-3">
+                            <h1 class="display-5 text-center">Sign Up</h1>
+                        </div>
+                    </div>
 
-            <div class="m-3">
-                <input type="text" class="form-control out" placeholder="First Name">
-            </div>
+                    <div class="row">
+                        <div class="col m-3">
+                            <input type="text" class="form-control out" placeholder="First Name"
+                                formControlName="firstName" [class.is-invalid]="firstName.invalid && firstName.touched">
+                            <small [class.d-none]="firstName.valid || firstName.untouched" class="text-danger">Enter
+                                first
+                                name</small>
+                        </div>
+                    </div>
 
-            <div class="m-3">
-                <input type="text" class="form-control out" placeholder="Last Name">
-            </div>
+                    <div class="row">
+                        <div class="col m-3">
+                            <input type="text" class="form-control out" placeholder="Last Name"
+                                formControlName="lastName" [class.is-invalid]="lastName.invalid && lastName.touched">
+                            <small [class.d-none]="lastName.valid || lastName.untouched" class="text-danger">Enter last
+                                name</small>
+                        </div>
+                    </div>
 
-            <div class="m-3">
-                <input type="email" class="form-control out" placeholder="Email">
-            </div>
+                    <div class="row">
+                        <div class="col m-3">
+                            <input type="email" class="form-control out" placeholder="Email" formControlName="email"
+                                [class.is-invalid]="email.invalid && email.touched">
+                            <small [class.d-none]="email.valid || email.untouched" class="text-danger">Enter your
+                                email</small>
+                        </div>
+                    </div>
 
-            <div class="m-3">
-                <input type="password" class="form-control out" placeholder="Password">
-            </div>
+                    <div class="row">
+                        <div class="col m-3">
+                            <input type="password" class="form-control out" placeholder="Password"
+                                formControlName="password"
+                                [class.is-invalid]="password.invalid && password.touched ||registerForm.errors?.patternMismatch">
+                            <small [class.d-none]="password.valid || password.untouched" class="text-danger">Enter
+                                password</small>
+                            <div [class.d-none]="!registerForm.errors?.patternMismatch" class="text-danger m-2">
+                                <small>Password must have the following:</small><br>
+                                <small>At least 8 characters</small><br>
+                                <small>At least one uppercase and lowercase letter</small><br>
+                                <small>At least one number</small><br>
+                                <small>At least one special character e.g. !@#?</small>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="m-3 text-center">
-                <small>Already have an account? <a href="/login">Log in</a></small>
-            </div>
+                    <div class="row">
+                        <div class="col m-3">
+                            <input type="password" class="form-control out" placeholder="Confirm Password"
+                                formControlName="confirmPassword" [class.is-invalid]="registerForm.errors?.mismatch">
+                            <small [class.d-none]="!registerForm.errors?.mismatch" class="text-danger">Passwords do not
+                                match</small>
+                        </div>
+                    </div>
 
-            <div class="my-4 mx-3">
-                <button class="btn btn-secondary btn-lg out">Sign up</button>
-            </div>
+                    <div class="row">
+                        <div class="col m-3">
+                            <small>Already have an account? <a href="/login">Log in</a></small>
+                        </div>
+                    </div>
 
-            <div class="my-3 text-center">
-                <small>If sign up is successful you will receive an email to activate your new account</small>
+                    <div class="row">
+                        <div class=" col m-3">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-primary btn-lg out"
+                                    [disabled]="!registerForm.valid">Sign
+                                    up</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+
+            <div *ngIf="success != null"  class="text-center">
+                <div *ngIf="success">
+                    <h2 class="display-3 text-success">Success!</h2>
+
+                    <span class="material-icons text-success display-1 m-5">
+                        check_circle_outline
+                    </span>
+
+                    <h2 class="lead">Check your email to complete your account registration</h2>
+                </div>
+
+                <div *ngIf="!success">
+                    <h2 class="display-3 text-danger">Error!</h2>
+
+                    <span class="material-icons text-danger display-1 m-5">
+                        error_outline
+                    </span>
+
+                    <h2 class="lead">Oops! Something went wrong</h2>
+                    <h2 class="lead">{{message}}</h2>
+
+                    <button class="btn btn-outline-dark btn-lg my-4 out" (click)="ngOnInit()">Try again</button>
+                </div>
             </div>
         </div>
-
-    </form>
+    </div>
 </div>

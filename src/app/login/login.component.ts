@@ -11,11 +11,14 @@ import { AuthenticationService } from '../services/authentication.service';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public message: String;
+  public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService,
     private _router: Router) { }
 
   ngOnInit(): void {
+    this.loading = false;
+
     this.loginForm = this._formBuilder.group({
       email: ['parklandpreschoolteam@gmail.com', Validators.required],
       password: ['password', Validators.required]
@@ -31,10 +34,16 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
+    this.loading = true;
       this._authenticationService.authenticate({
         email: this.email.value,
         password: this.password.value
-      }).catch(error => this.message = error.error.message);
+      }).catch(error => {
+        this.message = error;
+        this.loading = false;
+      });
+
+      this.loading = false;
     }
 
 }
