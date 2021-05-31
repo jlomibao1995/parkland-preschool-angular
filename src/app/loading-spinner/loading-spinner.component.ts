@@ -15,8 +15,6 @@ export class LoadingSpinnerComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.httpLoading = false;
-    this.pageLoading = false;
   }
 
 }

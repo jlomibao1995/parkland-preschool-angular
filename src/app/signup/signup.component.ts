@@ -26,17 +26,20 @@ export class SignupComponent implements OnInit {
 
     this._route.params.subscribe(params => {
       let uuid = params['uuid'];
+      this.loading = true;
 
       if (uuid) {
         this.activation = true;
         this._accountService.activateAccount(uuid).subscribe(
           data => {
             this.success = true;
+            this.loading = false;
           }
-        ), error => {
+        , error => {
           this.success = false;
           this.message = error;
-        }
+          this.loading = false;
+        })
       }
     });
 

@@ -65,6 +65,16 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
+  requestPasswordChange(email: string, params: HttpParams) {
+    return this._http.get<any>(environment.baseUrl + '/out/account/request_reset/' + email, {params})
+    .pipe(catchError(this.errorHandler));
+  }
+
+  changePassword(uuid: string, params: HttpParams) {
+    return this._http.get<any>(environment.baseUrl + '/out/account/reset_password/' + uuid, {params})
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

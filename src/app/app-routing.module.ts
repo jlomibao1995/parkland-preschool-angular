@@ -14,6 +14,7 @@ const routes: Routes = [
   {path: 'signup/:uuid', component: SignupComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'passwordreset', component: ResetPasswordComponent},
+  {path: 'passwordreset/:uuid', component: ResetPasswordComponent},
   {path: 'admin/registrations', component: RegistrationsComponent},
   {path: 'admin/classes', component: ClassesComponent},
   {path: 'admin/accounts', component: AccountsComponent},
