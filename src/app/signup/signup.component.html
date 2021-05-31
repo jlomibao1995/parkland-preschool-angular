@@ -90,7 +90,9 @@
                         check_circle_outline
                     </span>
 
-                    <h2 class="lead">Check your email to complete your account registration</h2>
+                    <h2 class="lead" *ngIf="!activation">Check your email to complete your account registration</h2>
+                    <h2 class="lead" *ngIf="activation">Account activated</h2>
+                    <a class="btn btn-outline-dark btn-lg my-4 out" *ngIf="activation" href="/login">Login</a>
                 </div>
 
                 <div *ngIf="!success">

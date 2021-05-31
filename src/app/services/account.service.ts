@@ -60,6 +60,11 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
+  activateAccount(uuid: string) {
+    return this._http.get<any>(environment.baseUrl + '/out/account/activate/' + uuid)
+    .pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

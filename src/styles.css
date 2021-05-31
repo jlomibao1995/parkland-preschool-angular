@@ -6,6 +6,10 @@ button.out {
     width: 100%;
 }
 
+a.out {
+    width: 100%;
+}
+
 input.out {
     background-color: rgba(223, 243, 250, 0.356);
     border: none;

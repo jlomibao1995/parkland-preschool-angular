@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { passwordPatternValidator, passwordValidator } from '../helpers/password.validator';
 import { AccountService } from '../services/account.service';
 
@@ -14,12 +15,30 @@ export class SignupComponent implements OnInit {
   public message: String;
   public success: boolean;
   public loading: boolean;
+  public activation: boolean;
 
-  constructor(private _accountService: AccountService, private _formBuilder: FormBuilder) { }
+  constructor(private _accountService: AccountService, private _formBuilder: FormBuilder, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.message = null;
     this.success = null;
+    this.activation = false;
+
+    this._route.params.subscribe(params => {
+      let uuid = params['uuid'];
+
+      if (uuid) {
+        this.activation = true;
+        this._accountService.activateAccount(uuid).subscribe(
+          data => {
+            this.success = true;
+          }
+        ), error => {
+          this.success = false;
+          this.message = error;
+        }
+      }
+    });
 
     this.registerForm = this._formBuilder.group({
       firstName: ['', Validators.required],
