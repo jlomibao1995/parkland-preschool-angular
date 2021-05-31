@@ -17,11 +17,13 @@ export class LoginComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit(): void {
+    this._authenticationService.checkAuthentication();
+
     this.loading = false;
 
     this.loginForm = this._formBuilder.group({
       email: ['parklandpreschoolteam@gmail.com', Validators.required],
-      password: ['password', Validators.required]
+      password: ['Password21!', Validators.required]
     });
   }
 

@@ -197,7 +197,7 @@
 </div>
 
 <!-- modal for editing account-->
-<div *ngIf="selectedId != null" class="modal fade" data-bs-backdrop="static" id="editAccount" tabindex="-1" aria-labelledby="editAccountLabel"
+<div class="modal fade" data-bs-backdrop="static" id="editAccount" tabindex="-1" aria-labelledby="editAccountLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
@@ -206,7 +206,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <app-account-details [accountId]="selectedId"></app-account-details>
+        <app-account-details *ngIf="selectedId != null" [accountId]="selectedId"></app-account-details>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reload()">Close</button>

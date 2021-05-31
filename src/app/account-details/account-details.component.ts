@@ -20,8 +20,12 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
   public message: String;
   public success: boolean;
   public loading: boolean;
+  public roles;
+  @Input() public userRole: string;
 
-  constructor(private _formBuilder: FormBuilder, private _accountService: AccountService) { }
+  constructor(private _formBuilder: FormBuilder, private _accountService: AccountService) {
+    this.roles = this._accountService.roles;
+   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.ngOnInit();
@@ -35,16 +39,16 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
     this.success = null;
     this.loading = false;
 
-    // this.editForm = this._formBuilder.group({
-    //   role: ['', Validators.required],
-    //   firstName: ['', Validators.required],
-    //   lastName: ['', Validators.required],
-    //   email: ['', Validators.required],
-    //   address: [''],
-    //   homePhoneNumber: [''],
-    //   workPhoneNumber: [''],
-    //   cellNumber: [''],
-    // });
+    this.editForm = this._formBuilder.group({
+      role: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      address: [''],
+      homePhoneNumber: [''],
+      workPhoneNumber: [''],
+      cellNumber: [''],
+    });
 
     this.passwordForm = this._formBuilder.group({
       password: ['', Validators.required],

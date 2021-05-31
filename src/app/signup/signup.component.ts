@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { passwordPatternValidator, passwordValidator } from '../helpers/password.validator';
 import { AccountService } from '../services/account.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -17,9 +18,12 @@ export class SignupComponent implements OnInit {
   public loading: boolean;
   public activation: boolean;
 
-  constructor(private _accountService: AccountService, private _formBuilder: FormBuilder, private _route: ActivatedRoute) { }
+  constructor(private _accountService: AccountService, private _formBuilder: FormBuilder, private _route: ActivatedRoute,
+    private _authenticationService: AuthenticationService, private _router: Router) { }
 
   ngOnInit(): void {
+    this._authenticationService.checkAuthentication();
+
     this.message = null;
     this.success = null;
     this.activation = false;

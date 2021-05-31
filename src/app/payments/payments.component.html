@@ -244,7 +244,7 @@
 </div>
 
 <!-- modal viewing payment details-->
-<div *ngIf="selectedId != null" class="modal fade" id="paymentDetails" tabindex="-1"
+<div class="modal fade" id="paymentDetails" tabindex="-1"
     aria-labelledby="paymentDetailsLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -253,7 +253,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <app-payment-details [paymentId]="selectedId"></app-payment-details>
+                <app-payment-details *ngIf="selectedId != null" [paymentId]="selectedId"></app-payment-details>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -263,7 +263,7 @@
 </div>
 
 <!-- modal for manually processing payment-->
-<div *ngIf="selectedId != null" class="modal fade" id="otherMethod" tabindex="-1" aria-labelledby="otherMethodLabel"
+<div class="modal fade" id="otherMethod" tabindex="-1" aria-labelledby="otherMethodLabel"
     data-bs-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -272,7 +272,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <app-manual-pay [paymentId]="selectedId"></app-manual-pay>
+                <app-manual-pay *ngIf="selectedId != null" [paymentId]="selectedId"></app-manual-pay>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"

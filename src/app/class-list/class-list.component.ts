@@ -29,7 +29,6 @@ export class ClassListComponent implements OnInit {
     this.loading = false;
     this._route.params.subscribe(params => {
       this.classId = params['classId'];
-      console.log("Class Id: " + this.classId);
 
       this._classroomService.getClass(this.classId).subscribe(
         data => {
@@ -40,7 +39,6 @@ export class ClassListComponent implements OnInit {
           for (let registration of this.registrations) {
             this.classEmail += registration.child.account.email + ';';
           }
-          console.log(this.classEmail);
         },
         error => console.log(error.error.message)
       );

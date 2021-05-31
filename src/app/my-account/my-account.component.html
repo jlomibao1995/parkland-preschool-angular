@@ -2,9 +2,11 @@
     <div class="card my-5 out">
         <div class="row">
             <div class="col mt-4 text-center">
-                <span class="material-icons" id="account">
-                    account_circle
-                </span>
+                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editAccount">
+                    <span class="material-icons" id="account">
+                        manage_accounts
+                    </span>
+                </button>
             </div>
         </div>
         <div class="card-body">
@@ -22,12 +24,36 @@
 
             <div class="row text-center">
                 <div class="col d-none d-lg-block">
-                    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FEdmonton&amp;src=cGFya2xhbmRwcmVzY2hvb2x0ZWFtQGdtYWlsLmNvbQ&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%234285F4&amp;color=%2333B679&amp;color=%230B8043&amp;showTitle=1&amp;title=Parkland%20Preschool&amp;showNav=1&amp;showDate=1&amp;showPrint=1&amp;showCalendars=1&amp;mode=MONTH" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                    <iframe
+                        src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FEdmonton&amp;src=cGFya2xhbmRwcmVzY2hvb2x0ZWFtQGdtYWlsLmNvbQ&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%234285F4&amp;color=%2333B679&amp;color=%230B8043&amp;showTitle=1&amp;title=Parkland%20Preschool&amp;showNav=1&amp;showDate=1&amp;showPrint=1&amp;showCalendars=1&amp;mode=MONTH"
+                        style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
                 </div>
 
                 <div class="col d-lg-none">
-                    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FEdmonton&amp;src=cGFya2xhbmRwcmVzY2hvb2x0ZWFtQGdtYWlsLmNvbQ&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%234285F4&amp;color=%2333B679&amp;color=%230B8043&amp;showTitle=1&amp;title=Parkland%20Preschool&amp;showNav=1&amp;showDate=1&amp;showPrint=1&amp;showCalendars=1&amp;mode=AGENDA" style="border-width:0" width="400" height="600" frameborder="0" scrolling="no"></iframe>
+                    <iframe
+                        src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FEdmonton&amp;src=cGFya2xhbmRwcmVzY2hvb2x0ZWFtQGdtYWlsLmNvbQ&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%234285F4&amp;color=%2333B679&amp;color=%230B8043&amp;showTitle=1&amp;title=Parkland%20Preschool&amp;showNav=1&amp;showDate=1&amp;showPrint=1&amp;showCalendars=1&amp;mode=AGENDA"
+                        style="border-width:0" width="400" height="600" frameborder="0" scrolling="no"></iframe>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal for account details-->
+<div class="modal fade" data-bs-backdrop="static" id="editAccount" tabindex="-1" aria-labelledby="editAccountLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAccountLabel">Account Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-account-details *ngIf="id != null" [userRole]="role" [accountId]="id"></app-account-details>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="ngOnInit()">Close</button>
             </div>
         </div>
     </div>

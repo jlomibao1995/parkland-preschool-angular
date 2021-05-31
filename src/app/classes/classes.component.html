@@ -178,7 +178,7 @@
 </div>
 
 <!-- modal for editing class-->
-<div class="modal fade" *ngIf="selectedId != null" id="editClass" tabindex="-1" aria-labelledby="editClassLabel"
+<div class="modal fade" id="editClass" tabindex="-1" aria-labelledby="editClassLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
@@ -187,7 +187,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <app-class-details [classId]="selectedId"></app-class-details>
+                <app-class-details *ngIf="selectedId != null" [classId]="selectedId"></app-class-details>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ngOnInit()">Close</button>

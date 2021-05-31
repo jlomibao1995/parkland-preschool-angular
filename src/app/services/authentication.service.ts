@@ -9,11 +9,11 @@ import { CookieService } from './cookie.service';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  public authenticated: boolean = false;
   public email: string;
   public name: string;
   public role: string;
   public access: boolean;
+  public id: number;
   url = environment.baseUrl + '/out/authenticate';
 
   constructor(private _http: HttpClient, private _cookieService: CookieService, private _router: Router,
@@ -25,9 +25,14 @@ export class AuthenticationService {
       .toPromise().then(data => {
         this._cookieService.set('authorization', data.jwt);
         this._cookieService.set('email', credentials.email);
-        this.authenticated = true;
         this._router.navigateByUrl('/myaccount');
       });
+  }
+
+  checkAuthentication() {
+    if (this._cookieService.get('email')) {
+      this._router.navigateByUrl('/');
+    } 
   }
 
   populateAccountInfo() {
@@ -40,6 +45,7 @@ export class AuthenticationService {
             this.name = data.firstName + ' ' + data.lastName;
             this.role = data.role;
             this.access = data.schoolAccessAllowed;
+            this.id = data.id;
             resolve(true);
           }
         );

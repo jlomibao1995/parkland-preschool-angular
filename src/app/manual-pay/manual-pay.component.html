@@ -1,10 +1,10 @@
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
-<div class="container">
+<div class="container" *ngIf="paymentDetails !=null">
     <fieldset [class.overlay]="loading" [disabled]="loading">
         <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
         </app-success-error-dialog>
     
-        <app-payment-details [paymentId]="paymentId"></app-payment-details>
+        <app-payment-details *ngIf="paymentId != null" [paymentId]="paymentId"></app-payment-details>
         <form [class.d-none]="paymentDetails.paymentStatus == status.paid" [formGroup]="paymentForm"
             (ngSubmit)="processPayment()">
             <fieldset [disabled]="loading">

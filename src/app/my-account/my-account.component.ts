@@ -13,14 +13,18 @@ export class MyAccountComponent implements OnInit {
   public name: string;
   public role: string;
   public access: boolean;
+  public id: number;
 
   constructor(private _accountService: AccountService, private _authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.id = null;
     this._authenticationService.populateAccountInfo().then((value) => {
       this.email = this._authenticationService.email;
       this.name = this._authenticationService.name;
       this.access = this._authenticationService.access;
+      this.id = this._authenticationService.id;
+      this.role = this._authenticationService.role;
     });
   }
 
