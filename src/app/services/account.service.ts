@@ -40,6 +40,11 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getMyAccount(email) {
+    return this._http.get<any>(this.baseUrl + '/email/' + email)
+    .pipe(catchError(this.errorHandler));
+  }
+
   addAccount(account: any) {   
     return this._http.post<any>(this.baseUrl, account, { 'headers': this.headers})
     .pipe(catchError(this.errorHandler));

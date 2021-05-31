@@ -30,6 +30,7 @@ import { ChildInfoComponent } from './child-info/child-info.component';
 import { RegistrationDetailsComponent } from './registration-details/registration-details.component';
 import { ClassListComponent } from './class-list/class-list.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { MyAccountComponent } from './my-account/my-account.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     ChildInfoComponent,
     RegistrationDetailsComponent,
     ClassListComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    MyAccountComponent
   ],
   imports: [
     BrowserModule,

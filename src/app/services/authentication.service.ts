@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AccountService } from './account.service';
 import { CookieService } from './cookie.service';
 
 @Injectable({
@@ -10,9 +10,14 @@ import { CookieService } from './cookie.service';
 })
 export class AuthenticationService {
   public authenticated: boolean = false;
+  public email: string;
+  public name: string;
+  public role: string;
+  public access: boolean;
   url = environment.baseUrl + '/out/authenticate';
 
-  constructor(private _http: HttpClient, private _cookieService: CookieService, private _router: Router) { }
+  constructor(private _http: HttpClient, private _cookieService: CookieService, private _router: Router,
+    private _accountService: AccountService) { }
 
   async authenticate(credentials: any) {
     const headers = { 'content-type': 'application/json' };
@@ -21,12 +26,29 @@ export class AuthenticationService {
         this._cookieService.set('authorization', data.jwt);
         this._cookieService.set('email', credentials.email);
         this.authenticated = true;
-        this._router.navigateByUrl('/admin/accounts');
+        this._router.navigateByUrl('/myaccount');
       });
   }
 
-  logout(){
+  populateAccountInfo() {
+    this.email = this._cookieService.get('email');
+
+    return new Promise((resolve, reject) => {
+
+        this._accountService.getMyAccount(this.email).subscribe(
+          data => {
+            this.name = data.firstName + ' ' + data.lastName;
+            this.role = data.role;
+            this.access = data.schoolAccessAllowed;
+            resolve(true);
+          }
+        );
+    })
+  }
+
+  logout() {
     this._cookieService.remove('authorization');
     this._cookieService.remove('email');
+    this._router.navigateByUrl('/login');
   }
 }

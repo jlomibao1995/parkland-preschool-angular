@@ -4,6 +4,7 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { ClassListComponent } from './class-list/class-list.component';
 import { ClassesComponent } from './classes/classes.component';
 import { LoginComponent } from './login/login.component';
+import { MyAccountComponent } from './my-account/my-account.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { RegistrationsComponent } from './registrations/registrations.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'admin/accounts', component: AccountsComponent},
   {path: 'admin/payments', component: PaymentsComponent},
   {path: 'staff/classlist/:classId', component: ClassListComponent},
+  {path: 'myaccount', component: MyAccountComponent},
   {path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
