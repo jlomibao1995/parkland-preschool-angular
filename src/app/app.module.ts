@@ -32,6 +32,9 @@ import { ClassListComponent } from './class-list/class-list.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { RegistrationsGuardianComponent } from './registrations-guardian/registrations-guardian.component';
+import { RegisterChildComponent } from './register-child/register-child.component';
+import { AddChildComponent } from './add-child/add-child.component';
+import { ChildInfoEditComponent } from './child-info-edit/child-info-edit.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,10 @@ import { RegistrationsGuardianComponent } from './registrations-guardian/registr
     ClassListComponent,
     LoadingSpinnerComponent,
     MyAccountComponent,
-    RegistrationsGuardianComponent
+    RegistrationsGuardianComponent,
+    RegisterChildComponent,
+    AddChildComponent,
+    ChildInfoEditComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,38 @@
-<p>registrations-guardian works!</p>
+<div class="container">
+    <div *ngIf="childList != null" class="card my-5 out">
+        <div class="row mt-4">
+            <div class="col text-center">
+                <p class="display-6">Registrations</p>
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <div class="col-auto">
+                <button class="btn btn-primary">Register</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title text-center"></h5>
+
+            <div *ngFor="let child of childList">
+                <a class="btn btn-outline-primary" *ngFor="let registration of child.registrationList"
+                 data-bs-toggle="collapse" [href]="'#collapse' + registration.id" role="button" aria-expanded="true" aria-controls="collapseExample">
+                    <div class="row text-center">
+                        <div class="col">{{child.firstName}} {{child.lastName}}</div>
+                        <div class="col">{{registration.classroom.description}}</div>
+                        <div class="col">{{registration.classroom.startDate | date:'shortDate'}} -
+                            {{registration.classroom.endDate | date:'shortDate'}} </div>
+                        <div class="col">{{registration.classroom.startDate | date:'shortTime'}} -
+                            {{registration.classroom.endDate | date:'shortTime'}}</div>
+                    </div>
+                </a>
+
+                <div class="collapse show my-3" [id]="'collapse' + registration.id" *ngFor="let registration of child.registrationList">
+                    <div class="card card-body">
+                      <app-registration-details [registrationId]="registration.id"></app-registration-details>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,6 +15,7 @@ export class Account {
         public lastLoginDate: String,
         public activateAccountUuid: String,
         public resetPasswordUuid: String,
+        public schoolAccessAllowed: boolean,
         public childList: []) {
 
         }

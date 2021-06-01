@@ -1,0 +1,42 @@
+<div class="container">
+    <div *ngIf="currentPage == 1">
+        <div class="progress my-4">
+            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0" aria-valuenow="0"
+                aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <form [formGroup]="childForm">
+            <div class="row p-3">
+                <div class="col form-group">
+                    <select class="form-select" (change)="selectChild()" formControlName="childId">
+                        <option value="" selected disabled hidden>Select child</option>
+                        <option value="new">Add Child Info</option>
+                        <option *ngFor="let child of childList" [value]="child.id">{{child.firstName}}
+                            {{child.lastName}}</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <app-add-child *ngIf="showAddChildForm" (updated)="updatedHandler($event)"></app-add-child>
+    </div>
+
+    <div *ngIf="currentPage == 2">
+        <div class="progress my-4">
+            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%" aria-valuenow="25"
+                aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <app-child-info-edit [childId]="selectedChildId"></app-child-info-edit>
+    </div>
+
+    <div class="row my-4">
+        <div class="col form-group">
+            <button class="btn btn-secondary">Cancel</button>
+        </div>
+        <div class="col-auto form-group">
+            <button class="btn btn-outline-primary" type="button" (click)="next()"
+                [disabled]="!childForm.valid || showAddChildForm">Next</button>
+        </div>
+    </div>
+</div>

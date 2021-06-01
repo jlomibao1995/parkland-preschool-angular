@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordPatternValidator, passwordValidator } from '../helpers/password.validator';
-import { Account } from '../models/Account';
 import { AccountService } from '../services/account.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-add-account',

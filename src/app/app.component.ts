@@ -9,19 +9,18 @@ import { CookieService } from './services/cookie.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public email: string;
-  public name: string;
-  public role: string;
+  public role: String;
   public access: boolean;
 
   constructor(private _authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
-    this._authenticationService.populateAccountInfo().then((value) => {
-      this.email = this._authenticationService.email;
-      this.name = this._authenticationService.name;
-    });
+    if (this._authenticationService.authenticated()) {
+      this._authenticationService.populateAccountInfo().then((value) => {
+        this.role = this._authenticationService.currentUser.role;
+      });
+    }
     
   }
 

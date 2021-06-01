@@ -12,12 +12,14 @@
 
     <div class="row">
         <div class="col-auto">Date:</div>
-        <div class="col">{{registration.classroom.startDate | date:'shortDate'}} - {{registration.classroom.endDate | date:'shortDate'}}</div>
+        <div class="col">{{registration.classroom.startDate | date:'shortDate'}} - {{registration.classroom.endDate |
+            date:'shortDate'}}</div>
     </div>
 
     <div class="row">
         <div class="col-auto">Time:</div>
-        <div class="col">{{registration.classroom.startDate | date:'shortTime'}} - {{registration.classroom.endDate | date:'shortTime'}}</div>
+        <div class="col">{{registration.classroom.startDate | date:'shortTime'}} - {{registration.classroom.endDate |
+            date:'shortTime'}}</div>
     </div>
 
     <div class="row">
@@ -25,5 +27,15 @@
             Registered on:
         </div>
         <div class="col">{{registration.registrationDate | date:'MM/d/yy HH:mm'}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-auto">
+            Status:
+        </div>
+        <div class="col" *ngIf="registration.status == status.registered">Registered</div>
+        <div class="col" *ngIf="registration.status == status.unregistered">Pending registration fee payment</div>
+        <div class="col" *ngIf="registration.status == status.pending">Pending admin confirmation</div>
+        <div class="col" *ngIf="registration.status == status.waitlisted">Wait Listed</div>
     </div>
 </div>

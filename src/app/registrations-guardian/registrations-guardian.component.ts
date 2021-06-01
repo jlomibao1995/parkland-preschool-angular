@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Child } from '../models/Child';
+import { AccountService } from '../services/account.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { CookieService } from '../services/cookie.service';
 
 @Component({
   selector: 'app-registrations-guardian',
@@ -6,10 +10,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registrations-guardian.component.css']
 })
 export class RegistrationsGuardianComponent implements OnInit {
+  public childList: Child[];
 
-  constructor() { }
+  constructor(private _accountService: AccountService, private _authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this._authenticationService.populateAccountInfo().then((value) => {
+      this.childList = this._authenticationService.currentUser.childList;
+    });
   }
 
 }

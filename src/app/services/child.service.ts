@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -28,6 +28,16 @@ export class ChildService {
   getChildInfo(id: number) {
     return this._http.get<Child>(this.baseUrl + '/' + id)
     .pipe(catchError(this.errorHandler));
+  }
+
+  addChild(child) {
+    return this._http.post<any>(this.baseUrl, child)
+    .pipe(catchError(this.errorHandler)); 
+  }
+
+  updateChildInfo(id, params: HttpParams) {
+    return this._http.put<any>(this.baseUrl + '/' + id, {}, {params})
+    .pipe(catchError(this.errorHandler)); 
   }
 
   errorHandler(error: HttpErrorResponse) {

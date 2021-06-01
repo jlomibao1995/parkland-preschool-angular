@@ -13,9 +13,11 @@ export class RegistrationDetailsComponent implements OnInit, OnChanges {
   @Input() updated: boolean;
   public registration: Registration;
   public days;
+  public status;
 
   constructor(private _registrationService: RegistrationService, private _classroomService: ClassesService) {
     this.days = this._classroomService.days;
+    this.status = this._registrationService.status;
    }
 
   ngOnChanges(changes: SimpleChanges): void {

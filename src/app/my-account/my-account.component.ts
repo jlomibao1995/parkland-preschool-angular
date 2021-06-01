@@ -9,9 +9,9 @@ import { CookieService } from '../services/cookie.service';
   styleUrls: ['./my-account.component.css']
 })
 export class MyAccountComponent implements OnInit {
-  public email: string;
-  public name: string;
-  public role: string;
+  public email: String;
+  public name: String;
+  public role: String;
   public access: boolean;
   public id: number;
 
@@ -20,11 +20,11 @@ export class MyAccountComponent implements OnInit {
   ngOnInit(): void {
     this.id = null;
     this._authenticationService.populateAccountInfo().then((value) => {
-      this.email = this._authenticationService.email;
-      this.name = this._authenticationService.name;
-      this.access = this._authenticationService.access;
-      this.id = this._authenticationService.id;
-      this.role = this._authenticationService.role;
+      this.email = this._authenticationService.currentUser.email;
+      this.name = this._authenticationService.currentUser.firstName + ' ' + this._authenticationService.currentUser.lastName;
+      this.access = this._authenticationService.currentUser.schoolAccessAllowed;
+      this.id = this._authenticationService.currentUser.id;
+      this.role = this._authenticationService.currentUser.role;
     });
   }
 

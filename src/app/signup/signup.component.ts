@@ -22,7 +22,9 @@ export class SignupComponent implements OnInit {
     private _authenticationService: AuthenticationService, private _router: Router) { }
 
   ngOnInit(): void {
-    this._authenticationService.checkAuthentication();
+    if (this._authenticationService.authenticated()) {
+      this._router.navigateByUrl('/myaccount');
+    }
 
     this.message = null;
     this.success = null;

@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Account } from '../models/Account';
 import { AccountService } from './account.service';
 import { CookieService } from './cookie.service';
 
@@ -10,10 +11,7 @@ import { CookieService } from './cookie.service';
 })
 export class AuthenticationService {
   public email: string;
-  public name: string;
-  public role: string;
-  public access: boolean;
-  public id: number;
+  public currentUser: Account;
   url = environment.baseUrl + '/out/authenticate';
 
   constructor(private _http: HttpClient, private _cookieService: CookieService, private _router: Router,
@@ -29,10 +27,17 @@ export class AuthenticationService {
       });
   }
 
-  checkAuthentication() {
-    if (this._cookieService.get('email')) {
-      this._router.navigateByUrl('/');
-    } 
+  // checkAuthentication() {
+  //   if (this._cookieService.get('authorization')) {
+  //     this._router.navigateByUrl('/');
+  //   } 
+  // }
+  
+  authenticated() {
+    if (this._cookieService.get('authorization')) {
+      return true;
+    }
+    return false;
   }
 
   populateAccountInfo() {
@@ -42,10 +47,7 @@ export class AuthenticationService {
 
         this._accountService.getMyAccount(this.email).subscribe(
           data => {
-            this.name = data.firstName + ' ' + data.lastName;
-            this.role = data.role;
-            this.access = data.schoolAccessAllowed;
-            this.id = data.id;
+            this.currentUser = data;
             resolve(true);
           }
         );
