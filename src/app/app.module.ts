@@ -36,6 +36,8 @@ import { RegisterChildComponent } from './register-child/register-child.componen
 import { AddChildComponent } from './add-child/add-child.component';
 import { ChildInfoEditComponent } from './child-info-edit/child-info-edit.component';
 import { ChildContactInfoComponent } from './child-contact-info/child-contact-info.component';
+import { ChildContactsComponent } from './child-contacts/child-contacts.component';
+import { AddContactComponent } from './add-contact/add-contact.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { ChildContactInfoComponent } from './child-contact-info/child-contact-in
     RegisterChildComponent,
     AddChildComponent,
     ChildInfoEditComponent,
-    ChildContactInfoComponent
+    ChildContactInfoComponent,
+    ChildContactsComponent,
+    AddContactComponent
   ],
   imports: [
     BrowserModule,
