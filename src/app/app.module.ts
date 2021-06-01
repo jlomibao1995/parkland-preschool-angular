@@ -35,6 +35,7 @@ import { RegistrationsGuardianComponent } from './registrations-guardian/registr
 import { RegisterChildComponent } from './register-child/register-child.component';
 import { AddChildComponent } from './add-child/add-child.component';
 import { ChildInfoEditComponent } from './child-info-edit/child-info-edit.component';
+import { ChildContactInfoComponent } from './child-contact-info/child-contact-info.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { ChildInfoEditComponent } from './child-info-edit/child-info-edit.compon
     RegistrationsGuardianComponent,
     RegisterChildComponent,
     AddChildComponent,
-    ChildInfoEditComponent
+    ChildInfoEditComponent,
+    ChildContactInfoComponent
   ],
   imports: [
     BrowserModule,

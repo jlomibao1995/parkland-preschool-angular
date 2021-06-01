@@ -43,11 +43,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
       role: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      address: [''],
-      homePhoneNumber: [''],
-      workPhoneNumber: [''],
-      cellNumber: [''],
+      email: ['', Validators.required]
     });
 
     this.passwordForm = this._formBuilder.group({
@@ -67,11 +63,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
             role: [this.account.role, Validators.required],
             firstName: [this.account.firstName, Validators.required],
             lastName: [this.account.lastName, Validators.required],
-            email: [this.account.email, Validators.required],
-            address: [this.account.address],
-            homePhoneNumber: [this.account.homePhoneNumber],
-            workPhoneNumber: [this.account.workPhoneNumber],
-            cellNumber: [this.account.cellNumber],
+            email: [this.account.email, Validators.required]
           });
 
           this.loading = false;
@@ -94,24 +86,8 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
     return this.editForm.get('lastName');
   }
 
-  get address() {
-    return this.editForm.get('address');
-  }
-
   get email() {
     return this.editForm.get('email');
-  }
-
-  get homePhoneNumber() {
-    return this.editForm.get('homePhoneNumber');
-  }
-
-  get workPhoneNumber() {
-    return this.editForm.get('workPhoneNumber');
-  }
-
-  get cellNumber() {
-    return this.editForm.get('cellNumber');
   }
 
   get password() {
@@ -127,6 +103,15 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
     this.passwordMode = false;
   }
 
+  edit(){
+    if (this.editMode) {
+      this.editMode = false;
+    } else {
+      this.editMode = true;
+      this.passwordMode = false;
+    }
+  }
+
   cancelEdit() {
     this.editMode = false;
     this.getAccount();
@@ -138,20 +123,12 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
 
   saveAccountChanges() {
     this.loading = true;
-    let address = this.address.value ? this.address.value : '';
-    let homePhoneNumber = this.homePhoneNumber.value ? this.homePhoneNumber.value : '';
-    let workPhoneNumber = this.workPhoneNumber.value ? this.workPhoneNumber.value : '';
-    let cellNumber = this.cellNumber.value ? this.cellNumber.value : '';
 
     const params = new HttpParams()
       .set('role', this.role.value)
       .set('email', this.email.value)
       .set('firstName', this.firstName.value)
-      .set('lastName', this.lastName.value)
-      .set('address', address)
-      .set('homePhoneNumber', homePhoneNumber)
-      .set('workPhoneNumber', workPhoneNumber)
-      .set('cellNumber', cellNumber);
+      .set('lastName', this.lastName.value);
 
     this._accountService.updateAccount(this.account.id, params).subscribe(
       data => this.successMessage('Account changes have been saved successfully'),

@@ -69,7 +69,7 @@
         <div class="form-check form-check-inline">
           <input type="checkbox" checked class="form-check-input" name="contactInfo"
             (change)="toggleColumnState($event)">
-          <label for="">Contact Info</label>
+          <label for="">Email</label>
         </div>
 
         <div class="form-check form-check-inline">
@@ -104,7 +104,7 @@
         <thead>
           <tr>
             <th [class.d-none]="!columnStates.name">Name</th>
-            <th [class.d-none]="!columnStates.contactInfo">Contact Info</th>
+            <th [class.d-none]="!columnStates.contactInfo">Email</th>
             <th [class.d-none]="!columnStates.child">Child</th>
             <th [class.d-none]="!columnStates.role">Role</th>
             <th [class.d-none]="!columnStates.lastLoginDate">Login Date</th>
@@ -116,14 +116,7 @@
           <tr *ngFor="let account of accounts; let i = index" (click)="selectAccount(i)"
             [class.table-active]="account.id==selectedId">
             <td [class.d-none]="!columnStates.name">{{account.firstName}} {{account.lastName}}</td>
-            <td [class.d-none]="!columnStates.contactInfo">
-              <ul class="list-unstyled">
-                <li>E: <a [href]="'mailto:' + account.email">{{account.email}}</a></li>
-                <li>H: {{account.homePhoneNumber}}</li>
-                <li>W: {{account.workPhoneNumber}}</li>
-                <li>C: {{account.cellNumber}}</li>
-              </ul>
-            </td>
+            <td [class.d-none]="!columnStates.contactInfo"><a [href]="'mailto:' + account.email">{{account.email}}</a></td>
             <td [class.d-none]="!columnStates.child">
               <ul class="list-unstyled">
                 <li *ngFor="let child of account.childList">{{child.firstName}} {{child.lastName}}</li>

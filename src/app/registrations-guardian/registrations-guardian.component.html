@@ -8,7 +8,7 @@
 
         <div class="row m-3">
             <div class="col-auto">
-                <button class="btn btn-primary">Register</button>
+                <a class="btn btn-primary" href="/guardian/register">Register</a>
             </div>
         </div>
         <div class="card-body">
@@ -16,7 +16,7 @@
 
             <div *ngFor="let child of childList">
                 <a class="btn btn-outline-primary" *ngFor="let registration of child.registrationList"
-                 data-bs-toggle="collapse" [href]="'#collapse' + registration.id" role="button" aria-expanded="true" aria-controls="collapseExample">
+                 data-bs-toggle="collapse" [href]="'#collapse' + registration.id" role="a" aria-expanded="true" aria-controls="collapseExample">
                     <div class="row text-center">
                         <div class="col">{{child.firstName}} {{child.lastName}}</div>
                         <div class="col">{{registration.classroom.description}}</div>

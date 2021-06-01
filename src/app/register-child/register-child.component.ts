@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Child } from '../models/Child';
+import { Classroom } from '../models/Classroom';
 import { AuthenticationService } from '../services/authentication.service';
+import { ClassesService } from '../services/classroom.service';
 
 @Component({
   selector: 'app-register-child',
@@ -15,13 +17,26 @@ export class RegisterChildComponent implements OnInit {
   public showAddChildForm: boolean;
   public currentPage = 1;
 
-  constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService) { }
+  public classrooms: Classroom[];
+  public classForm: FormGroup;
+  public classroom: Classroom;
+  public days;
+
+  constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService,
+    private _classroomService: ClassesService) { 
+      this.days = this._classroomService.days;
+    }
 
   ngOnInit(): void {
     this.showAddChildForm = false;
+    this.currentPage = 1;
     
     this.childForm = this._formBuilder.group({
       childId : ['', Validators.required]
+    });
+
+    this.classForm = this._formBuilder.group({
+      classId : ['', Validators.required]
     });
 
     this._authenticationService.populateAccountInfo().then((value) => {
@@ -40,11 +55,24 @@ export class RegisterChildComponent implements OnInit {
     } else {
       this.showAddChildForm = false;
       this.selectedChildId = this.childForm.get('childId').value;
+
+      this._classroomService.getClassroomForChild(this.selectedChildId).subscribe(
+        data => this.classrooms = data,
+        error => console.log(error)
+      )
     }
+  }
+
+  selectClass() {
+    this.classroom = this.classrooms[this.classForm.get('classId').value];
   }
 
   next() {
     this.currentPage += 1;
+  }
+
+  previous() {
+    this.currentPage -= 1;
   }
 
 }
