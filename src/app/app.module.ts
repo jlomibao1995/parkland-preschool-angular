@@ -39,6 +39,7 @@ import { ChildContactInfoComponent } from './child-contact-info/child-contact-in
 import { ChildContactsComponent } from './child-contacts/child-contacts.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
 import { ClassroomInfoComponent } from './classroom-info/classroom-info.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { ClassroomInfoComponent } from './classroom-info/classroom-info.componen
     ChildContactInfoComponent,
     ChildContactsComponent,
     AddContactComponent,
-    ClassroomInfoComponent
+    ClassroomInfoComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -83,4 +85,5 @@ import { ClassroomInfoComponent } from './classroom-info/classroom-info.componen
   {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+ }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountsComponent } from './accounts/accounts.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { ClassListComponent } from './class-list/class-list.component';
 import { ClassesComponent } from './classes/classes.component';
 import { LoginComponent } from './login/login.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'admin/payments', component: PaymentsComponent},
   {path: 'staff/classlist/:classId', component: ClassListComponent},
   {path: 'myaccount', component: MyAccountComponent},
+  {path: 'checkout/:invoiceId', component: CheckoutComponent},
   {path: '', redirectTo: '/myaccount', pathMatch: 'full'}
 ];
 

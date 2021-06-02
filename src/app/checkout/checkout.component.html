@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="card m-3">
+        <h4 class="card-title display-6 text-center m-3">Checkout</h4>
+        <div class="card-body">
+            
+            <div class="row">
+                <div class="col">
+                    <app-payment-details *ngIf="paymentId != null" [paymentId]="paymentId"></app-payment-details>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col"></div>
+                <div class="col" #paypal></div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+</div>

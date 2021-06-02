@@ -18,7 +18,8 @@ export class PaymentDetailsComponent implements OnInit, OnChanges {
    }
    
   ngOnChanges(changes: SimpleChanges): void {
-    this._paymentService.getPayment(this.paymentId).subscribe(data => this.payment = data,
+    this._paymentService.getPayment(this.paymentId).subscribe(
+      data => this.payment = data,
       error => console.log(error.error.message))
   }
 

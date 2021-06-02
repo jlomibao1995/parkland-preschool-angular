@@ -34,12 +34,22 @@ export class PaymentsService {
   }
 
   processPayment(invoiceId: String, params: HttpParams) {
-    return this._http.put<any>(this.baseUrl + '/' + invoiceId, {}, {params})
+    return this._http.put<any>(this.baseUrl + '/admin/' + invoiceId, {}, {params})
     .pipe(catchError(this.errorHandler));
   }
 
   getPayment(id){
     return this._http.get<PaymentDetails>(this.baseUrl + "/" + id)
+    .pipe(catchError(this.errorHandler));
+  }
+
+  getPaymentForPayPal(invoiceId) {
+    return this._http.get<PaymentDetails>(this.baseUrl + "/invoice/" + invoiceId)
+    .pipe(catchError(this.errorHandler));
+  }
+
+  processPaypalPayment(invoiceId, params){
+    return this._http.put<any>(this.baseUrl + '/paypal/' + invoiceId, {}, {params})
     .pipe(catchError(this.errorHandler));
   }
 
