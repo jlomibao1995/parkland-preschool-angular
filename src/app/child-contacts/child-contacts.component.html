@@ -2,33 +2,38 @@
     <div *ngFor="let guardian of getChildContacts(contactTypes.guardian)">
         <app-child-contact-info [contact]="guardian"></app-child-contact-info>
     </div>
-    <div *ngIf="getChildContacts(contactTypes.guardian).length < 2" class="alert alert-info" role="alert">
-        You are missing guardian information please add the missing information
-        <button class="btn btn-outline-dark px-3" (click)="addContactType(contactTypes.guardian)" data-bs-toggle="modal" data-bs-target="#addContact">Add Guardian Info</button>
+    <div *ngIf="getChildContacts(contactTypes.guardian).length < 2" class="alert alert-info row" role="alert">
+        <div class="col">You are missing guardian information please add the missing information</div>
+        <div class="col-auto"><button class="btn btn-outline-dark mx-3" (click)="addContactType(contactTypes.guardian)" 
+            data-bs-toggle="modal" data-bs-target="#addContact">Add Guardian Info</button></div>
     </div>
 
     <div *ngFor="let other of getChildContacts(contactTypes.other)">
         <app-child-contact-info [contact]="other"></app-child-contact-info>
     </div>
-    <div *ngIf="getChildContacts(contactTypes.other).length < 1" class="alert alert-info" role="alert">
-        You are missing information for other caregiver please add the missing information
-        <button class="btn btn-outline-dark px-3" (click)="addContactType(contactTypes.other)" data-bs-toggle="modal" data-bs-target="#addContact">Add Other Caregiver Info</button>
+    <div *ngIf="getChildContacts(contactTypes.other).length < 1" class="alert alert-info row" role="alert">
+        <div class="col">You are missing information for other caregiver please add the missing information</div>
+        <div class="col-auto"> <button class="btn btn-outline-dark mx-3" (click)="addContactType(contactTypes.other)" 
+            data-bs-toggle="modal" data-bs-target="#addContact">Add Other Caregiver Info</button> </div>
     </div>
 
     <div *ngFor="let emergency of getChildContacts(contactTypes.emergency)">
         <app-child-contact-info [contact]="emergency"></app-child-contact-info>
     </div>
-    <div *ngIf="getChildContacts(contactTypes.emergency).length < 1" class="alert alert-info" role="alert">
-        You are missing information for emergency contact please add the missing information
-        <button class="btn btn-outline-dark px-3" (click)="addContactType(contactTypes.emergency)" data-bs-toggle="modal" data-bs-target="#addContact">Add Emergency Contact Info</button>
+    <div *ngIf="getChildContacts(contactTypes.emergency).length < 1" class="alert alert-info row" role="alert">
+        <div class="col"> You are missing information for emergency contact please add the missing information</div>
+        <div class="col-auto"><button class="btn btn-outline-dark mx-3" (click)="addContactType(contactTypes.emergency)" 
+            data-bs-toggle="modal" data-bs-target="#addContact">Add Emergency Contact Info</button> </div>
     </div>
 
     <div *ngFor="let pickup of getChildContacts(contactTypes.pickup)">
         <app-child-contact-info [contact]="pickup"></app-child-contact-info>
     </div>
-    <div *ngIf="getChildContacts(contactTypes.pickup).length < 2" class="alert alert-info" role="alert">
-        You are missing information for authorized pickup please add the missing information
-        <button class="btn btn-outline-dark px-3" (click)="addContactType(contactTypes.pickup)" data-bs-toggle="modal" data-bs-target="#addContact">Add Authorized Pickup Info</button>
+    <div *ngIf="getChildContacts(contactTypes.pickup).length < 2" class="alert alert-info row" role="alert">
+        <div class="col">You are missing information for authorized pickup please add the missing information</div>
+        <div class="col-auto">
+            <button class="btn btn-outline-dark" (click)="addContactType(contactTypes.pickup)" data-bs-toggle="modal" data-bs-target="#addContact">Add Authorized Pickup Info</button>
+        </div>
     </div>
 </div>
 
@@ -44,7 +49,7 @@
           <app-add-contact *ngIf="contactToAdd != null && childId != null" [childId]="childId" [type]="contactToAdd"></app-add-contact>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ngOnInit()">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="update()">Close</button>
         </div>
       </div>
     </div>

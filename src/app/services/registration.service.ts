@@ -44,6 +44,11 @@ export class RegistrationService {
     .pipe(catchError(this.errorHandler));
   }
 
+  registerChild(registration) {
+    return this._http.post<any>(this.baseUrl + '/register', registration)
+    .pipe(catchError(this.errorHandler));
+  }
+
   deleteRegistration(id) {
     return this._http.delete<any>(this.baseUrl + '/' + id)
     .pipe(catchError(this.errorHandler));

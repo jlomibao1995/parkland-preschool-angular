@@ -1,41 +1,39 @@
-<div class="container p-3" *ngIf="registration != null">
-    <div class="row">
-        <div class="col-auto">Class:</div>
-        <div class="col">{{registration.classroom.description}}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-auto">Days:</div>
-        <div class="col" *ngIf="registration.classroom.days == days.mwf">Monday/Wednesday/Friday</div>
-        <div class="col" *ngIf="registration.classroom.days == days.tth">Tuesday/Thursday</div>
-    </div>
-
-    <div class="row">
-        <div class="col-auto">Date:</div>
-        <div class="col">{{registration.classroom.startDate | date:'shortDate'}} - {{registration.classroom.endDate |
-            date:'shortDate'}}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-auto">Time:</div>
-        <div class="col">{{registration.classroom.startDate | date:'shortTime'}} - {{registration.classroom.endDate |
-            date:'shortTime'}}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-auto">
-            Registered on:
-        </div>
-        <div class="col">{{registration.registrationDate | date:'MM/d/yy HH:mm'}}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-auto">
-            Status:
-        </div>
-        <div class="col" *ngIf="registration.status == status.registered">Registered</div>
-        <div class="col" *ngIf="registration.status == status.unregistered">Pending registration fee payment</div>
-        <div class="col" *ngIf="registration.status == status.pending">Pending admin confirmation</div>
-        <div class="col" *ngIf="registration.status == status.waitlisted">Wait Listed</div>
-    </div>
-</div>
+<table class="table table-hover" *ngIf="registration !=null">
+    <thead>
+        <tr>
+            <th colspan="2">Registration Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Class</th>
+            <td>{{registration.classroom.description}}</td>
+        </tr>
+        <tr>
+            <th>Days</th>
+            <td *ngIf="registration.classroom.days == days.mwf">Monday/Wednesday/Friday</td>
+            <td *ngIf="registration.classroom.days == days.tth">Tuesday/Thursday</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{registration.classroom.startDate | date:'shortDate'}} - {{registration.classroom.endDate |
+                date:'shortDate'}}</td>
+        </tr>
+        <tr>
+            <th>Time</th>
+            <td>{{registration.classroom.startDate | date:'shortTime'}} - {{registration.classroom.endDate |
+                date:'shortTime'}}</td>
+        </tr>
+        <tr>
+            <th>Registered on</th>
+            <td>{{registration.registrationDate | date:'MM/d/yy HH:mm'}}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td *ngIf="registration.status == status.registered">Registered</td>
+            <td *ngIf="registration.status == status.unregistered">Pending registration fee payment</td>
+            <td *ngIf="registration.status == status.pending">Pending admin confirmation</td>
+            <td *ngIf="registration.status == status.waitlisted">Wait Listed</td>
+        </tr>
+    </tbody>
+</table>

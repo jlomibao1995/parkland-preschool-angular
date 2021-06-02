@@ -33,8 +33,6 @@ export class ChildContactInfoComponent implements OnInit, OnChanges {
       address: [this.contact.address, Validators.required],
       relationToChild: [this.contact.relationToChild, Validators.required]
     });
-
-    console.log(this.contact.firstName);
   }
 
   ngOnInit(): void {

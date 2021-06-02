@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ChildContact } from '../models/ChildContact';
 import { ChildService } from '../services/child.service';
 
@@ -12,6 +12,7 @@ export class ChildContactsComponent implements OnInit, OnChanges {
   public childContacts: ChildContact[];
   public contactTypes;
   public contactToAdd: string;
+  @Output() public contactsUpdated: EventEmitter<string> = new EventEmitter();
 
   constructor(private _childService: ChildService) {
     this.contactTypes = this._childService.contactsType;
@@ -33,6 +34,11 @@ export class ChildContactsComponent implements OnInit, OnChanges {
         error => console.log(error.error.message)
       )
     }
+  }
+
+  update() {
+    this.ngOnInit();
+    this.contactsUpdated.emit('updated');
   }
 
   getChildContacts(type) {

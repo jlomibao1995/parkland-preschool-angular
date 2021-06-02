@@ -111,7 +111,7 @@ export class AddChildComponent implements OnInit {
       birthdate : this.birthdate.value,
       address : this.address.value,
       postalCode : this.postalCode.value,
-      healthCareNum : this.healthCareNum.value,
+      healthCareNumber : this.healthCareNum.value,
       allergy : this.addChildForm.get('allergy').value,
       doctorClinic : this.doctorClinic.value,
       medicalPhoneNumber : this.medicalPhoneNumber.value,

@@ -41,7 +41,7 @@
 
             <div class="col form-group">
                 <label for="postalCode">Phone Number</label>
-                <input type="text" class="form-control" formControlName="homePhoneNumber"
+                <input type="tel" class="form-control" formControlName="homePhoneNumber"
                     [class.is-invalid]="homePhoneNumber.invalid && homePhoneNumber.touched">
                 <small [class.d-none]="homePhoneNumber.valid || homePhoneNumber.untouched" class="text-danger">Enter home phone number</small>
             </div>
@@ -50,14 +50,14 @@
         <div class="row p-2" [hidden]="type == contactTypes.pickup || type == contactTypes.other">
             <div class="col form-group" [hidden]="type == contactTypes.emergency">
                 <label for="postalCode">Work Phone Number</label>
-                <input type="text" class="form-control" formControlName="workPhoneNumber"
+                <input type="tel" class="form-control" formControlName="workPhoneNumber"
                     [class.is-invalid]="workPhoneNumber.invalid && workPhoneNumber.touched">
                 <small [class.d-none]="workPhoneNumber.valid || workPhoneNumber.untouched" class="text-danger">Enter work phone number</small>
             </div>
 
             <div class="col form-group">
                 <label for="postalCode">Cellphone Number</label>
-                <input type="text" class="form-control" formControlName="cellNumber"
+                <input type="tel" class="form-control" formControlName="cellNumber"
                     [class.is-invalid]="cellNumber.invalid && cellNumber.touched">
                 <small [class.d-none]="cellNumber.valid || cellNumber.untouched" class="text-danger">Enter cell phone number</small>
             </div>
