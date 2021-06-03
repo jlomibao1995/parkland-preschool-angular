@@ -10,6 +10,7 @@ import { PaymentsService } from '../services/payments.service';
 export class PaymentDetailsComponent implements OnInit, OnChanges {
 
   @Input() public paymentId: number;
+  @Input() updated: boolean;
   public payment: PaymentDetails;
   public status;
 

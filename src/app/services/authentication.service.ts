@@ -26,12 +26,6 @@ export class AuthenticationService {
         this._router.navigateByUrl('/myaccount');
       });
   }
-
-  // checkAuthentication() {
-  //   if (this._cookieService.get('authorization')) {
-  //     this._router.navigateByUrl('/');
-  //   } 
-  // }
   
   authenticated() {
     if (this._cookieService.get('authorization')) {

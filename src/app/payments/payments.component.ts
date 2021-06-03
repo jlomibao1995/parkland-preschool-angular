@@ -76,6 +76,7 @@ export class PaymentsComponent implements OnInit {
   }
 
   goToPage(page: number) {
+    this.selectedId = null;
     this.loading = true;
     this.pages = [];
     this.currentPage = page;

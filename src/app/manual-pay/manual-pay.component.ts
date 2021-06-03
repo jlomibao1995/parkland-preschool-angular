@@ -18,6 +18,7 @@ export class ManualPayComponent implements OnInit, OnChanges {
   public status;
   public paymentForm: FormGroup;
   public loading: boolean;
+  updated: boolean;
 
   constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder) {
     this.status = this._paymentService.status;
@@ -35,7 +36,8 @@ export class ManualPayComponent implements OnInit, OnChanges {
     this.paymentForm = this._formBuilder.group({
       payee : ['Admin', Validators.required],
       payer : ['Parent', Validators.required],
-      method : ['Cash', Validators.required]
+      method : ['Cash', Validators.required],
+      serviceFee : [0, Validators.required]
     });
 
     if (this.paymentId) {
@@ -60,6 +62,10 @@ export class ManualPayComponent implements OnInit, OnChanges {
     return this.paymentForm.get('method');
   }
 
+  get serviceFee() {
+    return this.paymentForm.get('serviceFee');
+  }
+
   processPayment() {
     this.loading = true;
     let date = new Date();
@@ -70,18 +76,21 @@ export class ManualPayComponent implements OnInit, OnChanges {
     .set('payee', this.payee.value)
     .set('payer', this.payer.value)
     .set('paymentMethod', this.method.value)
-    .set('datePaid', formattedDate);
+    .set('datePaid', formattedDate)
+    .set('serviceFee', this.serviceFee.value);
 
     this._paymentService.processPayment(this.paymentDetails.invoiceId, params).subscribe(
-      data => this.successMessage('Payment changes have been processed'),
+      data => this.successMessage('Payment changes have been processed', data),
       error => this.errorMessage(error)
     );
   }
 
-  successMessage(successMesage: String) {
-    this.ngOnInit();
+  successMessage(successMesage: String, data) {
     this.message = successMesage;
     this.success = true;
+    this.updated = true;
+    this.loading = false;
+    this.paymentDetails = data;
   }
 
   errorMessage(error: HttpErrorResponse) {

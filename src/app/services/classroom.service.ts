@@ -25,7 +25,7 @@ export class ClassesService {
 
   getClasses(page, pageSize) {
     page = page -1;
-    let url = this.baseUrl + '/classrooms/pages?page=' + page + '&pageSize=' + pageSize;
+    let url = this.baseUrl + '/admin/classrooms/pages?page=' + page + '&pageSize=' + pageSize;
     return this._http.get<any>(url)
     .pipe(catchError(this.errorHandler));
   }
@@ -37,17 +37,17 @@ export class ClassesService {
   }
 
   addClassroom(classroom: Classroom) {
-    return this._http.post<any>(this.baseUrl, classroom, {'headers': this.headers})
+    return this._http.post<any>(this.baseUrl + '/admin', classroom, {'headers': this.headers})
     .pipe(catchError(this.errorHandler));
   }
 
   updateClassroom(id, params: HttpParams){
-    return this._http.put<any>(this.baseUrl + '/' + id, {}, {params})
+    return this._http.put<any>(this.baseUrl + '/admin/' + id, {}, {params})
     .pipe(catchError(this.errorHandler));
   }
 
   deleteClassroom(id) {
-    return this._http.delete(this.baseUrl + '/' + id)
+    return this._http.delete(this.baseUrl + '/admin/' + id)
     .pipe(catchError(this.errorHandler));
   }
 

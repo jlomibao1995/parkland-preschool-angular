@@ -109,9 +109,9 @@ export class AddClassComponent implements OnInit {
   }
 
   errorMessage(error) {
-    this.ngOnInit();
     this.message = error;
     this.success = false;
+    this.loading = false;
   }
 
   messageChangedHandler(message: String) {

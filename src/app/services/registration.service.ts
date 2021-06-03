@@ -19,7 +19,7 @@ export class RegistrationService {
   constructor(private _http: HttpClient) { }
 
   getRegistrations(page, pageSize, classroom, status, searchQuery) {
-    let url = this.baseUrl + '/registrations/pages';
+    let url = this.baseUrl + '/admin/registrations/pages';
     page = page - 1;
 
     const params = new HttpParams()
@@ -50,7 +50,7 @@ export class RegistrationService {
   }
 
   deleteRegistration(id) {
-    return this._http.delete<any>(this.baseUrl + '/' + id)
+    return this._http.delete<any>(this.baseUrl + '/admin/' + id)
     .pipe(catchError(this.errorHandler));
   }
 

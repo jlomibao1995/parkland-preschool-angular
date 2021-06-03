@@ -29,7 +29,7 @@ export class AccountService {
     .set('role', role)
     .set('search', searchQuery);
 
-    let url = this.baseUrl + '/accounts/pages';
+    let url = this.baseUrl + '/admin/accounts/pages';
     return this._http.get<any>(url, {params})
     .pipe(catchError(this.errorHandler));
   }
@@ -46,7 +46,7 @@ export class AccountService {
   }
 
   addAccount(account: any) {   
-    return this._http.post<any>(this.baseUrl, account, { 'headers': this.headers})
+    return this._http.post<any>(this.baseUrl + '/admin', account, { 'headers': this.headers})
     .pipe(catchError(this.errorHandler));
   }
 
@@ -56,7 +56,7 @@ export class AccountService {
   }
 
   deleteAccount(id) {
-    return this._http.delete<any>(this.baseUrl + '/' + id)
+    return this._http.delete<any>(this.baseUrl + '/admin/' + id)
     .pipe(catchError(this.errorHandler));
   }
 

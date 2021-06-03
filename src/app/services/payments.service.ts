@@ -19,17 +19,17 @@ export class PaymentsService {
   constructor(private _http: HttpClient) { }
 
   getPayments(params: HttpParams) {
-    return this._http.get<any>(this.baseUrl + '/payments/pages', {params})
+    return this._http.get<any>(this.baseUrl + '/admin/payments/pages', {params})
     .pipe(catchError(this.errorHandler));
   }
 
   addPayment(payment: any) {
-    return this._http.post<any>(this.baseUrl, payment, {'headers': this.headers})
+    return this._http.post<any>(this.baseUrl + '/admin', payment, {'headers': this.headers})
     .pipe(catchError(this.errorHandler));
   }
 
   addPaymentForClass(classId: number, payment: any) {
-    return this._http.post<any>(this.baseUrl + '/class_payments/' + classId, payment, {'headers': this.headers})
+    return this._http.post<any>(this.baseUrl + '/admin/class_payments/' + classId, payment, {'headers': this.headers})
     .pipe(catchError(this.errorHandler));
   }
 

@@ -4,21 +4,21 @@
         <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
         </app-success-error-dialog>
     
-        <app-payment-details *ngIf="paymentId != null" [paymentId]="paymentId"></app-payment-details>
+        <app-payment-details *ngIf="paymentId != null" [paymentId]="paymentId" [updated]="updated"></app-payment-details>
         <form [class.d-none]="paymentDetails.paymentStatus == status.paid" [formGroup]="paymentForm"
             (ngSubmit)="processPayment()">
             <fieldset [disabled]="loading">
                 <div class="row">
                     <div class="col form-group">
                         <label for="">Received by</label>
-                        <input type="text" class="form-control" formControlName="payee">
+                        <input type="text" class="form-control" formControlName="payee" [class.is-invalid]="payee.invalid && payee.touched">
                     </div>
                 </div>
     
                 <div class="row">
                     <div class="col form-group">
                         <label for="">Payer</label>
-                        <input type="text" class="form-control" formControlName="payer">
+                        <input type="text" class="form-control" formControlName="payer" [class.is-invalid]="payer.invalid && payer.touched">
                     </div>
                 </div>
     
@@ -26,7 +26,15 @@
                     <div class="col form-group">
                         <label for="">Method</label>
                         <input type="text" class="form-control" placeholder="PayPal, Cash, E-Transfer, Cheque..."
-                            formControlName="method">
+                            formControlName="method" [class.is-invalid]="method.invalid && method.touched">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="">Service Fees Paid</label>
+                        <input type="number" class="form-control" placeholder="Enter 0 if there are no service fees" formControlName="serviceFee"
+                        [class.is-invalid]="serviceFee.invalid && serviceFee.touched">
                     </div>
                 </div>
     

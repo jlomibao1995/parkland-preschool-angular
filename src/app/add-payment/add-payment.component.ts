@@ -94,7 +94,7 @@ export class AddPaymentComponent implements OnInit {
         data => {
           this.ngOnInit();
           this.success = true;
-          this.message = "Payment entry has been added"
+          this.message = "Payment entry has been added to " + data + " registration(s)";
         }, 
         error => {
           this.message = error.error.message;
@@ -108,7 +108,7 @@ export class AddPaymentComponent implements OnInit {
         data => {
           this.ngOnInit();
           this.success = true;
-          this.message = "Payment entry has been added"
+          this.message = "Payment entry has been added to " + data;
         }, 
         error => {
           this.message = error.error.message;
