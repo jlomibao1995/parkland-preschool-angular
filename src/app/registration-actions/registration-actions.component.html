@@ -1,7 +1,7 @@
-<div class="container">
-    <div class="row" *ngIf="registration.status == status.unregistered">
+<div class="container" *ngIf="registration != null">
+    <div class="row" *ngIf="registration.status == status.unregistered && registration.active">
         <div class="col" *ngIf="!registration.classroom.full">
-            <button class="btn tbn-primary">Pay Registration Fee</button>
+            <button class="btn btn-primary">Pay Registration Fee</button>
         </div>
 
         <div class="col" *ngIf="registration.classroom.full">
@@ -9,7 +9,27 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="registration.status == status.registered">
-        
+    <div class="row" *ngIf="registration.status == status.registered && registration.active">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                    <tr><th class="text-center"></th></tr>
+                </thead>
+                <tbody>
+                    <tr><td></td></tr>
+                    <select class="form-select" size="5">
+                        <option *ngFor="let payment of paymentList">
+                            <tr>
+                                <td *ngIf="payment.paymentStatus == paymentStatus.paid">{{payment.description}} paid on
+                                    {{payment.datePaid}} for {{payment.total | currency}}</td>
+                                <td *ngIf="payment.paymentStatus == paymentStatus.unpaid">Pending payment on
+                                    {{payment.description}} for {{payment.total | currency}}</td>
+                            </tr>
+                        </option>
+                    </select>
+                </tbody>
+            </table>
+        </div>
+        <div class="col"></div>
     </div>
 </div>
