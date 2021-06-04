@@ -56,13 +56,12 @@ export class PaymentsService {
 
   getPaymentsForAccount(params: HttpParams){
     let email = this._cookieService.get('email');
-    this._http.get<any>(this.baseUrl + '/account/' + email, {params})
+    return this._http.get<any>(this.baseUrl + '/account/' + email, {params})
     .pipe(catchError(this.errorHandler));
-
   }
 
   getPaymentsForRegistration(registrationId) {
-    this._http.get<any>(this.baseUrl + '/registration/' + registrationId)
+    return this._http.get<any>(this.baseUrl + '/registration/' + registrationId)
     .pipe(catchError(this.errorHandler));
   }
 
