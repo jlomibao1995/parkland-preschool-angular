@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row" *ngIf="registration.status == status.unregistered">
+        <div class="col" *ngIf="!registration.classroom.full">
+            <button class="btn tbn-primary">Pay Registration Fee</button>
+        </div>
+
+        <div class="col" *ngIf="registration.classroom.full">
+            <button class="btn btn-outline-primary">Add Child to Wait List</button>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="registration.status == status.registered">
+        
+    </div>
+</div>

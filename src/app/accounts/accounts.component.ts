@@ -18,6 +18,7 @@ export class AccountsComponent implements OnInit {
   public selectedAccount: Account;
   public roles;
   public selectedId: number;
+  public userRole;
 
   public pages: number[] = [];
   public totalPages: number;
@@ -54,6 +55,7 @@ export class AccountsComponent implements OnInit {
     });
 
     this.goToPage(this.currentPage);
+    this.userRole = this._accountService.roles.admin;
   }
 
   selectAccount(index) {

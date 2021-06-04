@@ -4,6 +4,7 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { PaymentDetails } from '../models/PaymentDetails';
+import { CookieService } from './cookie.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class PaymentsService {
     paid : 'PAID'
   }
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private _cookieService: CookieService) { }
 
   getPayments(params: HttpParams) {
     return this._http.get<any>(this.baseUrl + '/admin/payments/pages', {params})
@@ -50,6 +51,18 @@ export class PaymentsService {
 
   processPaypalPayment(invoiceId, params){
     return this._http.put<any>(this.baseUrl + '/paypal/' + invoiceId, {}, {params})
+    .pipe(catchError(this.errorHandler));
+  }
+
+  getPaymentsForAccount(params: HttpParams){
+    let email = this._cookieService.get('email');
+    this._http.get<any>(this.baseUrl + '/account/' + email, {params})
+    .pipe(catchError(this.errorHandler));
+
+  }
+
+  getPaymentsForRegistration(registrationId) {
+    this._http.get<any>(this.baseUrl + '/registration/' + registrationId)
     .pipe(catchError(this.errorHandler));
   }
 

@@ -40,6 +40,7 @@ import { ChildContactsComponent } from './child-contacts/child-contacts.componen
 import { AddContactComponent } from './add-contact/add-contact.component';
 import { ClassroomInfoComponent } from './classroom-info/classroom-info.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { RegistrationActionsComponent } from './registration-actions/registration-actions.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     ChildContactsComponent,
     AddContactComponent,
     ClassroomInfoComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    RegistrationActionsComponent
   ],
   imports: [
     BrowserModule,

@@ -55,7 +55,7 @@ export class PaymentsComponent implements OnInit {
       sort: [''],
       search: [''],
       class: [0],
-      month: [''],
+      month: [0],
       year: ['']
     });
 

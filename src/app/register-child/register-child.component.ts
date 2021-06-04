@@ -34,6 +34,7 @@ export class RegisterChildComponent implements OnInit {
 
   public registration: Registration;
   public status;
+  public infoComplete = false;
 
   constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService,
     private _childService: ChildService, private _classroomService: ClassesService,
@@ -175,6 +176,10 @@ export class RegisterChildComponent implements OnInit {
 
   messageChangedHandler(message: String) {
     this.message = null;
+  }
+
+  childInfoDone() {
+    this.infoComplete = true;
   }
 
 }

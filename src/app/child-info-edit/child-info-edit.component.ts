@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Child } from '../models/Child';
 import { ChildService } from '../services/child.service';
@@ -18,6 +18,7 @@ export class ChildInfoEditComponent implements OnInit, OnChanges {
   public child: Child;
   @Input() childId: number;
   public editMode:boolean;
+  @Output() infoComplete: EventEmitter<string> = new EventEmitter();
 
   constructor(private _formBuilder: FormBuilder, private _childService: ChildService) {
     this.genders = this._childService.gender;
@@ -37,6 +38,13 @@ export class ChildInfoEditComponent implements OnInit, OnChanges {
         this.child = data;
         this.loading = false;
         this.populateForm();
+        
+        this.editMode = true;
+        if (this.checkNullFields()) {
+          this.infoComplete.emit('done');
+          this.editMode = false;
+        }
+
       }, error => {
         console.log(error);
       }
@@ -179,6 +187,16 @@ export class ChildInfoEditComponent implements OnInit, OnChanges {
         this.loading = false;
       }
     )
+  }
+
+  checkNullFields() {
+    if (!this.child.firstName || !this.child.lastName || !this.child.gender || !this.child.birthdate || !this.child.address ||
+      !this.child.postalCode || !this.child.healthCareNumber || !this.child.doctorClinic || !this.child.medicalPhoneNumber ||
+      this.child.immunizations == null || this.child.chickenPox == null || this.child.medications == null) {
+      return false;
+    }
+
+    return true;
   }
 
 }
