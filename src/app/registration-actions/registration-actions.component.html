@@ -1,7 +1,7 @@
 <div class="container" *ngIf="registration != null">
     <div class="row" *ngIf="registration.status == status.unregistered && registration.active">
         <div class="col" *ngIf="!registration.classroom.full">
-            <button class="btn btn-primary">Pay Registration Fee</button>
+            <a [href]="'/guardian/register/' + registration.paymentList[0].id" class="btn btn-primary">Complete Registration</a>
         </div>
 
         <div class="col" *ngIf="registration.classroom.full">

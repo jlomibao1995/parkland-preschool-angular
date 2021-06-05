@@ -80,45 +80,27 @@
                     </div>
 
                     <div class="col-auto form-group" *ngIf="classroom != null && classroom.full">
-                        <input class="btn btn-success px-4" type="submit" value="Add My Child Wait List"
-                            [disabled]="!childForm.valid || !classForm.valid">
+                        <button class="btn btn-success px-4" type="button" (click)="register()"
+                            [disabled]="!childForm.valid || !classForm.valid">Add My Child Wait List</button>
                     </div>
                 </div>
             </div>
 
             <div *ngIf="currentPage == 3">
-                <div class="progress my-4">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%"
-                        aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-
-                <div class="alert alert-primary" *ngIf="!infoComplete" role="alert">
-                    Complete the child information to continue
-                </div>
-
-                <app-child-info-edit [childId]="selectedChildId" (infoComplete)="childInfoDone()"></app-child-info-edit>
-
-                <div class="row my-4">
-                    <div class="col form-group">
-                        <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
-                    </div>
-                    <div class="col-auto form-group" [hidden]="!infoComplete">
-                        <button class="btn btn-outline-primary px-4" [disabled]="!infoComplete" type="button" (click)="next()">Next</button>
-                    </div>
-                </div>
+                <app-registration-info [childId]="selectedChildId" (goBack)="previous()" (infoComplete)="next()"></app-registration-info>
             </div>
 
             <div *ngIf="currentPage == 4">
                 <div class="progress my-4">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%"
-                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%"
+                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
-                <app-child-contacts [childId]="selectedChildId" (contactsUpdated)="contactsHandler($event)">
-                </app-child-contacts>
+                <h4>Review Registration Details</h4>
+
+                <app-classroom-info [classroom]="classroom"></app-classroom-info>
+
+                <app-child-info [childId]="selectedChildId"></app-child-info>
 
                 <div class="row my-4">
                     <div class="col form-group">
@@ -128,242 +110,10 @@
                         <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
                     </div>
                     <div class="col-auto form-group">
-                        <button class="btn btn-outline-primary px-4" type="button" (click)="next()"
-                            [disabled]="numOfChildContacts < 6">Next</button>
+                        <input class="btn btn-success px-4" (click)="register()" value="Save Registration Details">
                     </div>
                 </div>
             </div>
-
-            <form [formGroup]="signForm" (ngSubmit)="register()">
-                <div *ngIf="currentPage == 5">
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 60%"
-                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                    <div>
-                        <h4>Discipline Policy</h4>
-                        <p class="lead">
-                            No corporal punishment will be administered by the staff of Parkland Preschool. In the event
-                            of
-                            a
-                            discipline problem, the child will be moved to a quiet area until he/she is settled. If a
-                            problem
-                            persists despite teacher intervention and communication with the parents/guardian, the
-                            school
-                            reserves the right to cancel the child’s enrolment. I accept this method of discipline for
-                            my
-                            child.
-                        </p>
-                        <small>
-                            By typing your name below, you are signing this agreement electronically. You agree your
-                            electronic
-                            signature is the legal equivalent of your physical signature.
-                        </small>
-                        <input type="text" class="form-control" formControlName="discipline" [placeholder]="accountName"
-                            [class.is-invalid]="discipline.invalid && discipline.touched || signForm.errors?.disciplineInvalid">
-                        <small [class.d-none]="discipline.valid || discipline.untouched" class="text-danger">Enter
-                            signature</small>
-                        <small [class.d-none]="!signForm.errors?.disciplineInvalid" class="text-danger">Signature
-                            doesn't
-                            match
-                            name of account
-                            holder</small>
-                    </div>
-
-                    <div class="row my-4">
-                        <div class="col form-group">
-                            <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
-                        </div>
-                        <div class="col-auto">
-                            <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
-                        </div>
-                        <div class="col-auto form-group">
-                            <button class="btn btn-outline-primary px-4" type="button" (click)="next()"
-                                [disabled]="discipline.invalid || signForm.errors?.disciplineInvalid">Next</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="currentPage == 6">
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 70%"
-                            aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                    <div>
-                        <h4>Safety Authorizations</h4>
-                        <p class="lead">
-                            In the case of a serious accident or illness, I authorize the staff of Parkland Preschool to
-                            administer
-                            and/or seek medical attention for my child. Parkland Preschool staff will notify
-                            parent/guardian
-                            as
-                            soon
-                            as possible. The parents/ guardian are responsible for any costs incurred.
-                        </p>
-                        <small>
-                            By typing your name below, you are signing this agreement electronically. You agree your
-                            electronic
-                            signature is the legal equivalent of your physical signature.
-                        </small>
-                        <input type="text" class="form-control" formControlName="safety" [placeholder]="accountName"
-                            [class.is-invalid]="safety.invalid && safety.touched || signForm.errors?.safetyInvalid">
-                        <small [class.d-none]="safety.valid || safety.untouched" class="text-danger">Enter
-                            signature</small>
-                        <small [class.d-none]="!signForm.errors?.safetyInvalid" class="text-danger">Signature doesn't
-                            match
-                            name
-                            of account holder</small>
-
-                        <h4 class="mt-3">Outdoor</h4>
-                        <p class="lead">
-                            We occasionally go outdoors during good weather for physical activity.
-                        </p>
-                        <small>
-                            By typing your name below, you are signing this agreement electronically. You agree your
-                            electronic
-                            signature is the legal equivalent of your physical signature.
-                        </small>
-                        <input type="text" class="form-control" formControlName="outdoor" [placeholder]="accountName"
-                            [class.is-invalid]="outdoor.invalid && outdoor.touched || signForm.errors?.outdoorInvalid">
-                        <small [class.d-none]="outdoor.valid || outdoor.untouched" class="text-danger">Enter
-                            signature</small>
-                        <small [class.d-none]="!signForm.errors?.outdoorInvalid" class="text-danger">Signature doesn't
-                            match
-                            name of account
-                            holder</small>
-                    </div>
-
-                    <div class="row my-4">
-                        <div class="col form-group">
-                            <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
-                        </div>
-                        <div class="col-auto">
-                            <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
-                        </div>
-                        <div class="col-auto form-group">
-                            <button class="btn btn-outline-primary px-4" type="button" (click)="next()"
-                                [disabled]="safety.invalid || outdoor.invalid || signForm.errors?.safetyInvalid || signForm.errors?.outdoorInvalid">Next</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="currentPage == 7">
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 90%"
-                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                    <div>
-                        <h4>Sick Policy</h4>
-                        <p class="lead">
-                            Parkland Preschool follows the Child Care Licensing Regulations concerning communicable
-                            diseases
-                            in
-                            order to protect the health and safety of all children and staff members. A child, who may
-                            be
-                            suffering
-                            from a disease in Schedule 1 of the Communicable Disease Regulations or exhibits any of the
-                            following
-                            symptoms within the past 24 hours, will not be permitted to be in attendance at preschool:
-                        </p>
-                        <ul>
-                            <li>Diarrhea</li>
-                            <li>Fever</li>
-                            <li>Vomiting</li>
-                            <li>New or unexplained rash or cough</li>
-                            <li>A child requiring greater care and attention can be provided without compromising the
-                                care
-                                of
-                                the
-                                other children in the program</li>
-                        </ul>
-                        <p class="lead">
-                            Children should be symptom free and/or on medication for 24 hours before returning to school
-                            or
-                            until
-                            the license holder is satisfied that the child no longer poses a health risk to persons on
-                            the
-                            program
-                            premises. The above does not apply if the child's parent provides written notice from a
-                            physician
-                            indicating the child does not pose a health risk to persons on the program premises. If a
-                            child
-                            becomes
-                            ill while at preschool, or where a staff member knows or has reason to believe that a child
-                            is
-                            exhibiting signs or symptoms of illness, the child will be separated from the class and made
-                            comfortable
-                            with a pillow and blanket where appropriate. The parents/guardian will be notified and
-                            expected
-                            to
-                            pick
-                            up the child as soon as possible. If the parents/guardians cannot be reached the emergency
-                            contact
-                            will
-                            be notified and expected to pick up the child as soon as possible. A primary staff member
-                            will
-                            directly
-                            supervise the sick child until removed from the program.
-                        </p>
-                        <p class="lead">Please notify the preschool if your child develops any communicable diseases</p>
-                        <p>(please ask us for a lisitng of communicable diseases)</p>
-                        <small>
-                            By typing your name below, you are signing this agreement electronically. You agree your
-                            electronic
-                            signature is the legal equivalent of your physical signature.
-                        </small>
-                        <input type="text" class="form-control" formControlName="sick" [placeholder]="accountName"
-                            [class.is-invalid]="sick.invalid && sick.touched || signForm.errors?.sickInvalid">
-                        <small [class.d-none]="sick.valid || sick.untouched" class="text-danger">Enter signature</small>
-                        <small [class.d-none]="!signForm.errors?.sickInvalid" class="text-danger">Signature doesn't
-                            match
-                            name
-                            of account holder</small>
-                    </div>
-
-                    <div class="row my-4">
-                        <div class="col form-group">
-                            <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
-                        </div>
-                        <div class="col-auto">
-                            <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
-                        </div>
-                        <div class="col-auto form-group">
-                            <button class="btn btn-outline-primary px-4" type="button" (click)="next()"
-                                [disabled]="sick.invalid || signForm.errors?.sickInvalid">Next</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="currentPage == 8">
-                    <div class="progress my-4">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%"
-                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                    <h4>Review Registration Details</h4>
-
-                    <app-classroom-info [classroom]="classroom"></app-classroom-info>
-
-                    <app-child-info [childId]="selectedChildId"></app-child-info>
-
-                    <div class="row my-4">
-                        <div class="col form-group">
-                            <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
-                        </div>
-                        <div class="col-auto">
-                            <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
-                        </div>
-                        <div class="col-auto form-group">
-                            <input class="btn btn-success px-4" type="submit" value="Register"
-                                [disabled]="!childForm.valid || !classForm.valid || !signForm.valid">
-                        </div>
-                    </div>
-                </div>
-
-            </form>
         </div>
     </fieldset>
 </div>
@@ -373,9 +123,9 @@
         <h2 *ngIf="registration.status == status.unregistered" class="display-3 text-success">Almost there!</h2>
         <h2 *ngIf="registration.status == status.waitlisted" class="display-3 text-success">Success!</h2>
 
-        <h2 *ngIf="registration.status == status.unregistered" class="lead">To save a spot for your child please pay the registration fee</h2>
-        <h2 *ngIf="registration.status == status.unregistered" class="lead">If you wish to pay another time just visit the <a href="/myaccount">My Account</a> page to access the PayPal portal</h2>
-        <small *ngIf="registration.status == status.unregistered">Until the registration fee is received the child has no saved spot for the class</small>
+        <h2 *ngIf="registration.status == status.unregistered" class="lead">To complete your registration and save a spot for your child please pay the registration fee</h2>
+        <h2 *ngIf="registration.status == status.unregistered" class="lead">If you wish to pay another time just visit the <a href="/myaccount">My Account</a> page to access this registration</h2>
+        <small *ngIf="registration.status == status.unregistered">Until the registration fee is received the child has no spot for the class</small>
         <h2 *ngIf="registration.status == status.waitlisted" class="lead">Your child has been added to the wait list</h2>
 
         <app-registration-details [registrationId]="registration.id"></app-registration-details>
@@ -386,7 +136,7 @@
             </div>
 
             <div class="col" *ngIf="registration.status == status.unregistered">
-                <button class="btn btn-outline-success">Pay Registration Fee</button>
+                <button class="btn btn-outline-success" (click)="payRegistrationFee()">Pay Registration Fee</button>
             </div>
         </div>
 

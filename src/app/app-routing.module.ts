@@ -6,6 +6,7 @@ import { ClassListComponent } from './class-list/class-list.component';
 import { ClassesComponent } from './classes/classes.component';
 import { LoginComponent } from './login/login.component';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { PayRegistrationFeeComponent } from './pay-registration-fee/pay-registration-fee.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { RegisterChildComponent } from './register-child/register-child.component';
 import { RegistrationsGuardianComponent } from './registrations-guardian/registrations-guardian.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'staff/classlist/:classId', component: ClassListComponent},
   {path: 'myaccount', component: MyAccountComponent},
   {path: 'checkout/:invoiceId', component: CheckoutComponent},
+  {path: 'guardian/register/:id', component: PayRegistrationFeeComponent},
   {path: '', redirectTo: '/myaccount', pathMatch: 'full'}
 ];
 

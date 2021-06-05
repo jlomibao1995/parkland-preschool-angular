@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { disciplineSignatureValidator, outdoorSignatureValidator, safetySignatureValidator, sickSignatureValidator } from '../helpers/signature.validator';
 import { Child } from '../models/Child';
 import { Classroom } from '../models/Classroom';
@@ -29,15 +30,13 @@ export class RegisterChildComponent implements OnInit {
   public classForm: FormGroup;
   public classroom: Classroom;
   public numOfChildContacts;
-  public signForm: FormGroup;
-  private accountName: string;
 
   public registration: Registration;
   public status;
   public infoComplete = false;
 
   constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService,
-    private _childService: ChildService, private _classroomService: ClassesService,
+    private _childService: ChildService, private _classroomService: ClassesService, private _router: Router,
     private _registrationService: RegistrationService) { 
       this.status = this._registrationService.status;
     }
@@ -58,18 +57,9 @@ export class RegisterChildComponent implements OnInit {
       classId: ['', Validators.required]
     });
 
-    this.signForm = this._formBuilder.group({
-      discipline: ['', Validators.required],
-      safety: ['', Validators.required],
-      outdoor: ['', Validators.required],
-      sick: ['', Validators.required],
-      accountName: [this.accountName]
-    });
-
     this.loading = true;
     this._authenticationService.populateAccountInfo().then((value) => {
       this.childList = this._authenticationService.currentUser.childList;
-      this.accountName = this._authenticationService.currentUser.firstName + ' ' + this._authenticationService.currentUser.lastName;
       this.loading = false;
     });
   }
@@ -99,14 +89,6 @@ export class RegisterChildComponent implements OnInit {
       this._childService.getChildInfo(this.selectedChildId).subscribe(
         data => {
           this.numOfChildContacts = data.childContactsList.length;
-
-          this.signForm = this._formBuilder.group({
-            discipline: ['', Validators.required],
-            safety: ['', Validators.required],
-            outdoor: ['', Validators.required],
-            sick: ['', Validators.required],
-            accountName: [this.accountName]
-          }, { validators: [disciplineSignatureValidator, outdoorSignatureValidator, safetySignatureValidator, sickSignatureValidator] });
           this.loading = false;
         },
         error => this.errorMessage(error)
@@ -121,13 +103,6 @@ export class RegisterChildComponent implements OnInit {
 
   selectClass() {
     this.classroom = this.classrooms[this.classForm.get('classId').value];
-  }
-
-  contactsHandler(event) {
-    this._childService.getChildInfo(this.selectedChildId).subscribe(
-      data => this.numOfChildContacts = data.childContactsList.length,
-      error => error
-    );
   }
 
   register() {
@@ -158,28 +133,11 @@ export class RegisterChildComponent implements OnInit {
     this.currentPage -= 1;
   }
 
-  get discipline() {
-    return this.signForm.get('discipline');
-  }
-
-  get safety() {
-    return this.signForm.get('safety');
-  }
-
-  get outdoor() {
-    return this.signForm.get('outdoor');
-  }
-
-  get sick() {
-    return this.signForm.get('sick');
-  }
-
   messageChangedHandler(message: String) {
     this.message = null;
   }
 
-  childInfoDone() {
-    this.infoComplete = true;
+  payRegistrationFee(){
+    this._router.navigate(['/checkout', this.registration.paymentList[0].invoiceId]);
   }
-
 }

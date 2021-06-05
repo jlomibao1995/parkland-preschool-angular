@@ -41,6 +41,8 @@ import { AddContactComponent } from './add-contact/add-contact.component';
 import { ClassroomInfoComponent } from './classroom-info/classroom-info.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { RegistrationActionsComponent } from './registration-actions/registration-actions.component';
+import { PayRegistrationFeeComponent } from './pay-registration-fee/pay-registration-fee.component';
+import { RegistrationInfoComponent } from './registration-info/registration-info.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { RegistrationActionsComponent } from './registration-actions/registratio
     AddContactComponent,
     ClassroomInfoComponent,
     CheckoutComponent,
-    RegistrationActionsComponent
+    RegistrationActionsComponent,
+    PayRegistrationFeeComponent,
+    RegistrationInfoComponent
   ],
   imports: [
     BrowserModule,
