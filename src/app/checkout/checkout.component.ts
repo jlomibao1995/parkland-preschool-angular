@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentDetails } from '../models/PaymentDetails';
@@ -22,7 +23,7 @@ export class CheckoutComponent implements OnInit {
   invoiceId: String;
   total: number;
   status;
-  payment;
+  updated = false;
 
   constructor(private _route: ActivatedRoute, private _paymentService: PaymentsService) {
     this._paymentService.status;
@@ -69,23 +70,26 @@ export class CheckoutComponent implements OnInit {
         this.loading = true;
 
         //send to backend
-        this.payment = {
-          status: order.status,
-          payee: order.purchase_units[0].payee.email_address,
-          payer: order.payer.email_address + ', ' + order.payer.name.given_name + ' ' + order.payer.name.surname,
-          invoiceId: order.purchase_units[0].invoice_id,
-          paymentMethod: 'Paypal',
-          datePaid: order.update_time
-        }
+        let date:string = order.update_time;
+        date = date.replace('Z', '');
+        date = date.replace('T', ' ');
+        const params = new HttpParams()
+        .set('payee', order.purchase_units[0].payee.email_address)
+        .set('payer', order.payer.email_address + ', ' + order.payer.name.given_name + ' ' + order.payer.name.surname)
+        .set('paymentMethod', 'PayPal')
+        .set('datePaid', date)
+        .set('status', order.status);
+
         this.paidFor = true;
 
-        this._paymentService.processPaypalPayment(this.payment.invoiceId, this.payment).subscribe(
+        this._paymentService.processPaypalPayment(this.invoiceId, params).subscribe(
           data => {
             this.success = true;
             this.message = "Payment has been processed"
             this.loading = false;
+            this.updated = true;
           }, error => console.log(error)
-        )
+        );
       },
       onError: err => {
         console.log(err);

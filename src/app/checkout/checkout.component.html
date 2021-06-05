@@ -1,17 +1,39 @@
-<div class="container">
-    <div class="card m-3">
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
+<div class="container mt-5">
+    <div class="card py-5" [hidden]="paidFor">
         <h4 class="card-title display-6 text-center m-3">Checkout</h4>
         <div class="card-body">
-            
+
             <div class="row">
                 <div class="col">
                     <app-payment-details *ngIf="paymentId != null" [paymentId]="paymentId"></app-payment-details>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col"></div>
                 <div class="col" #paypal></div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card py-5" [class.d-none]="!paidFor">
+        <h4 class="card-title display-6 text-success text-center m-3">Success!</h4>
+        <h4 class="lead text-center">Payment was processed.</h4>
+        <h4 *ngIf="paymentDescription == 'Registration Fee'" class="lead text-center">Congratulations a spot has been saved for your child.</h4>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <app-payment-details *ngIf="paymentId != null" [paymentId]="paymentId" [updated]="updated"></app-payment-details>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col"></div>
+                <div class="col">
+                    <a href="/myaccount" class="btn btn-dark text-nowrap">Return to My Account</a>
+                </div>
                 <div class="col"></div>
             </div>
         </div>

@@ -49,7 +49,7 @@ export class PaymentsService {
     .pipe(catchError(this.errorHandler));
   }
 
-  processPaypalPayment(invoiceId, params){
+  processPaypalPayment(invoiceId, params: HttpParams){
     return this._http.put<any>(this.baseUrl + '/paypal/' + invoiceId, {}, {params})
     .pipe(catchError(this.errorHandler));
   }
