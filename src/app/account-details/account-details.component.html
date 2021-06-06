@@ -65,7 +65,6 @@
                 </div>
 
                 <div class="col-auto form-group">
-                    <button class="btn btn-secondary mx-3" [hidden]="!editMode" (click)="cancelEdit()">Cancel</button>
                     <input type="submit" class="btn btn-primary" value="Save Changes" [disabled]="editForm.invalid"
                         [hidden]="!editMode">
                 </div>

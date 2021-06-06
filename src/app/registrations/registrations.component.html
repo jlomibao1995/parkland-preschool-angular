@@ -93,7 +93,8 @@
                         <td *ngIf="registration.status == status.unregistered">Pending registration fee payment</td>
                         <td *ngIf="registration.status == status.pending">Pending admin confirmation: View registration
                             details</td>
-                        <td *ngIf="registration.status == status.waitlisted">Wait Listed</td>
+                        <td *ngIf="registration.status == status.waitlisted">Waitlisted</td>
+                        <td *ngIf="registration.status == status.spotOffered">Offered spot</td>
                         <td>
                             <button *ngIf="registration.active" class="btn btn-outline-primary"
                                 (click)="deactivateRegistration(registration.id)" data-bs-toggle="tooltip"
@@ -209,7 +210,7 @@
     </div>
 </div>
 
-<!--modal for deletig registration-->
+<!--modal for deleting registration-->
 <div *ngIf="selectedId != null" class="modal fade" id="deleteRegistration" tabindex="-1"
     aria-labelledby="deleteRegistrationLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

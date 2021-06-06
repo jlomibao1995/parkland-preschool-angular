@@ -11,8 +11,7 @@
         </tr>
         <tr>
             <th>Days</th>
-            <td *ngIf="registration.classroom.days == days.mwf">Monday/Wednesday/Friday</td>
-            <td *ngIf="registration.classroom.days == days.tth">Tuesday/Thursday</td>
+            <td>{{registration.classroom.days}}</td>
         </tr>
         <tr>
             <th>Date</th>
@@ -33,7 +32,12 @@
             <td *ngIf="registration.status == status.registered">Registered</td>
             <td *ngIf="registration.status == status.unregistered">Pending registration fee payment</td>
             <td *ngIf="registration.status == status.pending">Pending admin confirmation</td>
-            <td *ngIf="registration.status == status.waitlisted">Wait Listed</td>
+            <td *ngIf="registration.status == status.waitlisted">Waitlisted</td>
+            <td *ngIf="registration.status == status.spotOffered">Offered spot</td>
+        </tr>
+        <tr>
+            <th>Enrolled</th>
+            <td>{{registration.classroom.enrolled}}/{{registration.classroom.capacity}}</td>
         </tr>
     </tbody>
 </table>

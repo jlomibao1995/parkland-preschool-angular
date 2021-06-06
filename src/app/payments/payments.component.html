@@ -181,15 +181,12 @@
                                 </span>
                             </button>
 
-                            <button *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-outline-primary"
+                            <button *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-outline-success"
                                 data-bs-toggle="modal" data-bs-target="#otherMethod">
                                 <span class="material-icons">
-                                    paid
+                                    add_task
                                 </span>
                             </button>
-                        </td>
-                        <td [class.d-none]="!columnStates.actions">
-
                         </td>
                     </tr>
                 </tbody>
@@ -270,7 +267,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="otherMethodLabel">Manually Process Payment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="goToPage(currentPage)"></button>
             </div>
             <div class="modal-body">
                 <app-manual-pay *ngIf="selectedId != null" [paymentId]="selectedId"></app-manual-pay>

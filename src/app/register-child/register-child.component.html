@@ -1,9 +1,9 @@
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
-<app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
-</app-success-error-dialog>
-<div class="display-6 my-3 text-center">Child Registration</div>
-<div class="container card my-4" *ngIf="success == null || !success">
-    <fieldset [class.overlay]="loading" [disabled]="loading">
+<fieldset [class.overlay]="loading" [disabled]="loading">
+    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
+    </app-success-error-dialog>
+    <div class="display-6 my-3 text-center">Child Registration</div>
+    <div class="container card my-4" *ngIf="success == null || !success">
         <div class="card-body">
 
             <div *ngIf="currentPage == 1">
@@ -87,7 +87,8 @@
             </div>
 
             <div *ngIf="currentPage == 3">
-                <app-registration-info [childId]="selectedChildId" (goBack)="previous()" (infoComplete)="next()"></app-registration-info>
+                <app-registration-info [childId]="selectedChildId" (goBack)="previous()" (infoComplete)="next()">
+                </app-registration-info>
             </div>
 
             <div *ngIf="currentPage == 4">
@@ -115,30 +116,35 @@
                 </div>
             </div>
         </div>
-    </fieldset>
-</div>
-
-<div class="container card" *ngIf="registration != null && success">
-    <div class="card-body text-center">
-        <h2 *ngIf="registration.status == status.unregistered" class="display-3 text-success">Almost there!</h2>
-        <h2 *ngIf="registration.status == status.waitlisted" class="display-3 text-success">Success!</h2>
-
-        <h2 *ngIf="registration.status == status.unregistered" class="lead">To complete your registration and save a spot for your child please pay the registration fee</h2>
-        <h2 *ngIf="registration.status == status.unregistered" class="lead">If you wish to pay another time just visit the <a href="/myaccount">My Account</a> page to access this registration</h2>
-        <small *ngIf="registration.status == status.unregistered">Until the registration fee is received the child has no spot for the class</small>
-        <h2 *ngIf="registration.status == status.waitlisted" class="lead">Your child has been added to the wait list</h2>
-
-        <app-registration-details [registrationId]="registration.id"></app-registration-details>
-
-        <div class="row m-5">
-            <div class="col">
-                <a class="btn btn-dark btn-md px-4" href="/myaccount">Return to Account</a>
-            </div>
-
-            <div class="col" *ngIf="registration.status == status.unregistered">
-                <button class="btn btn-outline-success" (click)="payRegistrationFee()">Pay Registration Fee</button>
-            </div>
-        </div>
-
     </div>
-</div>
+
+    <div class="container card" *ngIf="registration != null && success">
+        <div class="card-body text-center">
+            <h2 *ngIf="registration.status == status.unregistered" class="display-3 text-success">Almost there!</h2>
+            <h2 *ngIf="registration.status == status.waitlisted" class="display-3 text-success">Success!</h2>
+
+            <h2 *ngIf="registration.status == status.unregistered" class="lead">To complete your registration and save a
+                spot for your child please pay the registration fee</h2>
+            <h2 *ngIf="registration.status == status.unregistered" class="lead">If you wish to pay another time just
+                visit the <a href="/myaccount">My Account</a> page to access this registration</h2>
+            <small *ngIf="registration.status == status.unregistered">Until the registration fee is received the child
+                has no spot for the class</small>
+            <h2 *ngIf="registration.status == status.waitlisted" class="lead">Your child has been added to the wait list
+            </h2>
+
+            <app-registration-details [registrationId]="registration.id"></app-registration-details>
+
+            <div class="row m-5">
+                <div class="col">
+                    <a class="btn btn-dark btn-md px-4" href="/myaccount">Return to Account</a>
+                </div>
+
+                <div class="col" *ngIf="registration.status == status.unregistered">
+                    <a [href]="'/checkout/' + registration.paymentList[0].invoiceId" class="btn btn-outline-success">Pay
+                        Registration Fee</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</fieldset>

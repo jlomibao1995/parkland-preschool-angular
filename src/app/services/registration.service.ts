@@ -13,7 +13,8 @@ export class RegistrationService {
     registered : 'REGISTERED',
     waitlisted: 'WAIT_LISTED',
     pending: 'PENDING',
-    unregistered: 'UNREGISTERED'
+    unregistered: 'UNREGISTERED',
+    spotOffered : 'SPOT_OFFERED'
   };
 
   constructor(private _http: HttpClient) { }

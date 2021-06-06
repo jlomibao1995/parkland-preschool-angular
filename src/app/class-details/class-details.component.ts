@@ -34,17 +34,18 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
     this.message = null;
     this.success = null;
     this.loading = false;
-    // this.editForm = this._formBuilder.group({
-    //   description: ['', Validators.required],
-    //   age: ['', Validators.required],
-    //   startDate: ['', Validators.required],
-    //   startTime: ['', Validators.required],
-    //   endTime: ['', Validators.required],
-    //   endDate: ['', Validators.required],
-    //   days: ['', Validators.required],
-    //   capacity: ['', Validators.required],
-    //   cost: ['', Validators.required]
-    // });
+    this.editForm = this._formBuilder.group({
+      description: ['', Validators.required],
+      age: ['', Validators.required],
+      startDate: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      endDate: ['', Validators.required],
+      days: ['', Validators.required],
+      capacity: ['', Validators.required],
+      cost: ['', Validators.required],
+      serviceFee: ['']
+    });
   }
 
   getClass() {
@@ -124,8 +125,12 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
     return this.editForm.get('serviceFee');
   }
 
-  goToEditMode() {
-    this.editMode = true
+  edit(){
+    if (this.editMode) {
+      this.editMode = false;
+    } else {
+      this.editMode = true;
+    }
   }
 
   updateClassroom() {

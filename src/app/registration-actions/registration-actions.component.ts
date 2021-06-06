@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { PaymentDetails } from '../models/PaymentDetails';
 import { Registration } from '../models/Registration';
 import { PaymentsService } from '../services/payments.service';
@@ -22,6 +23,8 @@ export class RegistrationActionsComponent implements OnInit, OnChanges {
   paymentList: PaymentDetails[];
 
   childId: number;
+
+  @Output() updated: EventEmitter<String> = new EventEmitter();
 
   constructor(private _registrationService: RegistrationService, private _paymentService: PaymentsService) {
     this.status = this._registrationService.status;
@@ -64,6 +67,20 @@ export class RegistrationActionsComponent implements OnInit, OnChanges {
       );
 
     }
+  }
+
+  waitList() {
+    this.loading = true;
+    let params = new HttpParams().set('status', this.status.waitlisted);
+    this._registrationService.updateRegistration(this.registration.id, params).subscribe(
+      data => {
+        this.ngOnInit();
+        this.updated.emit('updated');
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
 }

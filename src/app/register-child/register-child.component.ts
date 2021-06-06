@@ -117,6 +117,7 @@ export class RegisterChildComponent implements OnInit {
         this.message = "Child has been registered";
         this.success = true;
         this.loading = false;
+        console.log(data);
       }, error => {
         this.message = error;
         this.success = false
@@ -135,9 +136,5 @@ export class RegisterChildComponent implements OnInit {
 
   messageChangedHandler(message: String) {
     this.message = null;
-  }
-
-  payRegistrationFee(){
-    this._router.navigate(['/checkout', this.registration.paymentList[0].invoiceId]);
   }
 }

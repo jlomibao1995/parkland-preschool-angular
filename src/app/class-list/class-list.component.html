@@ -12,8 +12,7 @@
             <thead>
                 <tr>
                     <th>{{classroom.description}}</th>
-                    <th *ngIf="classroom.days == days.mwf">Monday/Wednesday/Friday</th>
-                    <th *ngIf="classroom.days == days.tth">Tuesday/Thursday</th>
+                    <th>{{classroom.days}}</th>
                     <th>{{classroom.startDate | date:'shortDate'}} - {{classroom.endDate | date:'shortDate'}}</th>
                     <th>{{classroom.startDate | date:'shortTime'}} - {{classroom.endDate | date:'shortTime'}}</th>
                 </tr>

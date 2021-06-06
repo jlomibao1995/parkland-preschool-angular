@@ -34,8 +34,8 @@
 
                     <div class="collapse my-3" [id]="'collapse' + registration.id">
                         <div class="card card-body">
-                            <app-registration-details [registrationId]="registration.id"></app-registration-details>
-                            <app-registration-actions class="my-3" [registrationId]="registration.id"></app-registration-actions>
+                            <app-registration-details [registrationId]="registration.id" [updated]="updated"></app-registration-details>
+                            <app-registration-actions class="my-3" [registrationId]="registration.id" (updated)="updatedHandler()"></app-registration-actions>
                         </div>
                     </div>
                 </div>

@@ -155,7 +155,7 @@ export class RegistrationsComponent implements OnInit {
 
   offerSpot(registrationId) {
     this.loading = true;
-    let params = new HttpParams().set('status', this.status.unregistered);
+    let params = new HttpParams().set('status', this.status.spotOffered);
     this._registrationService.updateRegistration(registrationId, params).subscribe(
       data => this.successMessage('Spot offered to child: Email sent to account'),
       error => this.errorMessage(error)

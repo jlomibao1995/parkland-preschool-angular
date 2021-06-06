@@ -107,18 +107,18 @@ export class AddChildComponent implements OnInit {
     let child = {
       firstName : this.firstName.value,
       lastName : this.lastName.value,
-      // gender : this.gender.value,
+       gender : "",
       // birthdate : this.birthdate.value,
       // address : this.address.value,
       // postalCode : this.postalCode.value,
       // healthCareNumber : this.healthCareNum.value,
-      // allergy : this.addChildForm.get('allergy').value,
+      allergy : "",
       // doctorClinic : this.doctorClinic.value,
       // medicalPhoneNumber : this.medicalPhoneNumber.value,
       // immunizations : this.immunizations.value,
       // chickenPox : this.chickenPox.value,
       // medications : this.medications.value,
-      // medicalConditions : this.medicalConditions.value,
+      medicalConditions : "",
       account: {id : this.accountId}
     };
 

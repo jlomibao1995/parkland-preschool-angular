@@ -1,15 +1,19 @@
 <div class="container" *ngIf="registration != null">
-    <div class="row" *ngIf="registration.status == status.unregistered && registration.active">
-        <div class="col" *ngIf="!registration.classroom.full">
+    <div class="row" *ngIf="registration.active">
+        <div class="col mb-3" *ngIf="registration.status == status.spotOffered || registration.status == status.unregistered &&  !registration.classroom.full">
             <a [href]="'/guardian/register/' + registration.paymentList[0].id" class="btn btn-primary">Complete Registration</a>
         </div>
 
-        <div class="col" *ngIf="registration.classroom.full">
-            <button class="btn btn-outline-primary">Add Child to Wait List</button>
+        <div class="col" *ngIf="registration.status == status.unregistered &&  registration.classroom.full">
+            <div class="alert alert-warning" role="alert">
+                Class is now full, add child to the Wait List to be notified when a spot is available
+              </div>
+
+            <button class="btn btn-outline-primary" (click)="waitList()">Add Child to Wait List</button>
         </div>
     </div>
 
-    <div class="row mb-3">
+    <div class="row mb-3" *ngIf="registration.status == status.registered || registration.status == status.pending">
         <div class="col">
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#childInfo"
              (click)="selectChild(registration.child.id)">Edit Child Info</button>

@@ -11,6 +11,7 @@ import { CookieService } from '../services/cookie.service';
 })
 export class RegistrationsGuardianComponent implements OnInit {
   public childList: Child[];
+  updated:boolean;
 
   constructor(private _accountService: AccountService, private _authenticationService: AuthenticationService) { }
 
@@ -18,6 +19,10 @@ export class RegistrationsGuardianComponent implements OnInit {
     this._authenticationService.populateAccountInfo().then((value) => {
       this.childList = this._authenticationService.currentUser.childList;
     });
+  }
+
+  updatedHandler() {
+    this.updated = true;
   }
 
 }

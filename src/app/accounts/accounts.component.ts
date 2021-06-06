@@ -69,6 +69,7 @@ export class AccountsComponent implements OnInit {
   }
 
   goToPage(page) {
+    this.selectedId = null;
     this.loading = true;
     this.pages = [];
     this.currentPage = page;

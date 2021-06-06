@@ -106,9 +106,8 @@
                         <td [class.d-none]="!columnStates.times">{{class.startDate | date:'shortTime'}} -
                             {{class.endDate |
                             date:'shortTime'}}</td>
-                        <td [class.d-none]="!columnStates.days" *ngIf="class.days == days.mwf">Monday/Wednesday/Friday
+                        <td [class.d-none]="!columnStates.days">{{class.days}}
                         </td>
-                        <td [class.d-none]="!columnStates.days" *ngIf="class.days == days.tth">Tuesday/Thursday</td>
                         <td [class.d-none]="!columnStates.spots">{{class.enrolled}}/{{class.capacity}}</td>
                         <td [class.d-none]="!columnStates.actions">
                             <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editClass">
@@ -184,7 +183,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editClassLabel">Class Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="ngOnInit()"></button>
             </div>
             <div class="modal-body">
                 <app-class-details *ngIf="selectedId != null" [classId]="selectedId"></app-class-details>
@@ -197,12 +196,12 @@
 </div>
 
 <!-- modal for adding a new class -->
-<div class="modal fade" id="addClass" tabindex="-1" aria-labelledby="addClassLabel" aria-hidden="true">
+<div class="modal fade" id="addClass" tabindex="-1" aria-labelledby="addClassLabel" data-bs-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addClassLabel">Create New Class</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="ngOnInit()"></button>
             </div>
             <div class="modal-body">
                 <app-add-class></app-add-class>
