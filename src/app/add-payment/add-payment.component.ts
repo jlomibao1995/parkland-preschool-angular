@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Classroom } from '../models/Classroom';
@@ -20,12 +21,16 @@ export class AddPaymentComponent implements OnInit {
   public success: boolean;
   public loading: boolean;
 
+  visibleInputs = 1;
+
   constructor(private _formBuilder: FormBuilder, private _paymentService: PaymentsService, private _registrationService: RegistrationService,
     private _classroomService: ClassesService) { }
 
   ngOnInit(): void {
+    this.visibleInputs = 1;
     this.loading = false;
     this.addForm = this._formBuilder.group({
+      type: ['', Validators.required],
       description: ['', Validators.required],
       month: ['', Validators.required],
       cost: ['', Validators.required],
@@ -48,79 +53,156 @@ export class AddPaymentComponent implements OnInit {
     this.loading = true;
   }
 
-  get description(){
+  get type() {
+    return this.addForm.get('type');
+  }
+
+  get description() {
     return this.addForm.get('description');
   }
 
-  get month(){
+  get month() {
     return this.addForm.get('month');
   }
 
-  get cost(){
+  get cost() {
     return this.addForm.get('cost');
   }
 
-  get serviceFees(){
+  get serviceFees() {
     return this.addForm.get('serviceFees');
   }
 
-  get class(){
+  get class() {
     return this.addForm.get('class');
   }
 
-  get paymentFor(){
+  get paymentFor() {
     return this.addForm.get('paymentFor');
   }
 
-  toggleClassSelection(){
+  toggleClassSelection() {
     let index = this.class.value;
     this.selectedClassroom = this.classrooms[index];
     this.registrations = this.selectedClassroom.registrationList;
     this.registrations = this.registrations.filter(registration => registration.active && registration.status == this._registrationService.status.registered);
+
+    this.visibleInputs = 7;
+    switch (this.type.value) {
+      case 'month':
+        this.addForm.patchValue({
+          cost: this.selectedClassroom.costPerMonth
+        });
+        break;
+      case 'full':
+        this.addForm.patchValue({
+          cost: ''
+        });
+        break;
+      case 'misc':
+        this.addForm.patchValue({
+          cost: ''
+        });
+    }
   }
 
-  addPayment(){
-    let paymentDetails = {
-      description : this.description.value,
-      paymentMonth : this.month.value,
-      subTotal : this.cost.value,
-      serviceFees : this.serviceFees.value,
-      registration: {}
-    }
-    let recipient = this.paymentFor.value;
+  addPayment() {
+    if (this.type.value == 'month') {
+      const params = new HttpParams()
+        .set('classId', this.selectedClassroom.id)
+        .set('serviceFee', this.serviceFees.value);
 
-    if (recipient == 'all') {
-      this._paymentService.addPaymentForClass(this.selectedClassroom.id, paymentDetails).subscribe(
-        data => {
-          this.ngOnInit();
-          this.success = true;
-          this.message = "Payment entry has been added to " + data + " registration(s)";
-        }, 
-        error => {
-          this.message = error.error.message;
-          this.success = false;
-        }
+      this._paymentService.createMonthlyPayment(params).subscribe(
+        data => this.successMessage("Payment entry has been added to " + data + " registration(s)"),
+        error => this.errorMessage(error)
       )
     } else {
-      paymentDetails.registration = {id : this.paymentFor.value}
+      let paymentDetails = {
+        description: this.description.value,
+        paymentMonth: this.month.value,
+        subTotal: this.cost.value,
+        serviceFees: this.serviceFees.value,
+        registration: {}
+      }
 
-      this._paymentService.addPayment(paymentDetails).subscribe(
-        data => {
-          this.ngOnInit();
-          this.success = true;
-          this.message = "Payment entry has been added to " + data;
-        }, 
-        error => {
-          this.message = error.error.message;
-          this.success = false;
+      let recipient = this.paymentFor.value;
+
+      if (recipient == 'all') {
+        this._paymentService.addPaymentForClass(this.selectedClassroom.id, paymentDetails).subscribe(
+          data => this.successMessage("Payment entry has been added to " + data + " registration(s)"),
+          error => this.errorMessage(error)
+        );
+      } else {
+        paymentDetails.registration = { id: this.paymentFor.value }
+
+        if (this.type.value == 'full') {
+          this._paymentService.createFullPayment(paymentDetails).subscribe(
+            data => this.successMessage("Payment entry has been added "),
+          error => this.errorMessage(error)
+          );
+
+        } else {
+          this._paymentService.addPayment(paymentDetails).subscribe(
+            data => this.successMessage("Payment entry has been added"),
+            error => {
+              this.errorMessage(error);
+              console.log(error);
+            }
+          );
         }
-      )
+      }
     }
+
     this.loading = true;
+  }
+
+  successMessage(message: string) {
+    this.ngOnInit();
+    this.success = true;
+    this.message = message;
+  }
+
+  errorMessage(error) {
+    this.message = error;
+    this.success = false;
+    this.loading = false;
   }
 
   messageChangedHandler(message: String) {
     this.message = null;
   }
 
+  toggleInputs() {
+    switch (this.type.value) {
+      case 'month':
+        this.addForm.patchValue({
+          month: new Date().getMonth() + 1,
+          description: 'Monthly Fee',
+          paymentFor: 'all'
+        });
+        this.visibleInputs = 5;
+        break;
+      case 'full':
+        this.addForm.patchValue({
+          month: new Date().getMonth() + 1,
+          description: 'Full Tuition Payment'
+        });
+        this.visibleInputs = 5;
+        break;
+      case 'misc':
+        this.addForm.patchValue({
+          month: '',
+          description: ''
+        });
+        this.visibleInputs = 3;
+    }
+  }
+
+  togglePaymentFor() {
+    this.visibleInputs = 5;
+  }
+  
+  toggleCost() {
+    this.visibleInputs = 7;
+  }
 }

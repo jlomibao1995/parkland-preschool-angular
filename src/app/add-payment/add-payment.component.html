@@ -7,6 +7,19 @@
         <form class="m-3" [formGroup]="addForm" (ngSubmit)="addPayment()">
             <div class="row p-3">
                 <div class="col form-group">
+                    <select class="form-select" (change)="toggleInputs()" formControlName="type"
+                        [class.is-invalid]="type.invalid && type.touched">
+                        <option value="" selected disabled hidden>Payment Type</option>
+                        <option value="month">Monthly Payment</option>
+                        <option value="full">Full Tuition Payment</option>
+                        <option value="misc">Miscellaneous</option>
+                    </select>
+                    <small [class.d-none]="type.valid || type.untouched" class="text-danger">Select payment type</small>
+                </div>
+            </div>
+
+            <div class="row p-3" [hidden]="visibleInputs < 3 || type.value == 'month' || type.value == 'full'">
+                <div class="col form-group">
                     <label for="">Description</label>
                     <input type="text" class="form-control" formControlName="description"
                         [class.is-invalid]="description.invalid && description.touched">
@@ -16,7 +29,7 @@
 
                 <div class="col form-group">
                     <label for="">Month</label>
-                    <select class="form-select" formControlName="month"
+                    <select class="form-select" formControlName="month" (change)="togglePaymentFor()"
                         [class.is-invalid]="month.invalid && month.touched">
                         <option value="" selected disabled hidden>Select month</option>
                         <option value="1">Jan</option>
@@ -37,12 +50,40 @@
                 </div>
             </div>
 
-            <div class="row p-3">
+            <div class="row p-3" *ngIf="visibleInputs >= 5">
+                <div class="col form-group">
+                    <label for="">Class</label>
+                    <select size="5" class="form-select" formControlName="class" (change)="toggleClassSelection()"
+                        [class.is-invalid]="class.invalid && class.touched">
+                        <option value="" selected disabled hidden>Select class</option>
+                        <option *ngFor="let class of classrooms; let i = index" [value]="i">{{class.description}}
+                        </option>
+                    </select>
+                    <small [class.d-none]="class.valid || class.untouched" class="text-danger">Select class</small>
+                </div>
+
+                <div class="col form-group" [hidden]="type.value == 'month'">
+                    <label for="">Payment for</label>
+                    <select size="5" class="form-select" formControlName="paymentFor" (change)="toggleCost()"
+                        [class.is-invalid]="paymentFor.invalid && paymentFor.touched">
+                        <option value="" selected disabled hidden>Select who the payment is for</option>
+                        <option *ngIf="type.value != 'full'" value="all">All Registered Children</option>
+                        <option *ngFor="let registration of registrations" [value]="registration.id">
+                            {{registration.child.firstName}} {{registration.child.lastName}}</option>
+                    </select>
+                    <small [class.d-none]="paymentFor.valid || paymentFor.untouched" class="text-danger">Select
+                        registrations to add the payment to</small>
+                </div>
+            </div>
+
+            <div class="row p-3" [hidden]="visibleInputs < 7">
                 <div class="col form-group">
                     <label for="">Cost</label>
-                    <input type="number" class="form-control" step="0.01" placeholder="$" formControlName="cost"
-                        [class.is-invalid]="cost.invalid && cost.touched">
+                    <input [readOnly]="type.value == 'month'" type="number" class="form-control" step="0.01"
+                        placeholder="$" formControlName="cost" [class.is-invalid]="cost.invalid && cost.touched">
                     <small [class.d-none]="cost.valid || cost.untouched" class="text-danger">Enter cost</small>
+                    <small [class.d-none]="type.value != 'month'">This cost is based on the cost per month of the
+                        class</small>
                 </div>
 
                 <div class="col form-group">
@@ -51,32 +92,7 @@
                         [class.is-invalid]="serviceFees.invalid && serviceFees.touched">
                     <small [class.d-none]="serviceFees.valid || serviceFees.untouched" class="text-danger">Enter service
                         fees for paypal payments</small>
-                </div>
-            </div>
-
-            <div class="row p-3">
-                <div class="col form-group">
-                    <label for="">Class</label>
-                    <select size="5" class="form-select" formControlName="class"
-                        [class.is-invalid]="class.invalid && class.touched" (change)="toggleClassSelection()">
-                        <option value="" selected disabled hidden>Select class</option>
-                        <option *ngFor="let class of classrooms; let i = index" [value]="i">{{class.description}}
-                        </option>
-                    </select>
-                    <small [class.d-none]="class.valid || class.untouched" class="text-danger">Select class</small>
-                </div>
-
-                <div class="col form-group">
-                    <label for="">Payment for</label>
-                    <select size="5" class="form-select" formControlName="paymentFor"
-                        [class.is-invalid]="paymentFor.invalid && paymentFor.touched">
-                        <option value="" selected disabled hidden>Select who the payment is for</option>
-                        <option value="all">All Registered Children</option>
-                        <option *ngFor="let registration of registrations" [value]="registration.id">
-                            {{registration.child.firstName}} {{registration.child.lastName}}</option>
-                    </select>
-                    <small [class.d-none]="paymentFor.valid || paymentFor.untouched" class="text-danger">Select
-                        registrations to add the payment to</small>
+                    <small>PayPal charges 2.9% of the total amount plus $0.30 per transactions</small>
                 </div>
             </div>
 

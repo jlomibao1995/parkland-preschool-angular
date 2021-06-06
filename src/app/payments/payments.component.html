@@ -117,7 +117,7 @@
 
                 <div class="col-lg p-3">
                     <select name="role" class="form-select" formControlName="month" (change)="goToPage(1)">
-                        <option value="" selected disabled hidden>Month</option>
+                        <option value="0" selected disabled hidden>Month</option>
                         <option value="0">All</option>
                         <option value="1">Jan</option>
                         <option value="2">Feb</option>
@@ -227,7 +227,7 @@
 
 <!-- modal for adding a fee-->
 <div class="modal fade" id="addFee" tabindex="-1" aria-labelledby="addFeeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addFeeLabel">Create New Fee</h5>
@@ -246,7 +246,7 @@
 <!-- modal viewing payment details-->
 <div class="modal fade" id="paymentDetails" tabindex="-1"
     aria-labelledby="paymentDetailsLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="paymentDetailsLabel">Payment Details</h5>
@@ -265,7 +265,7 @@
 <!-- modal for manually processing payment-->
 <div class="modal fade" id="otherMethod" tabindex="-1" aria-labelledby="otherMethodLabel"
     data-bs-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="otherMethodLabel">Manually Process Payment</h5>

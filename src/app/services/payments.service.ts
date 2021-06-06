@@ -53,6 +53,16 @@ export class PaymentsService {
     .pipe(catchError(this.errorHandler));
   }
 
+  createFullPayment(paymentDetails) {
+    return this._http.post<any>(this.baseUrl + '/admin/full_payment', paymentDetails)
+    .pipe(catchError(this.errorHandler));
+  }
+
+  createMonthlyPayment(params: HttpParams) {
+    return this._http.get<any>(this.baseUrl + '/admin/monthly_fee', {params})
+    .pipe(catchError(this.errorHandler));
+  }
+
   getPaymentsForAccount(params: HttpParams){
     return this._http.get<any>(this.baseUrl + '/payments/account', {params})
     .pipe(catchError(this.errorHandler));
