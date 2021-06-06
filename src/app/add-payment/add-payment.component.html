@@ -22,9 +22,10 @@
                 <div class="col form-group">
                     <label for="">Description</label>
                     <input type="text" class="form-control" formControlName="description"
-                        [class.is-invalid]="description.invalid && description.touched">
+                        [class.is-invalid]="description.invalid && description.touched || addForm.errors?.descriptionInvalid">
                     <small [class.d-none]="description.valid || description.untouched" class="text-danger">Enter
                         description</small>
+                    <small [class.d-none]="!addForm.errors?.descriptionInvalid || description.untouched" class="text-danger">To enter a full tuition paymet change the payment type</small>
                 </div>
 
                 <div class="col form-group">

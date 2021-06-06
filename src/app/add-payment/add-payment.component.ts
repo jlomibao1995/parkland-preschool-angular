@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { paymentDescriptionValidator } from '../helpers/payment.description.validator';
 import { Classroom } from '../models/Classroom';
 import { Registration } from '../models/Registration';
 import { ClassesService } from '../services/classroom.service';
@@ -37,7 +38,7 @@ export class AddPaymentComponent implements OnInit {
       serviceFees: ['', Validators.required],
       class: ['', Validators.required],
       paymentFor: ['', Validators.required]
-    });
+    }, { validators: [paymentDescriptionValidator] });
 
     this._classroomService.getClassList().subscribe(
       data => {
