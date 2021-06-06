@@ -9,6 +9,22 @@
         </div>
     </div>
 
+    <div class="row mb-3">
+        <div class="col">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#childInfo"
+             (click)="selectChild(registration.child.id)">Edit Child Info</button>
+        </div>
+
+        <div class="col">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactsInfo"
+            (click)="selectChild(registration.child.id)">Edit Child Contacts Info</button>
+        </div>
+
+        <div class="col">
+            <a href="/guardian/payments" class="btn btn-outline-primary">Payments</a>
+        </div>
+    </div>
+
     <div class="row" *ngIf="registration.status == status.registered && registration.active">
         <div class="col">
             <table class="table table-striped">
@@ -30,6 +46,43 @@
                 </tbody>
             </table>
         </div>
-        <div class="col"></div>
+    </div>
+</div>
+
+<!-- modal viewing payment details-->
+<div class="modal fade" id="childInfo" tabindex="-1" data-bs-backdrop="static"
+    aria-labelledby="childInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="childInfoLabel">Child Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  (click)="ngOnInit()"></button>
+            </div>
+            <div class="modal-body">
+                <app-child-info-edit *ngIf="childId != null" [childId]="childId"></app-child-info-edit>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ngOnInit()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal viewing payment details-->
+<div class="modal fade" id="contactsInfo" tabindex="-1" data-bs-backdrop="static"
+    aria-labelledby="contactsInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactsInfoLabel">Child Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  (click)="ngOnInit()"></button>
+            </div>
+            <div class="modal-body">
+                <app-child-contacts *ngIf="childId != null" [childId]="childId"></app-child-contacts>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="ngOnInit()">Close</button>
+            </div>
+        </div>
     </div>
 </div>

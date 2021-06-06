@@ -4,6 +4,7 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ClassListComponent } from './class-list/class-list.component';
 import { ClassesComponent } from './classes/classes.component';
+import { GuardianPaymentsComponent } from './guardian-payments/guardian-payments.component';
 import { LoginComponent } from './login/login.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { PayRegistrationFeeComponent } from './pay-registration-fee/pay-registration-fee.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'myaccount', component: MyAccountComponent},
   {path: 'checkout/:invoiceId', component: CheckoutComponent},
   {path: 'guardian/register/:id', component: PayRegistrationFeeComponent},
+  {path: 'guardian/payments', component: GuardianPaymentsComponent},
   {path: '', redirectTo: '/myaccount', pathMatch: 'full'}
 ];
 

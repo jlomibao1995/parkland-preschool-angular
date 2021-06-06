@@ -10,7 +10,6 @@ import { CookieService } from './cookie.service';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  public email: string;
   public currentUser: Account;
   url = environment.baseUrl + '/out/authenticate';
 
@@ -35,11 +34,9 @@ export class AuthenticationService {
   }
 
   populateAccountInfo() {
-    this.email = this._cookieService.get('email');
-
     return new Promise((resolve, reject) => {
 
-        this._accountService.getMyAccount(this.email).subscribe(
+        this._accountService.getMyAccount().subscribe(
           data => {
             this.currentUser = data;
             resolve(true);

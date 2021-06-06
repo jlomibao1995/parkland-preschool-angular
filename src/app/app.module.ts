@@ -43,6 +43,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { RegistrationActionsComponent } from './registration-actions/registration-actions.component';
 import { PayRegistrationFeeComponent } from './pay-registration-fee/pay-registration-fee.component';
 import { RegistrationInfoComponent } from './registration-info/registration-info.component';
+import { GuardianPaymentsComponent } from './guardian-payments/guardian-payments.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { RegistrationInfoComponent } from './registration-info/registration-info
     CheckoutComponent,
     RegistrationActionsComponent,
     PayRegistrationFeeComponent,
-    RegistrationInfoComponent
+    RegistrationInfoComponent,
+    GuardianPaymentsComponent
   ],
   imports: [
     BrowserModule,

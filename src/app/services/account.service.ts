@@ -40,8 +40,8 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
-  getMyAccount(email) {
-    return this._http.get<any>(this.baseUrl + '/email/' + email)
+  getMyAccount() {
+    return this._http.get<any>(this.baseUrl + '/current_account')
     .pipe(catchError(this.errorHandler));
   }
 

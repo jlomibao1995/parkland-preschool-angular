@@ -1,0 +1,130 @@
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
+<div class="container">
+    <fieldset [class.overlay]="loading" [disabled]="loading">
+        <app-success-error-dialog [message]="message" [success]="success"
+            (messageChanged)="messageChangedHandler($event)">
+        </app-success-error-dialog>
+
+        <form [formGroup]="pageForm" (keydown.enter)="$event.preventDefault(); goToPage(1)">
+            <div class="row mx-3">
+                <div class="col-lg p-3">
+                    <input type="number" min="1" class="form-control page-entries" formControlName="numOfPayments"
+                        (change)="changePaymentNum()"> records
+                </div>
+
+                <div class="col-auto p-3">
+                    <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Update">
+                        <span class="material-icons">
+                            update
+                        </span>
+                    </button>
+                </div>
+
+                <div class="col-lg p-3">
+                    <select name="role" class="form-select" formControlName="month" (change)="goToPage(1)">
+                        <option value="" selected disabled hidden>Month</option>
+                        <option value="0">All</option>
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May </option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sept</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                </div>
+
+                <div class="col-lg p-3">
+                    <input type="number" min="1" class="form-control" formControlName="year" placeholder="Year">
+                </div>
+            </div>
+        </form>
+
+        <div class="table-responsive-lg p-3">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Child</th>
+                        <th>Description</th>
+                        <th>Total</th>
+                        <th>Paid/Unpaid</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    <tr *ngFor="let payment of payments; let i = index" (click)="selectPayment(i)"
+                        [class.table-active]="payment.id==selectedId">
+                        <td>{{payment.registration.child.firstName}}
+                            {{payment.registration.child.lastName}}</td>
+                        <td>{{payment.description}}</td>
+                        <td>{{payment.total | currency}}</td>
+                        <td>{{payment.paymentStatus}}</td>
+                        <td>
+                            <button *ngIf="payment.paymentStatus == status.paid" class="btn btn-outline-dark"
+                                data-bs-toggle="modal" data-bs-target="#paymentDetails">
+                                <span class="material-icons">
+                                    info
+                                </span>
+                            </button>
+
+                            <a [href]="'/checkout/' + payment.invoiceId" *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-outline-primary">Pay</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <small *ngIf="totalPayments > currentPage * numOfPayments">
+                    Showing {{currentPage * numOfPayments - numOfPayments + 1}} to {{currentPage *numOfPayments}} of
+                    {{totalPayments}} entries</small>
+
+                <small *ngIf="totalPayments <= currentPage * numOfPayments">Showing {{currentPage * numOfPayments -
+                    numOfPayments + 1}}
+                    to {{totalPayments}} of {{totalPayments}} entries</small>
+            </div>
+
+            <div class="col-auto">
+                <nav aria-label="Page navigation example" class="mt-3">
+                    <ul class="pagination">
+                        <li class="page-item"><button class="page-link" (click)="goToPage(1)"><span
+                                    aria-hidden="true">&laquo;</span></button></li>
+                        <li *ngFor="let page of pages; let i = index " [class.active]="currentPage == page"
+                            class="page-item">
+                            <button class="page-link" (click)=goToPage(page)>{{page}}</button>
+                        </li>
+                        <li class="page-item"><button class="page-link" (click)="goToPage(totalPages)"><span
+                                    aria-hidden="true">&raquo;</span></button></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<!-- modal viewing payment details-->
+<div class="modal fade" id="paymentDetails" tabindex="-1"
+    aria-labelledby="paymentDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentDetailsLabel">Payment Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-payment-details *ngIf="selectedId != null" [paymentId]="selectedId"></app-payment-details>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

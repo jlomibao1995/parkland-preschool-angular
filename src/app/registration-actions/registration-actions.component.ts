@@ -21,10 +21,12 @@ export class RegistrationActionsComponent implements OnInit, OnChanges {
   paymentStatus;
   paymentList: PaymentDetails[];
 
+  childId: number;
+
   constructor(private _registrationService: RegistrationService, private _paymentService: PaymentsService) {
     this.status = this._registrationService.status;
     this.paymentStatus = this._paymentService.status;
-   }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this._registrationService.getRegistration(this.registrationId).subscribe(
@@ -33,20 +35,35 @@ export class RegistrationActionsComponent implements OnInit, OnChanges {
       },
       error => console.log(error)
     );
-    
+
     this._paymentService.getPaymentsForRegistration(this.registrationId).subscribe(
       data => {
         this.paymentList = data.content;
       }, error => console.log(error)
     );
-    
+
   }
 
-  getPaymentList(){
-
+  selectChild(childId) {
+    this.childId = childId;
   }
 
   ngOnInit(): void {
+    if (this.registrationId) {
+      this._registrationService.getRegistration(this.registrationId).subscribe(
+        data => {
+          this.registration = data;
+        },
+        error => console.log(error)
+      );
+
+      this._paymentService.getPaymentsForRegistration(this.registrationId).subscribe(
+        data => {
+          this.paymentList = data.content;
+        }, error => console.log(error)
+      );
+
+    }
   }
 
 }
