@@ -8,7 +8,6 @@ export class Classroom {
         public enrolled: number,
         public ageGroup: number,
         public costPerMonth: number,
-        public serviceFee: number,
         public days: String,
         public description: String,
         public full: boolean,

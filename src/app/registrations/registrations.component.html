@@ -5,6 +5,28 @@
             (messageChanged)="messageChangedHandler($event)">
         </app-success-error-dialog>
 
+        <div class="bg-light bg-gradient mt-3 p-3">
+            <div class="row">
+                <div class="col mx-3">
+                    <h3>Registration Listing</h3>
+                </div>
+
+                <!-- <div class="col-auto mx-3">
+                    <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
+                        data-bs-target="#addRegistration" data-bs-whatever="@mdo">
+                        Add Registration
+                    </button>
+                </div> -->
+            </div>
+
+            <div class="mx-3">
+                <!-- <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" checked name="name" (change)="toggleColumnState($event)">
+                    <label for="">Name</label>
+                  </div> -->
+            </div>
+        </div>
+
         <form [formGroup]="pageForm" (keydown.enter)="$event.preventDefault(); goToPage(1)">
             <div class="row mx-3">
                 <div class="col-lg p-3">
@@ -47,28 +69,6 @@
                 </div>
             </div>
         </form>
-
-        <div class="bg-light bg-gradient p-3">
-            <div class="row">
-                <div class="col mx-3">
-                    <h3>Registration Listing</h3>
-                </div>
-
-                <!-- <div class="col-auto mx-3">
-                    <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
-                        data-bs-target="#addRegistration" data-bs-whatever="@mdo">
-                        Add Registration
-                    </button>
-                </div> -->
-            </div>
-
-            <div class="mx-3">
-                <!-- <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" checked name="name" (change)="toggleColumnState($event)">
-                    <label for="">Name</label>
-                  </div> -->
-            </div>
-        </div>
 
         <div class="table-responsive">
             <table class="table table-hover">

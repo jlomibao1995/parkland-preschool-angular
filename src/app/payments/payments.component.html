@@ -5,74 +5,8 @@
             (messageChanged)="messageChangedHandler($event)">
         </app-success-error-dialog>
 
-        <form [formGroup]="pageForm" (keydown.enter)="$event.preventDefault(); goToPage(1)">
-            <div class="row mx-3">
-                <div class="col-lg p-3">
-                    <input type="number" min="1" class="form-control page-entries" formControlName="numOfPayments"
-                        (change)="changePaymentNum()"> records
-                </div>
-
-                <div class="col-auto p-3">
-                    <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="Update">
-                        <span class="material-icons">
-                            update
-                        </span>
-                    </button>
-                </div>
-
-                <div class="col-lg p-3">
-                    <select name="sort" class="form-select" formControlName="sort" (change)="goToPage(1)">
-                        <option value="" selected disabled hidden>Sort By</option>
-                        <option value="">None</option>
-                        <option value="datePaid">Date Paid</option>
-                        <option value="paymentStatus">Status</option>
-                        <option value="description">Description</option>
-                        <option value="total">Total</option>
-                        <option value="paymentMethod">Method</option>
-                        <option value="paymentMonth">Month</option>
-                    </select>
-                </div>
-
-                <div class="col-lg p-3">
-                    <select name="role" class="form-select" formControlName="class" (change)="goToPage(1)">
-                        <option value="" selected disabled hidden>Class</option>
-                        <option value="0">All Classes</option>
-                        <option *ngFor="let classroom of classrooms" [value]="classroom.id">{{classroom.description}}
-                    </select>
-                </div>
-
-                <div class="col-lg p-3">
-                    <select name="role" class="form-select" formControlName="month" (change)="goToPage(1)">
-                        <option value="" selected disabled hidden>Month</option>
-                        <option value="0">All</option>
-                        <option value="1">Jan</option>
-                        <option value="2">Feb</option>
-                        <option value="3">Mar</option>
-                        <option value="4">Apr</option>
-                        <option value="5">May </option>
-                        <option value="6">Jun</option>
-                        <option value="7">Jul</option>
-                        <option value="8">Aug</option>
-                        <option value="9">Sept</option>
-                        <option value="10">Oct</option>
-                        <option value="11">Nov</option>
-                        <option value="12">Dec</option>
-                    </select>
-                </div>
-
-                <div class="col-lg p-3">
-                    <input type="number" min="1" class="form-control" formControlName="year" placeholder="Year">
-                </div>
-
-
-                <div class="col-lg p-3">
-                    <input type="search" class="form-control" placeholder="🔍 Enter child name" formControlName="search">
-                </div>
-            </div>
-        </form>
-
-        <div class="bg-light bg-gradient p-3">
+        
+        <div class="bg-light bg-gradient mt-3 p-3">
             <div class="row">
                 <div class="col mx-3">
                     <h3>Payment Records</h3>
@@ -143,6 +77,74 @@
                 </div>
             </div>
         </div>
+
+        <form [formGroup]="pageForm" (keydown.enter)="$event.preventDefault(); goToPage(1)">
+            <div class="row mx-3">
+                <div class="col-lg p-3">
+                    <input type="number" min="1" class="form-control page-entries" formControlName="numOfPayments"
+                        (change)="changePaymentNum()"> records
+                </div>
+
+                <div class="col-auto p-3">
+                    <button class="btn btn-outline-secondary" (click)="ngOnInit()" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Update">
+                        <span class="material-icons">
+                            update
+                        </span>
+                    </button>
+                </div>
+
+                <div class="col-lg p-3">
+                    <select name="sort" class="form-select" formControlName="sort" (change)="goToPage(1)">
+                        <option value="" selected disabled hidden>Sort By</option>
+                        <option value="">None</option>
+                        <option value="datePaid">Date Paid</option>
+                        <option value="paymentStatus">Status</option>
+                        <option value="description">Description</option>
+                        <option value="total">Total</option>
+                        <option value="paymentMethod">Method</option>
+                        <option value="paymentMonth">Month</option>
+                    </select>
+                </div>
+
+                <div class="col-lg p-3">
+                    <select name="role" class="form-select" formControlName="class" (change)="goToPage(1)">
+                        <option value="" selected disabled hidden>Class</option>
+                        <option value="0">All Classes</option>
+                        <option *ngFor="let classroom of classrooms" [value]="classroom.id">{{classroom.description}}
+                    </select>
+                </div>
+
+                <div class="col-lg p-3">
+                    <select name="role" class="form-select" formControlName="month" (change)="goToPage(1)">
+                        <option value="" selected disabled hidden>Month</option>
+                        <option value="0">All</option>
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May </option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sept</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                </div>
+
+                <div class="col-lg p-3">
+                    <input type="number" min="1" class="form-control" formControlName="year" placeholder="Year">
+                </div>
+
+
+                <div class="col-lg p-3">
+                    <input type="search" class="form-control" placeholder="🔍 Enter child name" formControlName="search">
+                </div>
+            </div>
+        </form>
+
 
         <div class="table-responsive-lg p-3">
             <table class="table table-hover">

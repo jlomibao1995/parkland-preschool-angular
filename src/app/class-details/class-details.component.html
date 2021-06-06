@@ -88,13 +88,6 @@
                     <small [class.d-none]="cost.valid || cost.untouched" class="text-danger">Enter cost per
                         month</small>
                 </div>
-
-                <div class="col form-group">
-                    <label for="service fees">Service Fees</label>
-                    <input type="number" class="form-control" formControlName="serviceFee" step=".01"
-                        [class.is-invalid]="serviceFee.invalid && serviceFee.touched">
-                    <small [class.d-none]="serviceFee.valid || serviceFee.untouched" class="text-danger">Enter service fee for paypal payments</small>
-                </div>
             </div>
 
             <div class="row p-3">
