@@ -20,7 +20,6 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
   public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, private _classService: ClassesService) { 
-    this.day = this._classService.days;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

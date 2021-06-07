@@ -11,15 +11,16 @@ import { Classroom } from '../models/Classroom';
 export class ClassesService {
   public baseUrl = environment.baseUrl + '/classroom';
   private headers = { 'content-type': 'application/json' };
-  public days = {
-    mwf : 'MWF',
-    tth : 'TTh'
-  }
 
   constructor(private _http: HttpClient) { }
 
   getClassList() {
     return this._http.get<any>(this.baseUrl + '/classrooms')
+    .pipe(catchError(this.errorHandler));
+  }
+
+  getClassrooms() {
+    return this._http.get<Classroom[]>(this.baseUrl + '/classrooms')
     .pipe(catchError(this.errorHandler));
   }
 

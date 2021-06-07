@@ -12,7 +12,6 @@ export class ClassroomInfoComponent implements OnInit {
   public days;
 
   constructor(private _classroomService: ClassesService) {
-    this.days = this._classroomService.days;
    }
 
   ngOnInit(): void {

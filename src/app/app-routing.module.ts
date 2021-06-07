@@ -26,6 +26,7 @@ const routes: Routes = [
   {path: 'admin/classes', component: ClassesComponent},
   {path: 'admin/accounts', component: AccountsComponent},
   {path: 'admin/payments', component: PaymentsComponent},
+  {path: 'staff/classlist', component: ClassListComponent},
   {path: 'staff/classlist/:classId', component: ClassListComponent},
   {path: 'myaccount', component: MyAccountComponent},
   {path: 'checkout/:invoiceId', component: CheckoutComponent},

@@ -16,7 +16,6 @@ export class RegistrationDetailsComponent implements OnInit, OnChanges {
   public status;
 
   constructor(private _registrationService: RegistrationService, private _classroomService: ClassesService) {
-    this.days = this._classroomService.days;
     this.status = this._registrationService.status;
    }
 

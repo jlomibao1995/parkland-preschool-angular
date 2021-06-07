@@ -1,42 +1,43 @@
-<div class="container">
-    <div *ngIf="childList != null" class="card my-5 out">
-        <div class="row mt-4">
-            <div class="col text-center">
-                <p class="display-6">Registrations</p>
-            </div>
+<div *ngIf="childList != null" class="card my-5 out">
+    <div class="row mt-4">
+        <div class="col text-center">
+            <p class="display-6">Registrations</p>
+        </div>
+    </div>
+
+    <div class="row m-3">
+        <div class="col"></div>
+        <div class="col-auto mx-3" [hidden]="childList.length == 0">
+            <a class="btn btn-primary" href="/guardian/register">Register</a>
         </div>
 
-        <div class="row m-3">
-            <div class="col"></div>
-            <div class="col-auto mx-3" [hidden]="childList.length == 0">
-                <a class="btn btn-primary" href="/guardian/register">Register</a>
-            </div>
-
-            <div *ngIf="childList.length == 0" class="alert alert-primary" role="alert">
-                Add your child's information, check out our classes, and <a href="/guardian/register" class="alert-link">register</a> with Parkland Preschool.
-            </div>
+        <div *ngIf="childList.length == 0" class="alert alert-primary" role="alert">
+            Add your child's information, check out our classes, and <a href="/guardian/register"
+                class="alert-link">register</a> with Parkland Preschool.
         </div>
-        <div class="card-body">
-            <h5 class="card-title text-center"></h5>
-            <div *ngFor="let child of childList" class="m-3">
-                <div class="my-3" *ngFor="let registration of child.registrationList">
-                    <a class="btn btn-outline-primary" data-bs-toggle="collapse" [href]="'#collapse' + registration.id"
-                        role="a" aria-expanded="true" aria-controls="collapseExample">
-                        <div class="row text-center">
-                            <div class="col">{{child.firstName}} {{child.lastName}}</div>
-                            <div class="col">{{registration.classroom.description}}</div>
-                            <!-- <div class="col">{{registration.classroom.startDate | date:'shortDate'}} -
+    </div>
+    <div class="card-body">
+        <h5 class="card-title text-center"></h5>
+        <div *ngFor="let child of childList" class="m-3">
+            <div class="my-3" *ngFor="let registration of child.registrationList">
+                <a class="btn btn-outline-primary" data-bs-toggle="collapse" [href]="'#collapse' + registration.id"
+                    role="a" aria-expanded="true" aria-controls="collapseExample">
+                    <div class="row text-center">
+                        <div class="col">{{child.firstName}} {{child.lastName}}</div>
+                        <div class="col">{{registration.classroom.description}}</div>
+                        <!-- <div class="col">{{registration.classroom.startDate | date:'shortDate'}} -
                             {{registration.classroom.endDate | date:'shortDate'}} </div>
                         <div class="col">{{registration.classroom.startDate | date:'shortTime'}} -
                             {{registration.classroom.endDate | date:'shortTime'}}</div> -->
-                        </div>
-                    </a>
+                    </div>
+                </a>
 
-                    <div class="collapse my-3" [id]="'collapse' + registration.id">
-                        <div class="card card-body">
-                            <app-registration-details [registrationId]="registration.id" [updated]="updated"></app-registration-details>
-                            <app-registration-actions class="my-3" [registrationId]="registration.id" (updated)="updatedHandler()"></app-registration-actions>
-                        </div>
+                <div class="collapse my-3" [id]="'collapse' + registration.id">
+                    <div class="card card-body">
+                        <app-registration-details [registrationId]="registration.id" [updated]="updated">
+                        </app-registration-details>
+                        <app-registration-actions class="my-3" [registrationId]="registration.id"
+                            (updated)="updatedHandler()"></app-registration-actions>
                     </div>
                 </div>
             </div>

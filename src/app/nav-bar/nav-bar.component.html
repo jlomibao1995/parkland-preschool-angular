@@ -12,8 +12,8 @@
           <li class="nav-item" *ngIf="role == roles.admin">
             <a class="nav-link" href="/admin/classes" [routerLink]="['/admin/classes']" [routerLinkActive]="['active']">Classrooms</a>
           </li>
-          <li class="nav-item" *ngIf="role == roles.admin">
-            <a class="nav-link" href="/admin/accounts" [routerLink]="['/admin/accounts']" [routerLinkActive]="['active']">Accounts</a>
+          <li class="nav-item" *ngIf="role == roles.admin || role == roles.staff">
+            <a class="nav-link" href="/staff/classlist" [routerLink]="['/staff/classlist']" [routerLinkActive]="['active']">Class List</a>
           </li>
           <li class="nav-item" *ngIf="role == roles.admin">
             <a class="nav-link" href="/admin/registrations" [routerLink]="['/admin/registrations']" [routerLinkActive]="['active']">Registrations</a>
@@ -26,6 +26,9 @@
           </li>
           <li class="nav-item" *ngIf="role == roles.user">
             <a class="nav-link" href="/gaurdian/payments" [routerLink]="['/guardian/payments']" [routerLinkActive]="['active']">Payments</a>
+          </li>
+          <li class="nav-item" *ngIf="role == roles.admin">
+            <a class="nav-link" href="/admin/accounts" [routerLink]="['/admin/accounts']" [routerLinkActive]="['active']">Accounts</a>
           </li>
           <li class="nav-item" *ngIf="authenticated">
             <a class="nav-link" href="/login" (click)="logout()">Logout</a>

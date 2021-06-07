@@ -38,7 +38,6 @@ export class ClassesComponent implements OnInit {
   }
 
   constructor(private _classroomService: ClassesService, private _formBuilder: FormBuilder, private _router: Router) { 
-    this.days = this._classroomService.days;
   }
 
   ngOnInit(): void {

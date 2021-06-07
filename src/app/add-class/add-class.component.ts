@@ -17,7 +17,6 @@ export class AddClassComponent implements OnInit {
   public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, public _classService: ClassesService) {
-    this.day = this._classService.days;
    }
 
   ngOnInit(): void {

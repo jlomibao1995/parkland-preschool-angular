@@ -1,12 +1,28 @@
 <app-nav-bar></app-nav-bar>
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
 <div class="container p-3" [class.overlay]="loading">
-    <div class="bg-light bg-gradient p-3">
-        <div class="row">
-            <div class="col"><h3>Class List</h3></div>
-            <div class="col-auto"><a [href]="'mailto:' + classEmail" class="btn btn-outline-primary">Email Class</a></div>
+    <div class="row m-3">
+        <div class="col-lg-auto">
+            <select class="form-select" id="class" (change)="selectClass()">
+                <option value="" selected disabled hidden>Select Class</option>
+                <option *ngFor="let class of classes" [value]="class.id"> {{class.description}} </option>
+            </select>
         </div>
     </div>
+
+    <div class="bg-light bg-gradient p-3">
+        <div class="row">
+            <div class="col">
+                <h3>Class List</h3>
+            </div>
+            <div class="col-auto" *ngIf="classId != null"><a [href]="'mailto:' + classEmail" class="btn btn-outline-primary">Email Class</a>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="classId == null" class="alert alert-primary m-3" role="alert">
+        Select a class to view class list
+      </div>
 
     <div class="table-responsive-lg m-3" *ngIf="classroom != null && registrations != null">
         <table class="table">
@@ -28,7 +44,9 @@
                 <tr *ngFor="let registration of registrations">
                     <td>{{registration.child.firstName}} {{registration.child.lastName}}</td>
                     <td>{{registration.child.account.firstName}} {{registration.child.account.lastName}}</td>
-                    <td><a [href]="'mailto:' + registration.child.account.email">{{registration.child.account.email}}</a></td>
+                    <td><a
+                            [href]="'mailto:' + registration.child.account.email">{{registration.child.account.email}}</a>
+                    </td>
                     <td>{{registration.child.phoneNumber}}</td>
                 </tr>
             </tbody>
