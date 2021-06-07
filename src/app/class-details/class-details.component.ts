@@ -157,6 +157,7 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
   errorMessage(error: HttpErrorResponse) {
     this.message = error.error.message;
     this.success = false;
+    this.loading = false;
     this.getClass();
   }
 

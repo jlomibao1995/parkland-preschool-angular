@@ -88,9 +88,9 @@ export class ChildInfoEditComponent implements OnInit, OnChanges {
       healthCareNum: [this.child.healthCareNumber, Validators.required],
       immunizations: [this.child.immunizations, Validators.required],
       doctorClinic: [this.child.doctorClinic, Validators.required],
-      medicalConditions: [this.child.medicalConditions],
+      medicalConditions: [this.child.medicalConditions == null ? this.child.medicalConditions : ''],
       chickenPox: [this.child.chickenPox, Validators.required],
-      allergy: [this.child.allergy],
+      allergy: [this.child.allergy == null ? this.child.allergy : ''],
       medications: [this.child.medications, Validators.required],
       medicalPhoneNumber: [this.child.medicalPhoneNumber, Validators.required]
     });

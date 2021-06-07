@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { guardianContactValidator } from '../helpers/guardian.contact.validator';
 import { ChildContact } from '../models/ChildContact';
 import { ChildService } from '../services/child.service';
 
@@ -56,8 +57,9 @@ export class AddContactComponent implements OnInit, OnChanges {
         workPhoneNumber: [initialWorkPhone, Validators.required],
         cellNumber: [initialCellPhone, Validators.required],
         address: [initialAddress, Validators.required],
-        relationToChild: [initialRelation, Validators.required]
-      });
+        relationToChild: [initialRelation, Validators.required],
+        type : [this.type]
+      }, {validators : [guardianContactValidator]});
     }
 
   ngOnInit(): void {

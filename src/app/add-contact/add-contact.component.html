@@ -67,8 +67,9 @@
             <div class="col form-group">
                 <label for="postalCode">Relation To Child</label>
                 <input type="text" class="form-control" formControlName="relationToChild"
-                    [class.is-invalid]="relationToChild.invalid && relationToChild.touched">
+                    [class.is-invalid]="relationToChild.invalid && relationToChild.touched || addContactForm.errors?.guardianInvalid">
                 <small [class.d-none]="relationToChild.valid || relationToChild.untouched" class="text-danger">Enter relation to child</small>
+                <small [class.d-none]="!addContactForm.errors?.guardianInvalid" class="text-danger">Enter guardian as either 'Mother' or 'Father'</small>
             </div>
         </div>
 
