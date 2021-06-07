@@ -44,6 +44,7 @@ import { RegistrationActionsComponent } from './registration-actions/registratio
 import { PayRegistrationFeeComponent } from './pay-registration-fee/pay-registration-fee.component';
 import { RegistrationInfoComponent } from './registration-info/registration-info.component';
 import { GuardianPaymentsComponent } from './guardian-payments/guardian-payments.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { GuardianPaymentsComponent } from './guardian-payments/guardian-payments
     RegistrationActionsComponent,
     PayRegistrationFeeComponent,
     RegistrationInfoComponent,
-    GuardianPaymentsComponent
+    GuardianPaymentsComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
