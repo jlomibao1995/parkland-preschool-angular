@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
             <fieldset [class.overlay]="loading" [disabled]="loading">
-                <form class="out py-3" [formGroup]="loginForm" (ngSubmit)="authenticate()">
+                <form class="out" [formGroup]="loginForm" (ngSubmit)="authenticate()">
                     <div class="row">
                         <div class="col m-3 form-group">
                             <input type="text" class="form-control out" formControlName="email"

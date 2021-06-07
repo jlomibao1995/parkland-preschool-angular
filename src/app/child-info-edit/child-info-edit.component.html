@@ -14,7 +14,7 @@
 
     <fieldset [class.overlay]="loading" [disabled]="loading || !editMode">
         <div class="row p-2">
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="firstName">First Name</label>
                 <input type="text" class="form-control" formControlName="firstName"
                     [class.is-invalid]="firstName.invalid && firstName.touched">
@@ -22,7 +22,7 @@
                     name</small>
             </div>
 
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="lastName">Last Name</label>
                 <input type="text" class="form-control" formControlName="lastName"
                     [class.is-invalid]="lastName.invalid && lastName.touched">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="row p-2">
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="gender">Gender</label>
                 <select class="form-select" formControlName="gender"
                     [class.is-invalid]="gender.invalid && gender.touched">
@@ -41,7 +41,7 @@
                 </select>
                 <small [class.d-none]="gender.valid || gender.untouched" class="text-danger">Select gender</small>
             </div>
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="birthdate">Birthdate</label>
                 <input type="date" class="form-control" formControlName="birthdate"
                     [class.is-invalid]="birthdate.invalid && birthdate.touched">
@@ -51,14 +51,14 @@
         </div>
 
         <div class="row p-2">
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="address">Address</label>
                 <input type="text" class="form-control" formControlName="address"
                     [class.is-invalid]="address.invalid && address.touched">
                 <small [class.d-none]="address.valid || address.untouched" class="text-danger">Enter address</small>
             </div>
 
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="postalCode">Postal Code</label>
                 <input type="text" class="form-control" formControlName="postalCode"
                     [class.is-invalid]="postalCode.invalid && postalCode.touched">
@@ -68,7 +68,7 @@
         </div>
 
         <div class="row p-2">
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="healthCareNum">Alberta Health Care #</label>
                 <input type="text" class="form-control" formControlName="healthCareNum"
                     [class.is-invalid]="healthCareNum.invalid && healthCareNum.touched">
@@ -76,14 +76,14 @@
                     care number</small>
             </div>
 
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="allergy">Allery/Dietary Requirements</label>
                 <textarea class="form-control" cols="30" rows="3" formControlName="allergy"></textarea>
             </div>
         </div>
 
         <div class="row p-2">
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="doctorClinic">Doctor/Walk-in Clinic</label>
                 <input type="text" class="form-control" formControlName="doctorClinic"
                     [class.is-invalid]="doctorClinic.invalid && doctorClinic.touched">
@@ -91,7 +91,7 @@
                     clinic</small>
             </div>
 
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="medicalPhone">Doctor/Clinic Phone Number</label>
                 <input type="tel" class="form-control" formControlName="medicalPhoneNumber"
                     [class.is-invalid]="medicalPhoneNumber.invalid && medicalPhoneNumber.touched">
@@ -152,7 +152,7 @@
             </div>
 
 
-            <div class="col form-group">
+            <div class="col-sm-auto form-group">
                 <label for="medicalConditions">Special Medical Conditions</label>
                 <textarea class="form-control" cols="30" rows="3" formControlName="medicalConditions"></textarea>
             </div>

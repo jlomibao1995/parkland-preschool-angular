@@ -15,7 +15,6 @@
 
                 <form [formGroup]="childForm">
                     <div class="row p-3">
-                        <div class="col"></div>
                         <div class="col form-group">
                             <select class="form-select" (change)="selectChild()" formControlName="childId">
                                 <option value="" selected disabled hidden>Select child</option>
@@ -24,7 +23,6 @@
                                     {{child.lastName}}</option>
                             </select>
                         </div>
-                        <div class="col"></div>
                     </div>
                 </form>
 

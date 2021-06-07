@@ -1,10 +1,18 @@
 <app-nav-bar></app-nav-bar>
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
-<div class="container">
+<div class="container my-3">
     <fieldset [class.overlay]="loading" [disabled]="loading">
         <app-success-error-dialog [message]="message" [success]="success"
             (messageChanged)="messageChangedHandler($event)">
         </app-success-error-dialog>
+
+        <div class="bg-light bg-gradient mt-3 p-3">
+            <div class="row">
+                <div class="col mx-3">
+                    <h3>Payment Records</h3>
+                </div>
+            </div>
+        </div>
 
         <form [formGroup]="pageForm" (keydown.enter)="$event.preventDefault(); goToPage(1)">
             <div class="row mx-3">
@@ -24,7 +32,7 @@
 
                 <div class="col-lg p-3">
                     <select name="role" class="form-select" formControlName="month" (change)="goToPage(1)">
-                        <option value="" selected disabled hidden>Month</option>
+                        <option value="0" selected disabled hidden>Month</option>
                         <option value="0">All</option>
                         <option value="1">Jan</option>
                         <option value="2">Feb</option>
@@ -74,7 +82,8 @@
                                 </span>
                             </button>
 
-                            <a [href]="'/checkout/' + payment.invoiceId" *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-outline-primary">Pay</a>
+                            <a [href]="'/checkout/' + payment.invoiceId" *ngIf="payment.paymentStatus == status.unpaid"
+                                class="btn btn-outline-primary">Pay</a>
                         </td>
                     </tr>
                 </tbody>
@@ -112,8 +121,7 @@
 </div>
 
 <!-- modal viewing payment details-->
-<div class="modal fade" id="paymentDetails" tabindex="-1"
-    aria-labelledby="paymentDetailsLabel" aria-hidden="true">
+<div class="modal fade" id="paymentDetails" tabindex="-1" aria-labelledby="paymentDetailsLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
