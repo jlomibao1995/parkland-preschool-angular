@@ -13,6 +13,9 @@
                     <h3>Payment Records</h3>
                 </div>
 
+                <div class="col-auto">
+                    <button class="btn btn-outline-primary" (click)="getPDFReport()">Print</button>
+                </div>
                 <div class="col-auto mx-3">
                     <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
                         data-bs-target="#addFee">
@@ -148,7 +151,7 @@
 
 
         <div class="table-responsive-lg p-3">
-            <table class="table table-hover">
+            <table class="table table-hover" id="payments">
                 <thead>
                     <tr>
                         <th [class.d-none]="!columnStates.name">Child</th>

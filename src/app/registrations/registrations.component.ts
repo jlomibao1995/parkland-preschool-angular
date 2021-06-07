@@ -5,6 +5,7 @@ import { Classroom } from '../models/Classroom';
 import { Registration } from '../models/Registration';
 import { ClassesService } from '../services/classroom.service';
 import { RegistrationService } from '../services/registration.service';
+import { ReportService } from '../services/report.service';
 
 @Component({
   selector: 'app-registrations',
@@ -35,9 +36,9 @@ export class RegistrationsComponent implements OnInit {
   public moveForm: FormGroup;
 
   constructor(private _registrationService: RegistrationService, private _formBuilder: FormBuilder,
-    private _classroomService: ClassesService) {
-      this.status = this._registrationService.status;
-     }
+    private _classroomService: ClassesService, private _reportService: ReportService) {
+    this.status = this._registrationService.status;
+  }
 
   ngOnInit(): void {
     this.loading = false;
@@ -76,41 +77,41 @@ export class RegistrationsComponent implements OnInit {
 
     this._registrationService.getRegistrations(this.currentPage, this.numOfRegistrations,
       classroom, status, searchQuery).subscribe(
-      data => {
-        this.registrations = data.content;
-        this.totalPages = data.totalPages;
-        this.totalRegistrations = data.totalElements;
-        
-        //figure out which page buttons are visible
-        let start = this.currentPage - 2;
+        data => {
+          this.registrations = data.content;
+          this.totalPages = data.totalPages;
+          this.totalRegistrations = data.totalElements;
 
-        if(this.currentPage + 2 > this.totalPages) {
-          start = this.currentPage - 3;
-        }
-        
-        if (start <= 0) {
-          start = 1;
-        }
+          //figure out which page buttons are visible
+          let start = this.currentPage - 2;
 
-        for (let i = 0; i < 5; i++) {
-          if (this.totalRegistrations == 0) {
-            break;
+          if (this.currentPage + 2 > this.totalPages) {
+            start = this.currentPage - 3;
           }
 
-          this.pages[i] = start + i;
-
-          if (start + i == this.totalPages) {
-            break;
+          if (start <= 0) {
+            start = 1;
           }
-        }
 
-        this.loading = false;
+          for (let i = 0; i < 5; i++) {
+            if (this.totalRegistrations == 0) {
+              break;
+            }
 
-      },
-      error => {
-        this.message = error.error.message
-        console.log(this.message);
-      });
+            this.pages[i] = start + i;
+
+            if (start + i == this.totalPages) {
+              break;
+            }
+          }
+
+          this.loading = false;
+
+        },
+        error => {
+          this.message = error.error.message
+          console.log(this.message);
+        });
   }
 
   selectRegistration(index) {
@@ -126,7 +127,7 @@ export class RegistrationsComponent implements OnInit {
   activateRegistration(registrationId) {
     this.loading = true;
     let params = new HttpParams()
-    .set('active', true);
+      .set('active', true);
 
     this._registrationService.updateRegistration(registrationId, params).subscribe(
       data => this.successMessage("Registration activated"),
@@ -173,12 +174,12 @@ export class RegistrationsComponent implements OnInit {
     this.loading = true;
     this.registrationUpdated = false;
     this._registrationService.updateRegistration(this.selectedId, new HttpParams().set('classId', this.moveForm.get('class').value))
-    .subscribe(data => {
-      this.ngOnInit();
-      this.successMessage('Registration was transfered to a different class');
-      this.registrationUpdated = true;
-      this.getClassForChild();
-    }, error => this.errorMessage(error));
+      .subscribe(data => {
+        this.ngOnInit();
+        this.successMessage('Registration was transfered to a different class');
+        this.registrationUpdated = true;
+        this.getClassForChild();
+      }, error => this.errorMessage(error));
   }
 
   deleteRegistration() {
@@ -187,6 +188,14 @@ export class RegistrationsComponent implements OnInit {
       data => this.successMessage('Registration deleted'),
       error => this.errorMessage(error)
     )
+  }
+
+  getRegistrationPDF() {
+    this._registrationService.getRegistrationPDF(this.selectedId);
+  }
+
+  printReportPDF() {
+    this._reportService.printReportPDF('registrations');
   }
 
   successMessage(successMesage: String) {

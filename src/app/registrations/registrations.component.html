@@ -11,6 +11,9 @@
                 <div class="col mx-3">
                     <h3>Registration Listing</h3>
                 </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-primary" (click)="printReportPDF()">Print</button>
+                </div>
 
                 <!-- <div class="col-auto mx-3">
                     <button type="button" class="btn btn-success text-nowrap" data-bs-toggle="modal"
@@ -72,7 +75,7 @@
         </form>
 
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table id="registrations" class="table table-hover">
                 <thead>
                     <tr>
                         <th>Child</th>
@@ -183,6 +186,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" *ngIf="selectedId != null">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-auto">
+                        <button class="btn btn-outline-primary" (click)="getRegistrationPDF()">Registration PDF</button>
+                    </div>
+                </div>
                 <app-registration-details [registrationId]="selectedId" [updated]="registrationUpdated">
                 </app-registration-details>
 

@@ -54,6 +54,22 @@ export class RegistrationService {
     return this._http.delete<any>(this.baseUrl + '/admin/' + id)
     .pipe(catchError(this.errorHandler));
   }
+  
+  getRegistrationPDF(id: number){
+    const httpOptions = {
+      'responseType'  : 'arraybuffer' as 'json'
+    };
+
+    this._http.get<any>(this.baseUrl + '/admin/pdf/' + id, httpOptions).subscribe(
+      data => {
+        let file = new Blob([data], {type : 'application/pdf'});
+          let url = URL.createObjectURL(file);
+          window.open(url, '_blank');
+      }, error => console.log(error)
+    );
+
+    //window.open(this.baseUrl + '/admin/registration/pdf/' + id, '_blank');
+  }
 
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);

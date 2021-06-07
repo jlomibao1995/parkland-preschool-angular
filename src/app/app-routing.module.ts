@@ -10,7 +10,6 @@ import { MyAccountComponent } from './my-account/my-account.component';
 import { PayRegistrationFeeComponent } from './pay-registration-fee/pay-registration-fee.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { RegisterChildComponent } from './register-child/register-child.component';
-import { RegistrationsGuardianComponent } from './registrations-guardian/registrations-guardian.component';
 import { RegistrationsComponent } from './registrations/registrations.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignupComponent } from './signup/signup.component';

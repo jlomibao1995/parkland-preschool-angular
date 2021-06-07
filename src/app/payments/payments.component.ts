@@ -5,6 +5,7 @@ import { Classroom } from '../models/Classroom';
 import { PaymentDetails } from '../models/PaymentDetails';
 import { ClassesService } from '../services/classroom.service';
 import { PaymentsService } from '../services/payments.service';
+import { ReportService } from '../services/report.service';
 
 @Component({
   selector: 'app-payments',
@@ -41,7 +42,8 @@ export class PaymentsComponent implements OnInit {
   };
   public classrooms: Classroom[];
 
-  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder, private _classroomService: ClassesService) {
+  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder, 
+    private _classroomService: ClassesService, private _reportService: ReportService) {
     this.status = this._paymentService.status;
    }
 
@@ -123,6 +125,10 @@ export class PaymentsComponent implements OnInit {
 
       }, error => console.log(error.error.message)
     );
+  }
+
+  getPDFReport() {
+    this._reportService.printReportPDF('payments')
   }
 
   messageChangedHandler(message: String) {
