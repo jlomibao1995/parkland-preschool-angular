@@ -3,10 +3,10 @@ $myPrimaryColor: #0050B6;
 $mySecondaryColor: #A1ACBD;
 $mySuccessColor: #36C190;
 $myDarkColor: #3D4856;
-$myLightColor: #D9F3FF;
+$myLightColor: #edf3f8;
 $myDangerColor: #FF706F;
 $myInfoColor: #0074BE;
-$myWarningColor: #EEE8A9;
+$myWarningColor: #DFA01F;
 $white: #fcfcfc;
 
 
@@ -20,6 +20,8 @@ $text-font: 'Roboto', sans-serif;
 @import "../../node_modules/bootstrap/scss/card";
 
 $card-border-radius : 20px;
+$card-bg: #4fa9f70e;
+
 $theme-colors: (
   "primary":    $myPrimaryColor,
   "secondary":  $mySecondaryColor,

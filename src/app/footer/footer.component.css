@@ -1,0 +1,10 @@
+div.container-fluid {
+    background-image: url(../../assets/stick-kids.png);
+    background-position-x: center;
+    background-size: contain;
+    background-repeat: repeat-x;
+}
+
+div.col {
+    background-color: rgba(255, 255, 255, 0.63);
+}

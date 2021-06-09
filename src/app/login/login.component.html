@@ -1,5 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
+<div class="container-fluid out"></div>
 <div class="container col-xl-3">
     <div class="card my-5 shadow">
         <div class="row">
@@ -43,15 +44,15 @@
                     </div>
 
                     <div class="row">
-                        <div class="col m-3">
-                            <button type="submit" class="btn btn-outline-primary btn-lg out"
-                                [disabled]="!loginForm.valid">Log In</button>
+                        <div class="col m-3 text-center">
+                            <small>Don't have an account? <a href="/signup">Sign up here</a></small>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col m-3 text-center">
-                            <small>Don't have an account? <a href="/signup">Sign up here</a></small>
+                        <div class="col m-3">
+                            <button type="submit" class="btn btn-outline-primary btn-lg out"
+                                [disabled]="!loginForm.valid">Log In</button>
                         </div>
                     </div>
                 </form>

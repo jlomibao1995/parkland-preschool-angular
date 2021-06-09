@@ -69,6 +69,10 @@ export class RegisterChildComponent implements OnInit {
   }
 
   selectChild() {
+    this.classForm = this._formBuilder.group({
+      classId: ['', Validators.required]
+    });
+    
     if (this.childForm.get('childId').value == 'new') {
       this.showAddChildForm = true;
       this.selectedChildId = null;
