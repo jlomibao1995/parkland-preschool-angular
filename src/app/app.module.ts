@@ -46,6 +46,7 @@ import { RegistrationInfoComponent } from './registration-info/registration-info
 import { GuardianPaymentsComponent } from './guardian-payments/guardian-payments.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { FooterComponent } from './footer/footer.component';
     RegistrationInfoComponent,
     GuardianPaymentsComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { ClassesComponent } from './classes/classes.component';
 import { GuardianPaymentsComponent } from './guardian-payments/guardian-payments.component';
 import { LoginComponent } from './login/login.component';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PayRegistrationFeeComponent } from './pay-registration-fee/pay-registration-fee.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { RegisterChildComponent } from './register-child/register-child.component';
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path: 'checkout/:invoiceId', component: CheckoutComponent},
   {path: 'guardian/register/:id', component: PayRegistrationFeeComponent},
   {path: 'guardian/payments', component: GuardianPaymentsComponent},
-  {path: '', redirectTo: '/myaccount', pathMatch: 'full'}
+  {path: '', redirectTo: '/myaccount', pathMatch: 'full'},
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
