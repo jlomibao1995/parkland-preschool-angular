@@ -112,23 +112,23 @@
                         <td [class.d-none]="!columnStates.actions">
                             <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editClass">
                                 <span class="material-icons">
-                                    info
+                                    edit
                                 </span>
                             </button>
                         </td>
                         <td [class.d-none]="!columnStates.actions">
-                            <button *ngIf="class.openRegistration" class="btn btn-outline-primary"
+                            <button *ngIf="class.openRegistration" class="btn btn-outline-secondary"
                                 data-bs-toggle="tooltip" data-bs-placement="top" title="Close Registration"
                                 (click)="closeRegistration(class.id)">
                                 <span class="material-icons">
-                                    lock_open
+                                    lock
                                 </span>
                             </button>
-                            <button *ngIf="!class.openRegistration" class="btn btn-outline-secondary"
+                            <button *ngIf="!class.openRegistration" class="btn btn-outline-primary"
                                 data-bs-toggle="tooltip" data-bs-placement="top" title="Open Registration"
                                 (click)="openRegistration(class.id)">
                                 <span class="material-icons">
-                                    lock
+                                    lock_open
                                 </span>
                             </button>
                         </td>

@@ -183,14 +183,14 @@
                             <button *ngIf="payment.paymentStatus == status.paid" class="btn btn-outline-dark"
                                 data-bs-toggle="modal" data-bs-target="#paymentDetails">
                                 <span class="material-icons">
-                                    info
+                                    read_more
                                 </span>
                             </button>
 
-                            <button *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-outline-success"
+                            <button *ngIf="payment.paymentStatus == status.unpaid" class="btn btn-outline-primary"
                                 data-bs-toggle="modal" data-bs-target="#otherMethod">
                                 <span class="material-icons">
-                                    add_task
+                                    read_more
                                 </span>
                             </button>
                         </td>

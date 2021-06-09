@@ -33,7 +33,3 @@ input[type=number].page-entries {
     opacity: 0.5;
     overflow: hidden;
 }
-
-.shadow {
-    box-shadow: 2px 2px 2px grey;
-}

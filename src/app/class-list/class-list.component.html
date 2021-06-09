@@ -15,13 +15,13 @@
             <div class="col">
                 <h3>Class List</h3>
             </div>
-            <div class="col-auto" *ngIf="classId != null"><a [href]="'mailto:' + classEmail"
+            <div class="col-auto" *ngIf="classId != null && registrations.length != 0"><a [href]="'mailto:' + classEmail"
                     class="btn btn-outline-primary">Email Class</a>
             </div>
         </div>
     </div>
 
-    <div *ngIf="classId == null" class="alert alert-primary m-3" role="alert">
+    <div *ngIf="classId == null" class="alert alert-info m-3" role="alert">
         Select a class to view class list
     </div>
 
@@ -39,20 +39,24 @@
                     <th>Guardian</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let registration of registrations; let i = index">
-                    <td>
-                        <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#childInfo" (click)="selectChild(i)">
-                            {{registration.child.firstName}} {{registration.child.lastName}}
-                        </button>
-                    </td>
+                    <td>{{registration.child.firstName}} {{registration.child.lastName}}</td>
                     <td>{{registration.child.account.firstName}} {{registration.child.account.lastName}}</td>
                     <td><a
                             [href]="'mailto:' + registration.child.account.email">{{registration.child.account.email}}</a>
                     </td>
                     <td>{{registration.child.phoneNumber}}</td>
+                    <td>
+                        <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#childInfo" (click)="selectChild(i)">
+                            <span class="material-icons">
+                                read_more
+                            </span>
+                        </button>
+                    </td>
                 </tr>
             </tbody>
             <tfoot>

@@ -1,0 +1,47 @@
+$mainColor : #4FA8F7;
+$myPrimaryColor: #0050B6;
+$mySecondaryColor: #A1ACBD;
+$mySuccessColor: #36C190;
+$myDarkColor: #3D4856;
+$myLightColor: #D9F3FF;
+$myDangerColor: #FF706F;
+$myInfoColor: #0074BE;
+$myWarningColor: #EEE8A9;
+$white: #fcfcfc;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+$heading: 'Roboto', sans-serif;
+$text-font: 'Roboto', sans-serif;
+
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/card";
+
+$card-border-radius : 20px;
+$theme-colors: (
+  "primary":    $myPrimaryColor,
+  "secondary":  $mySecondaryColor,
+  "success":    $mySuccessColor,
+  "info":       $myInfoColor,
+  "warning":    $myWarningColor,
+  "danger":     $myDangerColor,
+  "light":      $myLightColor,
+  "dark":       $myDarkColor
+);
+
+$navbar-light-hover-color: $white;
+$navbar-light-active-color: $white;
+
+$headings-font-family: $heading;
+$font-family-sans-serif: $text-font;
+
+$input-btn-focus-color: $mainColor;
+
+$pagination-active-bg: $myPrimaryColor;
+$pagination-active-border-color: $myPrimaryColor;
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss"
+
+
