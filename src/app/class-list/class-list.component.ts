@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Classroom } from '../models/Classroom';
 import { Registration } from '../models/Registration';
 import { ClassesService } from '../services/classroom.service';
@@ -24,7 +24,7 @@ export class ClassListComponent implements OnInit {
   classes: Classroom[];
 
   constructor(private _classroomService: ClassesService, private _route: ActivatedRoute,
-    private _registrationService: RegistrationService) {
+    private _registrationService: RegistrationService, private _router: Router) {
       this.status = this._registrationService.status;
      }
 
@@ -33,7 +33,7 @@ export class ClassListComponent implements OnInit {
 
     this._classroomService.getClassrooms().subscribe(
       data => this.classes = data,
-      error => console.log(error)
+      error => this._router.navigateByUrl('/error')
     );
 
     this._route.params.subscribe(params => {
@@ -56,7 +56,7 @@ export class ClassListComponent implements OnInit {
           this.classEmail += registration.child.account.email + ';';
         }
       },
-      error => console.log(error.error.message)
+      error => this._router.navigateByUrl('/error')
     );
   }
 

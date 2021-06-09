@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentDetails } from '../models/PaymentDetails';
 import { PaymentsService } from '../services/payments.service';
 declare var paypal;
@@ -25,7 +25,8 @@ export class CheckoutComponent implements OnInit {
   status;
   updated = false;
 
-  constructor(private _route: ActivatedRoute, private _paymentService: PaymentsService) {
+  constructor(private _route: ActivatedRoute, private _paymentService: PaymentsService,
+    private _router: Router) {
     this._paymentService.status;
   }
 
@@ -91,9 +92,7 @@ export class CheckoutComponent implements OnInit {
           }, error => console.log(error)
         );
       },
-      onError: err => {
-        console.log(err);
-      }
+      onError: err => this._router.navigateByUrl('/error')
 
     })
       .render(this.paypalElement.nativeElement);
@@ -112,7 +111,7 @@ export class CheckoutComponent implements OnInit {
             this.serviceFees = data.serviceFees;
             this.paymentId = data.id;
           },
-          error => console.log(error)
+          error => this._router.navigateByUrl('/error')
         );
       }
     })

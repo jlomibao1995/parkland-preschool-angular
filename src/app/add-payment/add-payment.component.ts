@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { paymentDescriptionValidator } from '../helpers/payment.description.validator';
 import { Classroom } from '../models/Classroom';
 import { Registration } from '../models/Registration';
@@ -25,7 +26,7 @@ export class AddPaymentComponent implements OnInit {
   visibleInputs = 1;
 
   constructor(private _formBuilder: FormBuilder, private _paymentService: PaymentsService, private _registrationService: RegistrationService,
-    private _classroomService: ClassesService) { }
+    private _classroomService: ClassesService, private _router: Router) { }
 
   ngOnInit(): void {
     this.visibleInputs = 1;
@@ -45,10 +46,7 @@ export class AddPaymentComponent implements OnInit {
         this.classrooms = data;
         this.loading = false;
       },
-      error => {
-        console.log(error.error.message);
-        this.loading = false;
-      }
+      error => this._router.navigateByUrl('/error')
     );
 
     this.loading = true;

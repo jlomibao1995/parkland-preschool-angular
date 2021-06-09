@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators'
 import { environment } from 'src/environments/environment';
@@ -17,7 +18,7 @@ export class RegistrationService {
     spotOffered : 'SPOT_OFFERED'
   };
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private _router: Router) { }
 
   getRegistrations(page, pageSize, classroom, status, searchQuery) {
     let url = this.baseUrl + '/admin/registrations/pages';
@@ -65,7 +66,7 @@ export class RegistrationService {
         let file = new Blob([data], {type : 'application/pdf'});
           let url = URL.createObjectURL(file);
           window.open(url, '_blank');
-      }, error => console.log(error)
+      }, error => this._router.navigateByUrl('/error')
     );
 
     //window.open(this.baseUrl + '/admin/registration/pdf/' + id, '_blank');

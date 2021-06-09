@@ -93,10 +93,7 @@ export class ClassesComponent implements OnInit {
         this.loading = false;
 
       },
-      error => {
-        this.message = error.error.message
-        this.loading = false;
-      });
+      error => this._router.navigateByUrl('/error'));
   }
 
   changeClassesNum() {

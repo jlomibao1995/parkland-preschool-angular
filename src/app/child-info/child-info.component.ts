@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { Child } from '../models/Child';
 import { ChildContact } from '../models/ChildContact';
 import { ChildService } from '../services/child.service';
@@ -15,7 +16,8 @@ export class ChildInfoComponent implements OnInit, OnChanges {
   public contactsType;
   public gender;
 
-  constructor(private _childService: ChildService, private _reportService: ReportService) {
+  constructor(private _childService: ChildService, private _reportService: ReportService,
+    private _router: Router) {
     this.contactsType = this._childService.contactsType;
     this.gender = this._childService.gender;
   }
@@ -23,7 +25,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this._childService.getChildInfo(this.childId).subscribe(
       data => this.child = data,
-      error => console.log(error.error.message)
+      error => this._router.navigateByUrl('/error')
     )
   }
 

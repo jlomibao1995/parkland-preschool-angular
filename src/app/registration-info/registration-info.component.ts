@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { disciplineSignatureValidator, outdoorSignatureValidator, safetySignatureValidator, sickSignatureValidator } from '../helpers/signature.validator';
 import { ChildService } from '../services/child.service';
 
@@ -20,7 +21,8 @@ export class RegistrationInfoComponent implements OnInit, OnChanges {
   @Output() infoComplete: EventEmitter<String> = new EventEmitter();
   @Output() goBack: EventEmitter<String> = new EventEmitter();
 
-  constructor(private _childService: ChildService, private _formBuilder: FormBuilder) { }
+  constructor(private _childService: ChildService, private _formBuilder: FormBuilder,
+    private _router: Router) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.contactsHandler(null);
@@ -85,7 +87,7 @@ export class RegistrationInfoComponent implements OnInit, OnChanges {
           accountName: [this.accountName]
         }, { validators: [disciplineSignatureValidator, outdoorSignatureValidator, safetySignatureValidator, sickSignatureValidator] });
       },
-      error => error
+      error => this._router.navigateByUrl('/error')
     );
   }
 

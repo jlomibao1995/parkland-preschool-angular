@@ -86,7 +86,7 @@ export class RegisterChildComponent implements OnInit {
           this.classrooms = data;
           this.loading = false;
         },
-        error => this.errorMessage(error)
+        error => this._router.navigateByUrl('/error')
       )
 
       this.loading = true;
@@ -95,7 +95,7 @@ export class RegisterChildComponent implements OnInit {
           this.numOfChildContacts = data.childContactsList.length;
           this.loading = false;
         },
-        error => this.errorMessage(error)
+        error => this._router.navigateByUrl('/error')
       );
     }
   }

@@ -20,7 +20,7 @@ $text-font: 'Roboto', sans-serif;
 @import "../../node_modules/bootstrap/scss/card";
 
 $card-border-radius : 20px;
-$card-bg: #4fa9f70e;
+$card-bg: $white;
 
 $theme-colors: (
   "primary":    $myPrimaryColor,

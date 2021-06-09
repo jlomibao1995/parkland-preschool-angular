@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Classroom } from '../models/Classroom';
 import { Registration } from '../models/Registration';
 import { ClassesService } from '../services/classroom.service';
@@ -36,7 +37,8 @@ export class RegistrationsComponent implements OnInit {
   public moveForm: FormGroup;
 
   constructor(private _registrationService: RegistrationService, private _formBuilder: FormBuilder,
-    private _classroomService: ClassesService, private _reportService: ReportService) {
+    private _classroomService: ClassesService, private _reportService: ReportService,
+    private _router: Router) {
     this.status = this._registrationService.status;
   }
 
@@ -56,7 +58,7 @@ export class RegistrationsComponent implements OnInit {
     });
 
     this._classroomService.getClassList().subscribe(data => this.classrooms = data,
-      error => this.errorMessage(error));
+      error => this._router.navigateByUrl('/error'));
 
     this.goToPage(this.currentPage);
     this.registrationUpdated = false;
@@ -108,10 +110,7 @@ export class RegistrationsComponent implements OnInit {
           this.loading = false;
 
         },
-        error => {
-          this.message = error.error.message
-          console.log(this.message);
-        });
+        error => this._router.navigateByUrl('/error'));
   }
 
   selectRegistration(index) {
@@ -166,7 +165,7 @@ export class RegistrationsComponent implements OnInit {
   getClassForChild() {
     this._classroomService.getClassroomForChild(this.selectedRegistration.child.id).subscribe(
       data => this.childClassrooms = data,
-      error => error.error.message
+      error => this._router.navigateByUrl('/error')
     );
   }
 

@@ -7,6 +7,7 @@ import { ClassesService } from '../services/classroom.service';
 import { PaymentsService } from '../services/payments.service';
 import { ReportService } from '../services/report.service';
 import { CurrencyPipe } from '@angular/common'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payments',
@@ -15,8 +16,6 @@ import { CurrencyPipe } from '@angular/common'
 })
 export class PaymentsComponent implements OnInit {
   public loading: boolean;
-  public message: String;
-  public success: boolean;
   public status;
   public payments: PaymentDetails[];
   private selectedPayment: PaymentDetails;
@@ -44,14 +43,13 @@ export class PaymentsComponent implements OnInit {
   public classrooms: Classroom[];
 
   constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder,
-    private _classroomService: ClassesService, private _reportService: ReportService) {
+    private _classroomService: ClassesService, private _reportService: ReportService,
+    private _router: Router) {
     this.status = this._paymentService.status;
   }
 
   ngOnInit(): void {
     this.loading = false;
-    this.message = null;
-    this.success = null;
     this.selectedId = null;
     this.pageForm = this._formBuilder.group({
       numOfPayments: [this.numOfPayments],
@@ -62,8 +60,9 @@ export class PaymentsComponent implements OnInit {
       year: ['']
     });
 
-    this._classroomService.getClassList().subscribe(data => this.classrooms = data,
-      error => this.errorMessage(error));
+    this._classroomService.getClassList().subscribe(
+      data => this.classrooms = data,
+      error => this._router.navigateByUrl('/error'));
 
     this.goToPage(this.currentPage);
   }
@@ -124,7 +123,7 @@ export class PaymentsComponent implements OnInit {
 
         this.loading = false;
 
-      }, error => console.log(error.error.message)
+      }, error => this._router.navigateByUrl('/error')
     );
   }
 
@@ -155,24 +154,8 @@ export class PaymentsComponent implements OnInit {
         }
 
         this._reportService.createPDFReport('Payments', head, body);
-      }, error => console.log(error)
+      }, error => this._router.navigateByUrl('/error')
     )
-  }
-
-  messageChangedHandler(message: String) {
-    this.message = null;
-  }
-
-  successMessage(successMesage: String) {
-    this.goToPage(this.currentPage);
-    this.message = successMesage;
-    this.success = true;
-  }
-
-  errorMessage(error: HttpErrorResponse) {
-    this.goToPage(this.currentPage);
-    this.message = error.error.message;
-    this.success = false;
   }
 
   toggleColumnState(event) {

@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Child } from '../models/Child';
 import { ChildService } from '../services/child.service';
 
@@ -20,7 +21,8 @@ export class ChildInfoEditComponent implements OnInit, OnChanges {
   public editMode:boolean;
   @Output() infoComplete: EventEmitter<string> = new EventEmitter();
 
-  constructor(private _formBuilder: FormBuilder, private _childService: ChildService) {
+  constructor(private _formBuilder: FormBuilder, private _childService: ChildService,
+    private _router: Router) {
     this.genders = this._childService.gender;
   }
 
@@ -45,9 +47,7 @@ export class ChildInfoEditComponent implements OnInit, OnChanges {
           this.editMode = false;
         }
 
-      }, error => {
-        console.log(error);
-      }
+      }, error => this._router.navigateByUrl('/error')
     );
   }
 
