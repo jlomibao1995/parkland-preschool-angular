@@ -4,6 +4,7 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ClassListComponent } from './class-list/class-list.component';
 import { ClassesComponent } from './classes/classes.component';
+import { ErrorComponent } from './error/error.component';
 import { GuardianPaymentsComponent } from './guardian-payments/guardian-payments.component';
 import { LoginComponent } from './login/login.component';
 import { MyAccountComponent } from './my-account/my-account.component';
@@ -32,8 +33,10 @@ const routes: Routes = [
   {path: 'checkout/:invoiceId', component: CheckoutComponent},
   {path: 'guardian/register/:id', component: PayRegistrationFeeComponent},
   {path: 'guardian/payments', component: GuardianPaymentsComponent},
+  {path: 'error', component: ErrorComponent},
+  { path: '404', component: PageNotFoundComponent},
   {path: '', redirectTo: '/myaccount', pathMatch: 'full'},
-  {path: '**', component: PageNotFoundComponent}
+  {path: '**', redirectTo: '/404'}
 ];
 
 @NgModule({

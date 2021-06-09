@@ -47,6 +47,7 @@ import { GuardianPaymentsComponent } from './guardian-payments/guardian-payments
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     GuardianPaymentsComponent,
     NavBarComponent,
     FooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
