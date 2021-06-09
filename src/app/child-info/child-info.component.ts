@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { Child } from '../models/Child';
 import { ChildContact } from '../models/ChildContact';
 import { ChildService } from '../services/child.service';
+import { ReportService } from '../services/report.service';
 
 @Component({
   selector: 'app-child-info',
@@ -14,7 +15,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
   public contactsType;
   public gender;
 
-  constructor(private _childService: ChildService) {
+  constructor(private _childService: ChildService, private _reportService: ReportService) {
     this.contactsType = this._childService.contactsType;
     this.gender = this._childService.gender;
   }
@@ -33,5 +34,9 @@ export class ChildInfoComponent implements OnInit, OnChanges {
     let contactList = this.child.childContactsList.filter(contact => contact.type == type);
     return contactList;
   }
+
+  // generatePDF() {
+  //   this._reportService.createPDF_HTML("child-info");
+  // }
 
 }

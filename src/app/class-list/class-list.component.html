@@ -15,14 +15,15 @@
             <div class="col">
                 <h3>Class List</h3>
             </div>
-            <div class="col-auto" *ngIf="classId != null"><a [href]="'mailto:' + classEmail" class="btn btn-outline-primary">Email Class</a>
+            <div class="col-auto" *ngIf="classId != null"><a [href]="'mailto:' + classEmail"
+                    class="btn btn-outline-primary">Email Class</a>
             </div>
         </div>
     </div>
 
     <div *ngIf="classId == null" class="alert alert-primary m-3" role="alert">
         Select a class to view class list
-      </div>
+    </div>
 
     <div class="table-responsive-lg m-3" *ngIf="classroom != null && registrations != null">
         <table class="table">
@@ -41,8 +42,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let registration of registrations">
-                    <td>{{registration.child.firstName}} {{registration.child.lastName}}</td>
+                <tr *ngFor="let registration of registrations; let i = index">
+                    <td>
+                        <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#childInfo" (click)="selectChild(i)">
+                            {{registration.child.firstName}} {{registration.child.lastName}}
+                        </button>
+                    </td>
                     <td>{{registration.child.account.firstName}} {{registration.child.account.lastName}}</td>
                     <td><a
                             [href]="'mailto:' + registration.child.account.email">{{registration.child.account.email}}</a>
@@ -57,5 +62,23 @@
                 </tr>
             </tfoot>
         </table>
+    </div>
+</div>
+
+<!-- modal for viewing registration info-->
+<div class="modal fade" id="childInfo" tabindex="-1" aria-labelledby="childInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="childInfoLabel">Registration Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" *ngIf="selectedChildId != null">
+                <app-child-info [childId]="selectedChildId"></app-child-info>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>

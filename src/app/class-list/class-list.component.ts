@@ -19,6 +19,8 @@ export class ClassListComponent implements OnInit {
   days;
   loading: boolean;
 
+  selectedChildId: number;
+
   classes: Classroom[];
 
   constructor(private _classroomService: ClassesService, private _route: ActivatedRoute,
@@ -63,6 +65,10 @@ export class ClassListComponent implements OnInit {
     this.classId = selectElement.options[selectElement.selectedIndex].value
     
     this.getClassInfo();
+  }
+
+  selectChild(index) {
+    this.selectedChildId = this.registrations[index].child.id;
   }
 
 }

@@ -1,7 +1,7 @@
 <app-nav-bar></app-nav-bar>
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
 <div class="container col-xl-3">
-    <div class="card my-5 out">
+    <div class="card my-5 out shadow">
         <div class="card-body">
             <fieldset [class.overlay]="loading" [disabled]="loading">
                 <form *ngIf="success == null" class="py-3" [formGroup]="registerForm" (ngSubmit)="registerAccount()">
