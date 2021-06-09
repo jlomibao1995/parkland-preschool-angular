@@ -194,10 +194,6 @@ export class RegistrationsComponent implements OnInit {
     this._registrationService.getRegistrationPDF(this.selectedId);
   }
 
-  printReportPDF() {
-    this._reportService.printReportPDF('registrations');
-  }
-
   successMessage(successMesage: String) {
     this.goToPage(this.currentPage);
     this.message = successMesage;

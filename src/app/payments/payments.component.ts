@@ -6,6 +6,7 @@ import { PaymentDetails } from '../models/PaymentDetails';
 import { ClassesService } from '../services/classroom.service';
 import { PaymentsService } from '../services/payments.service';
 import { ReportService } from '../services/report.service';
+import { CurrencyPipe } from '@angular/common'
 
 @Component({
   selector: 'app-payments',
@@ -13,7 +14,7 @@ import { ReportService } from '../services/report.service';
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent implements OnInit {
-  public loading:boolean;
+  public loading: boolean;
   public message: String;
   public success: boolean;
   public status;
@@ -42,10 +43,10 @@ export class PaymentsComponent implements OnInit {
   };
   public classrooms: Classroom[];
 
-  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder, 
+  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder,
     private _classroomService: ClassesService, private _reportService: ReportService) {
     this.status = this._paymentService.status;
-   }
+  }
 
   ngOnInit(): void {
     this.loading = false;
@@ -128,7 +129,34 @@ export class PaymentsComponent implements OnInit {
   }
 
   getPDFReport() {
-    this._reportService.printReportPDF('payments')
+    let year = this.pageForm.get('year').value ? this.pageForm.get('year').value : 0;
+
+    let cp = new CurrencyPipe('en-US', 'CAD');
+    let params = new HttpParams()
+      .set('page', 0)
+      .set('pageSize', this.totalPayments)
+      .set('sort', this.pageForm.get('sort').value)
+      .set('search', this.pageForm.get('search').value)
+      .set('classId', this.pageForm.get('class').value)
+      .set('month', this.pageForm.get('month').value)
+      .set('year', year);
+
+    this._paymentService.getPayments(params).subscribe(
+      data => {
+        let head = [['Name', 'Description', 'Date Paid', 'Total', 'Service Fee', 'Invoice #', 'Payee', 'Payer']];
+        let body = [];
+
+        let content: PaymentDetails[] = data.content;
+        for (var i = 0; i < data.totalElements; i++) {
+          body[i] = [content[i].registration.child.firstName + ' ' + content[i].registration.child.lastName, content[i].description,
+                    content[i].datePaid, cp.transform(content[i].total, 'CAD', 'symbol-narrow', '1.2-2'), 
+                    cp.transform(content[i].serviceFees, 'CAD', 'symbol-narrow', '1.2-2'), 
+                    content[i].invoiceId, content[i].payee, content[i].payer];
+        }
+
+        this._reportService.createPDFReport('Payments', head, body);
+      }, error => console.log(error)
+    )
   }
 
   messageChangedHandler(message: String) {
