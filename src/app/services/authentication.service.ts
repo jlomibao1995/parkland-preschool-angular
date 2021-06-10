@@ -40,7 +40,7 @@ export class AuthenticationService {
           data => {
             this.currentUser = data;
             resolve(true);
-          }, error => this._router.navigateByUrl('/error')
+          }
         );
     })
   }

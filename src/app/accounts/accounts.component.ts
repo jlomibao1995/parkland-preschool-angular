@@ -2,7 +2,6 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Account } from '../models/Account';
 import { AccountService } from '../services/account.service';
 
@@ -40,8 +39,7 @@ export class AccountsComponent implements OnInit {
     phoneNumbers: false
   }
 
-  constructor(private _accountService: AccountService, private _formBuilder: FormBuilder,
-    private _router: Router) { }
+  constructor(private _accountService: AccountService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.roles = this._accountService.roles;
@@ -109,8 +107,7 @@ export class AccountsComponent implements OnInit {
         }
         this.loading = false;
 
-      }, error => this._router.navigateByUrl('/error')
-    );
+      });
   }
 
   reload() {

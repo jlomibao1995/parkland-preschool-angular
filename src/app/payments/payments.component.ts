@@ -7,7 +7,6 @@ import { ClassesService } from '../services/classroom.service';
 import { PaymentsService } from '../services/payments.service';
 import { ReportService } from '../services/report.service';
 import { CurrencyPipe } from '@angular/common'
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payments',
@@ -43,8 +42,7 @@ export class PaymentsComponent implements OnInit {
   public classrooms: Classroom[];
 
   constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder,
-    private _classroomService: ClassesService, private _reportService: ReportService,
-    private _router: Router) {
+    private _classroomService: ClassesService, private _reportService: ReportService) {
     this.status = this._paymentService.status;
   }
 
@@ -61,8 +59,7 @@ export class PaymentsComponent implements OnInit {
     });
 
     this._classroomService.getClassList().subscribe(
-      data => this.classrooms = data,
-      error => this._router.navigateByUrl('/error'));
+      data => this.classrooms = data);
 
     this.goToPage(this.currentPage);
   }
@@ -123,8 +120,7 @@ export class PaymentsComponent implements OnInit {
 
         this.loading = false;
 
-      }, error => this._router.navigateByUrl('/error')
-    );
+      });
   }
 
   getPDFReport() {
@@ -154,8 +150,7 @@ export class PaymentsComponent implements OnInit {
         }
 
         this._reportService.createPDFReport('Payments', head, body);
-      }, error => this._router.navigateByUrl('/error')
-    )
+      });
   }
 
   toggleColumnState(event) {

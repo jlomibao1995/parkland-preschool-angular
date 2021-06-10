@@ -33,8 +33,7 @@ export class PayRegistrationFeeComponent implements OnInit {
           this.payment = data;
           this.registration = data.registration;
           this.childId = data.registration.child.id;
-        }, error => this._router.navigateByUrl('/error')
-      );
+        });
     });
   }
 

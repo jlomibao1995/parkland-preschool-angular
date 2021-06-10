@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { disciplineSignatureValidator, outdoorSignatureValidator, safetySignatureValidator, sickSignatureValidator } from '../helpers/signature.validator';
 import { Child } from '../models/Child';
 import { Classroom } from '../models/Classroom';
@@ -36,7 +35,7 @@ export class RegisterChildComponent implements OnInit {
   public infoComplete = false;
 
   constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService,
-    private _childService: ChildService, private _classroomService: ClassesService, private _router: Router,
+    private _childService: ChildService, private _classroomService: ClassesService, 
     private _registrationService: RegistrationService) { 
       this.status = this._registrationService.status;
     }
@@ -85,24 +84,15 @@ export class RegisterChildComponent implements OnInit {
         data => {
           this.classrooms = data;
           this.loading = false;
-        },
-        error => this._router.navigateByUrl('/error')
-      )
+        });
 
       this.loading = true;
       this._childService.getChildInfo(this.selectedChildId).subscribe(
         data => {
           this.numOfChildContacts = data.childContactsList.length;
           this.loading = false;
-        },
-        error => this._router.navigateByUrl('/error')
-      );
+        });
     }
-  }
-
-  errorMessage(error) {
-    console.log(error);
-    this.loading = false;
   }
 
   selectClass() {
@@ -121,7 +111,6 @@ export class RegisterChildComponent implements OnInit {
         this.message = "Child has been registered";
         this.success = true;
         this.loading = false;
-        console.log(data);
       }, error => {
         this.message = error;
         this.success = false

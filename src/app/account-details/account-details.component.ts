@@ -1,7 +1,6 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { passwordPatternValidator, passwordValidator } from '../helpers/password.validator';
 import { Account } from '../models/Account';
 import { AccountService } from '../services/account.service';
@@ -24,8 +23,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
   public roles;
   @Input() public userRole: string;
 
-  constructor(private _formBuilder: FormBuilder, private _accountService: AccountService,
-    private _router: Router) {
+  constructor(private _formBuilder: FormBuilder, private _accountService: AccountService) {
     this.roles = this._accountService.roles;
    }
 
@@ -69,8 +67,7 @@ export class AccountDetailsComponent implements OnInit, OnChanges {
           });
 
           this.loading = false;
-        },
-        error => this._router.navigateByUrl('/error'));
+        });
     }
   }
 

@@ -8,7 +8,7 @@ import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private _authenticationService: AuthenticationService, private _router: Router) {}
+    constructor(private _authenticationService: AuthenticationService, private _router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
@@ -16,10 +16,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                 // auto logout if 403 response returned from api
                 this._authenticationService.logout();
                 this._router.navigateByUrl('/login');
+            } else if (err.error.message == null || err.error.message.length > 50) {
+                this._router.navigateByUrl('/error');
+
+            } else {
+                const error = err.error.message || err.statusText;
+                return throwError(error);
             }
-            
-            const error = err.error.message || err.statusText;
-            return throwError(error);
-        }))
+        }));
     }
 }

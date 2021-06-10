@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
 import { Registration } from '../models/Registration';
 import { ClassesService } from '../services/classroom.service';
 import { RegistrationService } from '../services/registration.service';
@@ -16,16 +15,13 @@ export class RegistrationDetailsComponent implements OnInit, OnChanges {
   public days;
   public status;
 
-  constructor(private _registrationService: RegistrationService, private _classroomService: ClassesService,
-    private _router: Router) {
+  constructor(private _registrationService: RegistrationService, private _classroomService: ClassesService) {
     this.status = this._registrationService.status;
    }
 
   ngOnChanges(changes: SimpleChanges): void {
     this._registrationService.getRegistration(this.registrationId).subscribe(
-      data => this.registration = data,
-      error => this._router.navigateByUrl('/error')
-    )
+      data => this.registration = data);
   }
 
   ngOnInit(): void {

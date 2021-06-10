@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { PaymentDetails } from '../models/PaymentDetails';
 import { PaymentsService } from '../services/payments.service';
 
@@ -21,16 +20,13 @@ export class ManualPayComponent implements OnInit, OnChanges {
   public loading: boolean;
   updated: boolean;
 
-  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder,
-    private _router: Router) {
+  constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder) {
     this.status = this._paymentService.status;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this._paymentService.getPayment(this.paymentId).subscribe(
-      data => this.paymentDetails = data,
-      error => this._router.navigateByUrl('/error')
-    )
+      data => this.paymentDetails = data);
   }
 
   ngOnInit(): void {
@@ -44,9 +40,7 @@ export class ManualPayComponent implements OnInit, OnChanges {
 
     if (this.paymentId) {
       this._paymentService.getPayment(this.paymentId).subscribe(
-        data => this.paymentDetails = data,
-        error => this._router.navigateByUrl('/error')
-      );
+        data => this.paymentDetails = data);
     }
 
     this.loading = false;

@@ -1,6 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
 import { PaymentDetails } from '../models/PaymentDetails';
 import { Registration } from '../models/Registration';
 import { PaymentsService } from '../services/payments.service';
@@ -27,8 +26,7 @@ export class RegistrationActionsComponent implements OnInit, OnChanges {
 
   @Output() updated: EventEmitter<String> = new EventEmitter();
 
-  constructor(private _registrationService: RegistrationService, private _paymentService: PaymentsService,
-    private _router: Router) {
+  constructor(private _registrationService: RegistrationService, private _paymentService: PaymentsService) {
     this.status = this._registrationService.status;
     this.paymentStatus = this._paymentService.status;
   }
@@ -37,15 +35,12 @@ export class RegistrationActionsComponent implements OnInit, OnChanges {
     this._registrationService.getRegistration(this.registrationId).subscribe(
       data => {
         this.registration = data;
-      },
-      error => this._router.navigateByUrl('/error')
-    );
+      });
 
     this._paymentService.getPaymentsForRegistration(this.registrationId).subscribe(
       data => {
         this.paymentList = data.content;
-      }, error => this._router.navigateByUrl('/error')
-    );
+      });
 
   }
 
@@ -58,15 +53,12 @@ export class RegistrationActionsComponent implements OnInit, OnChanges {
       this._registrationService.getRegistration(this.registrationId).subscribe(
         data => {
           this.registration = data;
-        },
-        error => this._router.navigateByUrl('/error')
-      );
+        });
 
       this._paymentService.getPaymentsForRegistration(this.registrationId).subscribe(
         data => {
           this.paymentList = data.content;
-        }, error => this._router.navigateByUrl('/error')
-      );
+        });
 
     }
   }
@@ -78,8 +70,7 @@ export class RegistrationActionsComponent implements OnInit, OnChanges {
       data => {
         this.ngOnInit();
         this.updated.emit('updated');
-      },
-      error => this._router.navigateByUrl('/error'));
+      });
   }
 
 }

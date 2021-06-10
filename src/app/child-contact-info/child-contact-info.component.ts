@@ -1,7 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ChildContact } from '../models/ChildContact';
 import { ChildService } from '../services/child.service';
 
@@ -20,8 +19,7 @@ export class ChildContactInfoComponent implements OnInit, OnChanges {
 
   public editContactForm: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private _childService: ChildService,
-    private _router: Router) {
+  constructor(private _formBuilder: FormBuilder, private _childService: ChildService) {
     this.contactTypes = this._childService.contactsType;
   }
 
@@ -112,8 +110,7 @@ export class ChildContactInfoComponent implements OnInit, OnChanges {
               cellNumber: this.contact.cellNumber,
               relationToChild: this.contact.relationToChild
             });
-          }, error => this._router.navigateByUrl('/error')
-        )
+          });
       }, error => {
         this.success = false;
         this.message = error;

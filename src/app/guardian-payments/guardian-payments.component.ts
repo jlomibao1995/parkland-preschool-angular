@@ -1,7 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { PaymentDetails } from '../models/PaymentDetails';
 import { PaymentsService } from '../services/payments.service';
 
@@ -27,8 +26,7 @@ export class GuardianPaymentsComponent implements OnInit {
 
   public pageForm: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private _paymentService: PaymentsService,
-    private _router: Router) {
+  constructor(private _formBuilder: FormBuilder, private _paymentService: PaymentsService) {
     this.status = this._paymentService.status;
    }
 
@@ -89,8 +87,7 @@ export class GuardianPaymentsComponent implements OnInit {
 
         this.loading = false;
 
-      }, error => this._router.navigateByUrl('/error')
-    );
+      });
   }
 
   changePaymentNum() {

@@ -110,9 +110,7 @@ export class CheckoutComponent implements OnInit {
             this.subtotal = data.subTotal;
             this.serviceFees = data.serviceFees;
             this.paymentId = data.id;
-          },
-          error => this._router.navigateByUrl('/error')
-        );
+          });
       }
     })
   }

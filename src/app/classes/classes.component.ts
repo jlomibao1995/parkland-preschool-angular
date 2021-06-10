@@ -92,8 +92,7 @@ export class ClassesComponent implements OnInit {
         }
         this.loading = false;
 
-      },
-      error => this._router.navigateByUrl('/error'));
+      });
   }
 
   changeClassesNum() {

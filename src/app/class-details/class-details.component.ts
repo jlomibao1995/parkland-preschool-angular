@@ -1,7 +1,6 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Classroom } from '../models/Classroom';
 import { ClassesService } from '../services/classroom.service';
 
@@ -20,8 +19,7 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
   public day;
   public loading: boolean;
 
-  constructor(private _formBuilder: FormBuilder, private _classService: ClassesService,
-    private _router: Router) { 
+  constructor(private _formBuilder: FormBuilder, private _classService: ClassesService) { 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,8 +75,7 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
 
         this.loading = false;
 
-      }, error => this._router.navigateByUrl('/error')
-    );
+      });
   }
 
   get description() {
