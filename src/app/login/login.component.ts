@@ -46,8 +46,6 @@ export class LoginComponent implements OnInit {
         this.message = error;
         this.loading = false;
       });
-
-      this.loading = false;
     }
 
 }

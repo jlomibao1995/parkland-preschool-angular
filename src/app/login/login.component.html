@@ -1,7 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
-<div class="container-fluid out"></div>
-<div class="container col-xl-3">
+<div class="container col-xl-3" [class.overlay]="loading">
     <div class="card my-5 shadow">
         <div class="row">
             <div class="col m-3 text-center">

@@ -1,9 +1,10 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { passwordPatternValidator, passwordValidator } from '../helpers/password.validator';
 import { AccountService } from '../services/account.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -20,9 +21,14 @@ export class ResetPasswordComponent implements OnInit {
   private uuid: string;
   private fallBackUrl = window.location.href;
 
-  constructor(private _formBuilder: FormBuilder, private _accountService: AccountService, private _route: ActivatedRoute) { }
+  constructor(private _formBuilder: FormBuilder, private _accountService: AccountService, private _route: ActivatedRoute,
+    private _authenticationService: AuthenticationService, private _router: Router) { }
 
   ngOnInit(): void {
+    if (this._authenticationService.authenticated()) {
+      this._router.navigateByUrl('/myaccount');
+    }
+
     this.loading = false;
     this.message = null;
     this.success = null;
