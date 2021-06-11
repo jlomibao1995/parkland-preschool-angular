@@ -73,15 +73,13 @@
                 electronic
                 signature is the legal equivalent of your physical signature.
             </small>
-            <input type="text" class="form-control" formControlName="discipline" [placeholder]="accountName"
+            <input type="text" class="form-control" formControlName="discipline"
                 [class.is-invalid]="discipline.invalid && discipline.touched || signForm.errors?.disciplineInvalid">
             <small [class.d-none]="discipline.valid || discipline.untouched" class="text-danger">Enter
                 signature</small>
-            <small [class.d-none]="!signForm.errors?.disciplineInvalid" class="text-danger">Signature
-                doesn't
-                match
-                name of account
-                holder</small>
+            <small [class.d-none]="!signForm.errors?.disciplineInvalid" class="text-danger">Signature doesn't match
+                the account holder {{accountName}} </small>
+            <small [class.d-none]="!signForm.errors?.guardianInvalid" class="text-danger">The account holder's name doesn't match one of the guardians on record</small>
         </div>
 
         <div class="row my-4">
@@ -120,14 +118,12 @@
                 electronic
                 signature is the legal equivalent of your physical signature.
             </small>
-            <input type="text" class="form-control" formControlName="safety" [placeholder]="accountName"
+            <input type="text" class="form-control" formControlName="safety"
                 [class.is-invalid]="safety.invalid && safety.touched || signForm.errors?.safetyInvalid">
             <small [class.d-none]="safety.valid || safety.untouched" class="text-danger">Enter
                 signature</small>
-            <small [class.d-none]="!signForm.errors?.safetyInvalid" class="text-danger">Signature doesn't
-                match
-                name
-                of account holder</small>
+            <small [class.d-none]="!signForm.errors?.safetyInvalid" class="text-danger">Signature doesn't match
+                the account holder {{accountName}} </small>
 
             <h4 class="mt-3">Outdoor</h4>
             <p class="lead">
@@ -138,14 +134,12 @@
                 electronic
                 signature is the legal equivalent of your physical signature.
             </small>
-            <input type="text" class="form-control" formControlName="outdoor" [placeholder]="accountName"
+            <input type="text" class="form-control" formControlName="outdoor"
                 [class.is-invalid]="outdoor.invalid && outdoor.touched || signForm.errors?.outdoorInvalid">
             <small [class.d-none]="outdoor.valid || outdoor.untouched" class="text-danger">Enter
                 signature</small>
-            <small [class.d-none]="!signForm.errors?.outdoorInvalid" class="text-danger">Signature doesn't
-                match
-                name of account
-                holder</small>
+            <small [class.d-none]="!signForm.errors?.outdoorInvalid" class="text-danger">Signature doesn't match
+                the account holder {{accountName}} </small>
         </div>
 
         <div class="row my-4">
@@ -227,13 +221,11 @@
                 electronic
                 signature is the legal equivalent of your physical signature.
             </small>
-            <input type="text" class="form-control" formControlName="sick" [placeholder]="accountName"
+            <input type="text" class="form-control" formControlName="sick"
                 [class.is-invalid]="sick.invalid && sick.touched || signForm.errors?.sickInvalid">
             <small [class.d-none]="sick.valid || sick.untouched" class="text-danger">Enter signature</small>
-            <small [class.d-none]="!signForm.errors?.sickInvalid" class="text-danger">Signature doesn't
-                match
-                name
-                of account holder</small>
+            <small [class.d-none]="!signForm.errors?.sickInvalid" class="text-danger">Signature doesn't match
+                the account holder {{accountName}} </small>
         </div>
 
         <div class="row my-4">

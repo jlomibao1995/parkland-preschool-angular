@@ -72,6 +72,7 @@
                 <input type="text" class="form-control" formControlName="relationToChild"
                     [class.is-invalid]="relationToChild.invalid && relationToChild.touched">
                 <small [class.d-none]="relationToChild.valid || relationToChild.untouched" class="text-danger">Enter relation to child</small>
+                <small [class.d-none]="!editContactForm.errors?.guardianInvalid" class="text-danger">Enter guardian as either 'Mother' or 'Father'</small>
             </div>
 
             <!-- <div class="col form-group">

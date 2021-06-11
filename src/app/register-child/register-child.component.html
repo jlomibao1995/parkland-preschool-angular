@@ -1,149 +1,157 @@
 <app-nav-bar></app-nav-bar>
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
-<fieldset [class.overlay]="loading" [disabled]="loading">
-    <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
-    </app-success-error-dialog>
-    <div class="display-6 my-3 text-center">Child Registration</div>
-    <div class="container card my-4" *ngIf="success == null || !success">
-        <div class="card-body">
 
-            <div *ngIf="currentPage == 1">
-                <div class="progress my-4">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0" aria-valuenow="0"
-                        aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+<div class="container">
+    <fieldset [class.overlay]="loading" [disabled]="loading">
+        <app-success-error-dialog [message]="message" [success]="success"
+            (messageChanged)="messageChangedHandler($event)">
+        </app-success-error-dialog>
+        <div class="display-6 my-3 text-center">Child Registration</div>
+        <div class="card my-4" *ngIf="success == null || !success">
+            <div class="card-body">
 
-                <form [formGroup]="childForm">
-                    <div class="row p-3">
+                <div *ngIf="currentPage == 1">
+                    <div class="progress my-4">
+                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0"
+                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                    <form [formGroup]="childForm">
+                        <div class="row p-3">
+                            <div class="col form-group">
+                                <select class="form-select" (change)="selectChild()" formControlName="childId">
+                                    <option value="" selected disabled hidden>Select child</option>
+                                    <option value="new">Add Child</option>
+                                    <option *ngFor="let child of childList" [value]="child.id">{{child.firstName}}
+                                        {{child.lastName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <app-add-child *ngIf="showAddChildForm" (updated)="updatedHandler($event)"></app-add-child>
+
+                    <div class="row my-4">
                         <div class="col form-group">
-                            <select class="form-select" (change)="selectChild()" formControlName="childId">
-                                <option value="" selected disabled hidden>Select child</option>
-                                <option value="new">Add Child</option>
-                                <option *ngFor="let child of childList" [value]="child.id">{{child.firstName}}
-                                    {{child.lastName}}</option>
-                            </select>
+                            <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
+                        </div>
+                        <div class="col-auto form-group">
+                            <button class="btn btn-outline-primary px-4" type="button" (click)="next()"
+                                [disabled]="!childForm.valid || showAddChildForm">Next</button>
                         </div>
                     </div>
-                </form>
-
-                <app-add-child *ngIf="showAddChildForm" (updated)="updatedHandler($event)"></app-add-child>
-
-                <div class="row my-4">
-                    <div class="col form-group">
-                        <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
-                    </div>
-                    <div class="col-auto form-group">
-                        <button class="btn btn-outline-primary px-4" type="button" (click)="next()"
-                            [disabled]="!childForm.valid || showAddChildForm">Next</button>
-                    </div>
-                </div>
-            </div>
-
-            <div *ngIf="currentPage == 2">
-                <div class="progress my-4">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 5%"
-                        aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
-                <form [formGroup]="classForm">
-                    <div class="row p-3">
+                <div *ngIf="currentPage == 2">
+                    <div class="progress my-4">
+                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 5%"
+                            aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                    <form [formGroup]="classForm">
+                        <div class="row p-3">
+                            <div class="col form-group">
+                                <select class="form-select" formControlName="classId" (change)="selectClass()">
+                                    <option value="" selected disabled hidden>Select class</option>
+                                    <option *ngFor="let class of classrooms; let i = index" [value]="i">
+                                        {{class.description}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="m-3" *ngIf="classroom != null">
+                        <div class="alert alert-warning" *ngIf="classroom.full" role="alert">
+                            This class is full, you will be added to the wait list once your registration is complete
+                        </div>
+
+                        <app-classroom-info [classroom]="classroom"></app-classroom-info>
+                    </div>
+
+                    <div class="row my-4">
                         <div class="col form-group">
-                            <select class="form-select" formControlName="classId" (change)="selectClass()">
-                                <option value="" selected disabled hidden>Select class</option>
-                                <option *ngFor="let class of classrooms; let i = index" [value]="i">
-                                    {{class.description}}
-                                </option>
-                            </select>
+                            <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
+                        </div>
+                        <div class="col-auto form-group" *ngIf="classroom != null && !classroom.full">
+                            <button class="btn btn-outline-primary px-4" type="button" (click)="next()"
+                                [disabled]="!classForm.valid">Next</button>
+                        </div>
+
+                        <div class="col-auto form-group" *ngIf="classroom != null && classroom.full">
+                            <button class="btn btn-success px-4" type="button" (click)="register()"
+                                [disabled]="!childForm.valid || !classForm.valid">Add My Child Wait List</button>
                         </div>
                     </div>
-                </form>
+                </div>
 
-                <div class="m-3" *ngIf="classroom != null">
-                    <div class="alert alert-warning" *ngIf="classroom.full" role="alert">
-                        This class is full, you will be added to the wait list once your registration is complete
+                <div *ngIf="currentPage == 3">
+                    <app-registration-info [childId]="selectedChildId" (goBack)="previous()" (infoComplete)="next()">
+                    </app-registration-info>
+                </div>
+
+                <div *ngIf="currentPage == 4">
+                    <div class="progress my-4">
+                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%"
+                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+
+                    <h4>Review Registration Details</h4>
 
                     <app-classroom-info [classroom]="classroom"></app-classroom-info>
-                </div>
 
-                <div class="row my-4">
-                    <div class="col form-group">
-                        <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
-                    </div>
-                    <div class="col-auto form-group" *ngIf="classroom != null && !classroom.full">
-                        <button class="btn btn-outline-primary px-4" type="button" (click)="next()"
-                            [disabled]="!classForm.valid">Next</button>
-                    </div>
+                    <app-child-info [childId]="selectedChildId"></app-child-info>
 
-                    <div class="col-auto form-group" *ngIf="classroom != null && classroom.full">
-                        <button class="btn btn-success px-4" type="button" (click)="register()"
-                            [disabled]="!childForm.valid || !classForm.valid">Add My Child Wait List</button>
-                    </div>
-                </div>
-            </div>
-
-            <div *ngIf="currentPage == 3">
-                <app-registration-info [childId]="selectedChildId" (goBack)="previous()" (infoComplete)="next()">
-                </app-registration-info>
-            </div>
-
-            <div *ngIf="currentPage == 4">
-                <div class="progress my-4">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%"
-                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-
-                <h4>Review Registration Details</h4>
-
-                <app-classroom-info [classroom]="classroom"></app-classroom-info>
-
-                <app-child-info [childId]="selectedChildId"></app-child-info>
-
-                <div class="row my-4">
-                    <div class="col form-group">
-                        <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
-                    </div>
-                    <div class="col-auto form-group">
-                        <input class="btn btn-success px-4" (click)="register()" value="Save Registration Details">
+                    <div class="row my-4">
+                        <div class="col form-group">
+                            <a class="btn btn-dark btn-md px-4" href="/myaccount">Cancel</a>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
+                        </div>
+                        <div class="col-auto form-group">
+                            <input class="btn btn-success px-4" (click)="register()" value="Save Registration Details">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container card" *ngIf="registration != null && success">
-        <div class="card-body text-center">
-            <h2 *ngIf="registration.status == status.unregistered" class="display-3 text-success">Almost there!</h2>
-            <h2 *ngIf="registration.status == status.waitlisted" class="display-3 text-success">Success!</h2>
+        <div class="card" *ngIf="registration != null && success">
+            <div class="card-body text-center">
+                <h2 *ngIf="registration.status == status.unregistered" class="display-3 text-success">Almost there!</h2>
+                <h2 *ngIf="registration.status == status.waitlisted" class="display-3 text-success">Success!</h2>
 
-            <h2 *ngIf="registration.status == status.unregistered" class="lead">To complete your registration and save a
-                spot for your child please pay the registration fee</h2>
-            <h2 *ngIf="registration.status == status.unregistered" class="lead">If you wish to pay another time just
-                visit the <a href="/myaccount">My Account</a> page to access this registration</h2>
-            <small *ngIf="registration.status == status.unregistered">Until the registration fee is received the child
-                has no spot for the class</small>
-            <h2 *ngIf="registration.status == status.waitlisted" class="lead">Your child has been added to the wait list
-            </h2>
+                <h2 *ngIf="registration.status == status.unregistered" class="lead">To complete your registration and
+                    save a
+                    spot for your child please pay the registration fee</h2>
+                <h2 *ngIf="registration.status == status.unregistered" class="lead">If you wish to pay another time just
+                    visit the <a href="/myaccount">My Account</a> page to access this registration</h2>
+                <small *ngIf="registration.status == status.unregistered">Until the registration fee is received the
+                    child
+                    has no spot for the class</small>
+                <h2 *ngIf="registration.status == status.waitlisted" class="lead">Your child has been added to the wait
+                    list
+                </h2>
 
-            <app-registration-details [registrationId]="registration.id"></app-registration-details>
+                <app-registration-details [registrationId]="registration.id"></app-registration-details>
 
-            <div class="row m-5">
-                <div class="col">
-                    <a class="btn btn-dark btn-md px-4" href="/myaccount">Return to Account</a>
+                <div class="row m-5">
+                    <div class="col">
+                        <a class="btn btn-dark btn-md px-4" href="/myaccount">Return to Account</a>
+                    </div>
+
+                    <div class="col" *ngIf="registration.status == status.unregistered">
+                        <a [href]="'/checkout/' + registration.paymentList[0].invoiceId"
+                            class="btn btn-outline-success">Pay
+                            Registration Fee</a>
+                    </div>
                 </div>
 
-                <div class="col" *ngIf="registration.status == status.unregistered">
-                    <a [href]="'/checkout/' + registration.paymentList[0].invoiceId" class="btn btn-outline-success">Pay
-                        Registration Fee</a>
-                </div>
             </div>
-
         </div>
-    </div>
-</fieldset>
+    </fieldset>
+</div>

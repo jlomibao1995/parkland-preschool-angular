@@ -1,6 +1,7 @@
-<div class="container" *ngIf="registration != null">
+<div *ngIf="registration != null">
     <div class="row" *ngIf="registration.active">
-        <div class="col mb-3" *ngIf="registration.status == status.spotOffered || registration.status == status.unregistered &&  !registration.classroom.full">
+        <div class="col"></div>
+        <div class="col-auto mb-3" *ngIf="registration.status == status.spotOffered || registration.status == status.unregistered &&  !registration.classroom.full">
             <a [href]="'/guardian/register/' + registration.paymentList[0].id" class="btn btn-primary">Complete Registration</a>
         </div>
 

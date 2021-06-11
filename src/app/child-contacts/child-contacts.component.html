@@ -1,6 +1,6 @@
 <div class="container" *ngIf="childContacts != null">
     <div *ngFor="let guardian of getChildContacts(contactTypes.guardian)">
-        <app-child-contact-info [contact]="guardian"></app-child-contact-info>
+        <app-child-contact-info (updated)="update()" [contact]="guardian"></app-child-contact-info>
     </div>
     <div *ngIf="getChildContacts(contactTypes.guardian).length < 2" class="alert alert-info row" role="alert">
         <div class="col">You are missing guardian information please add the missing information</div>
@@ -46,7 +46,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <app-add-contact *ngIf="contactToAdd != null && childId != null" [childId]="childId" [type]="contactToAdd"></app-add-contact>
+          <div *ngIf="contactToAdd == null" class="alert alert-primary" role="alert">
+            Contact information added: Close this window to continue
+          </div>
+          <app-add-contact *ngIf="contactToAdd != null && childId != null" (updated)="update()" [childId]="childId" [type]="contactToAdd"></app-add-contact>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="update()">Close</button>

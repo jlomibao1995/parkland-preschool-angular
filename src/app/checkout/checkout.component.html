@@ -1,6 +1,7 @@
 <app-nav-bar></app-nav-bar>
+<app-success-error-dialog [message]="message" [success]="success"></app-success-error-dialog>
 <app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
-<div class="container mt-5">
+<div class="container mt-5" [class.overlay]="loading">
     <div class="card py-5" [hidden]="paidFor">
         <h4 class="card-title display-6 text-center m-3">Checkout</h4>
         <div class="card-body">

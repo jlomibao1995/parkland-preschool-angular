@@ -26,7 +26,6 @@ export class ChildContactsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.contactToAdd = null;
-
     if (this.childId) {
       this._childService.getChildInfo(this.childId).subscribe(
         data => this.childContacts = data.childContactsList
@@ -36,6 +35,7 @@ export class ChildContactsComponent implements OnInit, OnChanges {
 
   update() {
     this.ngOnInit();
+  
     this.contactsUpdated.emit('updated');
   }
 

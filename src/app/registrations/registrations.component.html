@@ -52,7 +52,8 @@
                 </div>
 
                 <div class="col-lg p-3">
-                    <input type="search" class="form-control" placeholder="🔍 Enter child name" formControlName="search">
+                    <input type="search" class="form-control" placeholder="🔍 Enter child name"
+                        formControlName="search">
                 </div>
             </div>
         </form>
@@ -83,7 +84,7 @@
                         <td>
                             <button *ngIf="registration.active" class="btn btn-outline-secondary"
                                 (click)="deactivateRegistration(registration.id)" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Activate">
+                                data-bs-placement="top" title="Deactivate">
                                 <span class="material-icons">
                                     lock
                                 </span>
@@ -91,24 +92,23 @@
 
                             <button *ngIf="!registration.active" class="btn btn-outline-primary"
                                 (click)="activateRegistration(registration.id)" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Deactivate">
+                                data-bs-placement="top" title="Activate">
                                 <span class="material-icons">
                                     lock_open
                                 </span>
                             </button>
                         </td>
                         <td>
-                            <button *ngIf="registration.active && registration.status == status.waitlisted"
-                                (click)="offerSpot(registration.id)" data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="Offer Spot">
+                            <button class="btn btn-outline-primary"
+                                *ngIf="registration.active && registration.status == status.waitlisted"
+                                data-bs-toggle="modal" data-bs-target="#offerSpot">
                                 <span class="material-icons">
                                     queue
                                 </span>
                             </button>
                             <button *ngIf="registration.active && registration.status == status.pending"
                                 (click)="acceptRegistration(registration.id)" class="btn btn-outline-success"
-                                data-bs-toggle="modal" data-bs-target="#deleteAccount" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Accept Registration">
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Accept Registration">
                                 <span class="material-icons">
                                     check
                                 </span>
@@ -121,8 +121,7 @@
                             </button>
                         </td>
                         <td>
-                            <button class="btn btn-link" data-bs-toggle="modal"
-                                data-bs-target="#childInfo">
+                            <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#childInfo">
                                 <span class="material-icons">
                                     read_more
                                 </span>
@@ -166,8 +165,7 @@
 </div>
 
 <!-- modal for viewing registration info-->
-<div class="modal fade" id="childInfo" tabindex="-1" aria-labelledby="childInfoLabel"
-    aria-hidden="true">
+<div class="modal fade" id="childInfo" tabindex="-1" aria-labelledby="childInfoLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -210,18 +208,18 @@
 </div>
 
 <!--modal for deleting registration-->
-<div *ngIf="selectedId != null" class="modal fade" id="deleteRegistration" tabindex="-1"
+<div class="modal fade" id="deleteRegistration" tabindex="-1"
     aria-labelledby="deleteRegistrationLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" *ngIf="selectedId != null">
                 <h5 class="modal-title" id="deleteRegistrationLabel">Delete {{selectedRegistration.child.firstName}}
                     {{selectedRegistration.child.lastName}}'s registration for
                     {{selectedRegistration.classroom.description}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                Deleting the registraiton will result in permanently removing the data associated with it.
+            <div class="modal-body" *ngIf="selectedId != null">
+                Deleting the registration will result in permanently removing the data associated with it.
                 Are you sure you want to delete {{selectedRegistration.child.firstName}}
                 {{selectedRegistration.child.lastName}}'s registration?
             </div>
@@ -229,6 +227,30 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
                     (click)="deleteRegistration()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal for waitlist-->
+<div class="modal fade" id="offerSpot" tabindex="-1" aria-labelledby="offerSpotLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="offerSpotLabel">Open Spot for Wait List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" *ngIf="selectedId != null">
+                Are you sure you want to open a spot for {{selectedRegistration.child.firstName}}
+                {{selectedRegistration.child.lastName}} for the class {{selectedRegistration.classroom.description}}?
+
+                <small class="mt-3">To withdraw the spot offered to the child deactivate registration</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="offerSpot()">Offer
+                    Spot</button>
             </div>
         </div>
     </div>

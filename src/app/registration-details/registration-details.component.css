@@ -1,3 +1,7 @@
-div.col-auto {
-    font-weight: bold;
+tbody tr th {
+    text-align: right;
+}
+
+tbody tr td {
+    text-align: left;
 }

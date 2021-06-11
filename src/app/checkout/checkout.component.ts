@@ -89,7 +89,10 @@ export class CheckoutComponent implements OnInit {
             this.message = "Payment has been processed"
             this.loading = false;
             this.updated = true;
-          }, error => console.log(error)
+          }, error => {
+            this.success = false;
+            this.message = error;
+          }
         );
       },
       onError: err => this._router.navigateByUrl('/error')
@@ -110,7 +113,7 @@ export class CheckoutComponent implements OnInit {
             this.subtotal = data.subTotal;
             this.serviceFees = data.serviceFees;
             this.paymentId = data.id;
-          });
+          }, error => this._router.navigateByUrl('/error'));
       }
     })
   }

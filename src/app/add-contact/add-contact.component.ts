@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { guardianContactValidator } from '../helpers/guardian.contact.validator';
 import { ChildContact } from '../models/ChildContact';
@@ -18,6 +18,8 @@ export class AddContactComponent implements OnInit, OnChanges {
   public contactTypes;
   public editMode: boolean;
   public done: boolean;
+
+  @Output() updated: EventEmitter<string> = new EventEmitter();
 
   public addContactForm: FormGroup;
 
@@ -129,6 +131,8 @@ export class AddContactComponent implements OnInit, OnChanges {
         this.success = true;
         this.loading = false;
         this.done = true;
+
+        this.updated.emit('done');
       }, error => {
         this.message = error;
         this.success = false;

@@ -135,13 +135,13 @@
             </td>
             <td [class.d-none]="!columnStates.actions">
               <button *ngIf="account.active" class="btn btn-outline-primary" (click)="deactivateAccount(account.id)">
-                <span class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Lock">
+                <span class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Lock Account">
                   lock_open
                 </span>
               </button>
 
               <button *ngIf="!account.active" class="btn btn-outline-secondary" (click)="activateAccount(account.id)"
-                data-bs-toggle="tooltip" data-bs-placement="top" title="Unlock">
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Unlock Account">
                 <span class="material-icons">
                   lock
                 </span>

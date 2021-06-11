@@ -1,5 +1,13 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
 
+export function guardianSignatureValidator(control: AbstractControl): ValidationErrors | null {
+    const accountName = control.get('accountName');
+    const parentName = control.get('parentName');
+
+    return parentName.value != accountName.value ?
+    { 'guardianInvalid' : true} : null;
+}
+
 export function disciplineSignatureValidator(control: AbstractControl): ValidationErrors | null {
     const discipline = control.get('discipline');
     const accountName = control.get('accountName');

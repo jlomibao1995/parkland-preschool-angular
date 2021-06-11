@@ -75,6 +75,9 @@ export class ChildInfoEditComponent implements OnInit, OnChanges {
   }
 
   populateForm() {
+    let allergy = this.child.allergy != null ? this.child.allergy : ' ';
+    let medicalConditions = this.child.medicalConditions != null ? this.child.medicalConditions : ' ';
+
     this.editChildForm = this._formBuilder.group({
       firstName: [this.child.firstName, Validators.required],
       lastName: [this.child.lastName, Validators.required],
@@ -85,9 +88,9 @@ export class ChildInfoEditComponent implements OnInit, OnChanges {
       healthCareNum: [this.child.healthCareNumber, Validators.required],
       immunizations: [this.child.immunizations, Validators.required],
       doctorClinic: [this.child.doctorClinic, Validators.required],
-      medicalConditions: [this.child.medicalConditions == null ? this.child.medicalConditions : ''],
+      medicalConditions: [medicalConditions],
       chickenPox: [this.child.chickenPox, Validators.required],
-      allergy: [this.child.allergy == null ? this.child.allergy : ''],
+      allergy: [allergy],
       medications: [this.child.medications, Validators.required],
       medicalPhoneNumber: [this.child.medicalPhoneNumber, Validators.required]
     });

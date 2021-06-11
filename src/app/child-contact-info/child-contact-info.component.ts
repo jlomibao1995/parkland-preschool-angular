@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { guardianContactValidator } from '../helpers/guardian.contact.validator';
 import { ChildContact } from '../models/ChildContact';
 import { ChildService } from '../services/child.service';
 
@@ -19,6 +20,8 @@ export class ChildContactInfoComponent implements OnInit, OnChanges {
 
   public editContactForm: FormGroup;
 
+  @Output() updated: EventEmitter<String> = new EventEmitter()
+
   constructor(private _formBuilder: FormBuilder, private _childService: ChildService) {
     this.contactTypes = this._childService.contactsType;
   }
@@ -31,8 +34,9 @@ export class ChildContactInfoComponent implements OnInit, OnChanges {
       workPhoneNumber: [this.contact.workPhoneNumber, Validators.required],
       cellNumber: [this.contact.cellNumber, Validators.required],
       address: [this.contact.address, Validators.required],
-      relationToChild: [this.contact.relationToChild, Validators.required]
-    });
+      relationToChild: [this.contact.relationToChild, Validators.required],
+      type : [this.contact.type]
+    }, {validators : [guardianContactValidator]});
   }
 
   ngOnInit(): void {
@@ -96,6 +100,8 @@ export class ChildContactInfoComponent implements OnInit, OnChanges {
         this.success = true;
         this.loading = false;
         this.editMode = false;
+
+        this.updated.emit('updated');
 
         this._childService.getChildContact(this.contact.id).subscribe(
           data => {

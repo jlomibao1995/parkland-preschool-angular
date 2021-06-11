@@ -30,18 +30,6 @@ export class AddChildComponent implements OnInit {
     this.addChildForm = this._formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      // gender: ['', Validators.required],
-      // birthdate: ['', Validators.required],
-      // address: ['', Validators.required],
-      // postalCode: ['', Validators.required],
-      // healthCareNum: ['', Validators.required],
-      // immunizations: ['', Validators.required],
-      // doctorClinic: ['', Validators.required],
-      // medicalConditions: [''],
-      // chickenPox: ['', Validators.required],
-      // allergy: [''],
-      // medications: ['', Validators.required],
-      // medicalPhoneNumber: ['', Validators.required]
     });
 
     this._authenticationService.populateAccountInfo().then((value) => {
@@ -57,50 +45,6 @@ export class AddChildComponent implements OnInit {
     return this.addChildForm.get('lastName');
   }
 
-  // get gender() {
-  //   return this.addChildForm.get('gender');
-  // }
-
-  // get birthdate() {
-  //   return this.addChildForm.get('birthdate');
-  // }
-
-  // get address() {
-  //   return this.addChildForm.get('address');
-  // }
-
-  // get postalCode() {
-  //   return this.addChildForm.get('postalCode');
-  // }
-
-  // get healthCareNum() {
-  //   return this.addChildForm.get('healthCareNum');
-  // }
-
-  // get immunizations() {
-  //   return this.addChildForm.get('immunizations');
-  // }
-
-  // get doctorClinic() {
-  //   return this.addChildForm.get('doctorClinic');
-  // }
-
-  // get chickenPox() {
-  //   return this.addChildForm.get('chickenPox');
-  // }
-
-  // get medications() {
-  //   return this.addChildForm.get('medications');
-  // }
-
-  // get medicalPhoneNumber() {
-  //   return this.addChildForm.get('medicalPhoneNumber');
-  // }
-
-  // get medicalConditions() {
-  //   return this.addChildForm.get('medicalConditions');
-  // }
-
   addChild() {
     this.loading = true;
 
@@ -108,16 +52,7 @@ export class AddChildComponent implements OnInit {
       firstName : this.firstName.value,
       lastName : this.lastName.value,
        gender : "",
-      // birthdate : this.birthdate.value,
-      // address : this.address.value,
-      // postalCode : this.postalCode.value,
-      // healthCareNumber : this.healthCareNum.value,
       allergy : "",
-      // doctorClinic : this.doctorClinic.value,
-      // medicalPhoneNumber : this.medicalPhoneNumber.value,
-      // immunizations : this.immunizations.value,
-      // chickenPox : this.chickenPox.value,
-      // medications : this.medications.value,
       medicalConditions : "",
       account: {id : this.accountId}
     };
