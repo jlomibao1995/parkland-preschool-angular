@@ -193,14 +193,14 @@
 <!-- modal for editing account-->
 <div class="modal fade" data-bs-backdrop="static" id="editAccount" tabindex="-1" aria-labelledby="editAccountLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="editAccountLabel">Account Details</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="goToPage(currentPage)"></button>
       </div>
       <div class="modal-body">
-        <app-account-details *ngIf="selectedId != null" [accountId]="selectedId"></app-account-details>
+        <app-account-details [userRole]="userRole" [accountId]="selectedId"></app-account-details>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="goToPage(currentPage)">Close</button>
@@ -228,17 +228,17 @@
 </div>
 
 <!-- modal for deleting account -->
-<div *ngIf="selectedId != null" class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="deleteAccountLabel"
+<div class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="deleteAccountLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content" *ngIf="selectedId != null">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteAccountLabel">Delete {{selectedAccount.firstName}}
           {{selectedAccount.lastName}}'s account</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Deleting the class will delete all records (child info, registrations, and payment info) associated with it.
+        Deleting the account will delete all records (child info, registrations, and payment info) associated with it.
         Are you sure you want to delete {{selectedAccount.firstName}} {{selectedAccount.lastName}}'s account?
       </div>
       <div class="modal-footer">
@@ -249,23 +249,3 @@
     </div>
   </div>
 </div>
-
-<!-- modal for adding deactivating account -->
-<!-- <div class="modal fade" id="deactivateAccount" tabindex="-1" aria-labelledby="deactivateAccountLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deactivateAccountLabel">Deactivate account</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Deactivating will lock the account and mark it for deletion. This account will no longer be available and all data will be deleted.
-          Are you sure you want to deactivate the account?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger">Deactivate</button>
-        </div>
-      </div>
-    </div>
-  </div> -->

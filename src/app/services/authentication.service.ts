@@ -21,7 +21,6 @@ export class AuthenticationService {
     await this._http.post<any>(this.url, credentials, { 'headers': headers })
       .toPromise().then(data => {
         this._cookieService.set('authorization', data.jwt);
-        this._cookieService.set('email', credentials.email);
         this._router.navigateByUrl('/myaccount');
       });
   }
@@ -47,7 +46,6 @@ export class AuthenticationService {
 
   logout() {
     this._cookieService.remove('authorization');
-    this._cookieService.remove('email');
     this._router.navigateByUrl('/login');
   }
 }

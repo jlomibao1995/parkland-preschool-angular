@@ -10,15 +10,6 @@
                 </span>
             </button>
         </div>
-
-        <!-- <div class="col-auto">
-            <button *ngIf="class.openRegistration" class="btn btn-outline-primary">
-                Close Registration
-            </button>
-            <button *ngIf="!class.openRegistration" class="btn btn-outline-primary">
-                Open Registration
-            </button>
-        </div> -->
     </div>
 
     <form class="p-3" [formGroup]="editForm">
@@ -78,7 +69,7 @@
                 <div class="col form-group">
                     <label for="days">Days</label>
                     <input class="form-control" formControlName="days" [class.is-invalid]="days.invalid && days.touched">
-                    <small [class.d-none]="days.valid || days.untouched" class="text-danger">Enter dyas class is in
+                    <small [class.d-none]="days.valid || days.untouched" class="text-danger">Enter days class is in
                         session</small>
                 </div>
                 <div class="col form-group">

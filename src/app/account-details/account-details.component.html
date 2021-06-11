@@ -2,7 +2,7 @@
 <app-success-error-dialog [message]="message" [success]="success" (messageChanged)="messageChangedHandler($event)">
 </app-success-error-dialog>
 
-<div *ngIf="!passwordMode" class="container" [class.overlay]="loading">
+<div *ngIf="!passwordMode" [class.overlay]="loading">
 
     <div class="p-3 row">
         <div class="col"></div>
@@ -17,15 +17,14 @@
 
     <fieldset [disabled]="!editMode || loading">
 
-        <form class="p-3" [formGroup]="editForm" (ngSubmit)="saveAccountChanges()">
+        <form *ngIf="account != null" class="p-3" [formGroup]="editForm" (ngSubmit)="saveAccountChanges()">
             <div class="row p-3">
-                <div class="col form-group" [hidden]="userRole != roles.admin && userRole != null">
+                <div class="col form-group" [hidden]="userRole != roles.admin || userRole == null || account.role == roles.user">
                     <label for="days">Account Type</label>
                     <select name="days" class="form-select" formControlName="role"
                         [class.is-invalid]="role.invalid && role.touched">
-                        <option value="ADMIN">Admin</option>
-                        <option value="USER">Regular User</option>
-                        <option value="STAFF">Staff</option>
+                        <option [value]="roles.admin">Admin</option>
+                        <option [value]="roles.staff">Staff</option>
                     </select>
                     <small [class.d-none]="role.valid || role.untouched" class="text-danger">Select account
                         type</small>
@@ -59,7 +58,7 @@
 
             <div class="row p-3">
                 <div class="col">
-                    <button class="btn btn-outline-primary" [hidden]="!editMode" (click)="changePasswordMode()">
+                    <button class="btn btn-outline-dark" [hidden]="!editMode" (click)="changePasswordMode()">
                         Change Password
                     </button>
                 </div>
@@ -73,7 +72,7 @@
     </fieldset>
 </div>
 
-<div class="container" *ngIf="passwordMode">
+<div *ngIf="passwordMode">
     <fieldset [disabled]="!editMode || loading" [class.overlay]="loading">
         <div class="row p-3">
             <div class="col">
@@ -112,7 +111,8 @@
             </div>
 
             <div class="row p-3">
-                <div class="col form-group">
+                <div class="col"></div>
+                <div class="col-auto form-group">
                     <input type="submit" class="btn btn-primary" value="Change password"
                         [disabled]="passwordForm.invalid">
                 </div>

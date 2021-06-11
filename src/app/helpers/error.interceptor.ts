@@ -16,13 +16,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                 // auto logout if 403 response returned from api
                 this._authenticationService.logout();
                 this._router.navigateByUrl('/login');
-            } else if (err.error.message == null || err.error.message.length > 50) {
+            } else if (err.error.message == null || err.error.message.length > 100) {
                 this._router.navigateByUrl('/error');
-
-            } else {
-                const error = err.error.message || err.statusText;
-                return throwError(error);
             }
+
+            const error = err.error.message || err.statusText;
+            return throwError(error);
+
         }));
     }
 }
