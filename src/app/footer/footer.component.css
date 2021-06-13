@@ -1,15 +1,25 @@
 div.container-fluid {
-    background-image: url(../../assets/stick-kids.png);
     background-position-x: center;
     background-size: contain;
     background-repeat: repeat-x;
+    background-color: #3D4856;
+    color: white;
 }
 
-div.col {
-    background-color: rgba(255, 255, 255, 0.63);
-}
+/* div.row {
+    background-color: #ffffff70;
+} */
 
 hr {
     margin: 0;
     padding: 0;
+}
+
+.material-icons {
+    font-size: 30px;
+    color: white;
+}
+
+a {
+    color: white;
 }

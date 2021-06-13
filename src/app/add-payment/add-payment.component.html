@@ -15,6 +15,10 @@
                         <option value="misc">Miscellaneous</option>
                     </select>
                     <small [class.d-none]="type.valid || type.untouched" class="text-danger">Select payment type</small>
+
+                    <small class="mt-2" *ngIf="type.value == 'month'">The monthly fee for the current month will be
+                        created for the chosen class and added to registrations that have been approved by the
+                        admin and have not paid the full tuition.</small>
                 </div>
             </div>
 
@@ -25,7 +29,8 @@
                         [class.is-invalid]="description.invalid && description.touched || addForm.errors?.descriptionInvalid">
                     <small [class.d-none]="description.valid || description.untouched" class="text-danger">Enter
                         description</small>
-                    <small [class.d-none]="!addForm.errors?.descriptionInvalid || description.untouched" class="text-danger">To enter a full tuition paymet change the payment type</small>
+                    <small [class.d-none]="!addForm.errors?.descriptionInvalid || description.untouched"
+                        class="text-danger">To enter a full tuition paymet change the payment type</small>
                 </div>
 
                 <div class="col form-group">
@@ -68,7 +73,7 @@
                     <select size="5" class="form-select" formControlName="paymentFor" (change)="toggleCost()"
                         [class.is-invalid]="paymentFor.invalid && paymentFor.touched">
                         <option value="" selected disabled hidden>Select who the payment is for</option>
-                        <option *ngIf="type.value != 'full'" value="all">All Registered Children</option>
+                        <option *ngIf="type.value == 'misc'" value="all">All Registered Children</option>
                         <option *ngFor="let registration of registrations" [value]="registration.id">
                             {{registration.child.firstName}} {{registration.child.lastName}}</option>
                     </select>
