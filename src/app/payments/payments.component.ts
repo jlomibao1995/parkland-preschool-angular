@@ -14,20 +14,20 @@ import { CurrencyPipe } from '@angular/common'
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent implements OnInit {
-  public loading: boolean;
-  public status;
-  public payments: PaymentDetails[];
+  loading: boolean;
+  status;
+  payments: PaymentDetails[];
   private selectedPayment: PaymentDetails;
-  public selectedId: number;
+  selectedId: number;
 
-  public pages: number[] = [];
-  public totalPages: number;
-  public currentPage = 1;
-  public numOfPayments = 10;
-  public totalPayments: number;
+  pages: number[] = [];
+  totalPages: number;
+  currentPage = 1;
+  numOfPayments = 10;
+  totalPayments: number;
 
-  public pageForm: FormGroup;
-  public columnStates = {
+  pageForm: FormGroup;
+  columnStates = {
     name: true,
     invoiceId: false,
     payee: false,
@@ -37,9 +37,26 @@ export class PaymentsComponent implements OnInit {
     datePaid: false,
     description: true,
     paymentMethod: false,
-    actions: true
+    actions: true,
+    month: false
   };
-  public classrooms: Classroom[];
+
+  months = {
+    Jan: 'January',
+    Feb: 'February',
+    Mar: 'March',
+    Apr: 'April',
+    May: 'May',
+    Jun: 'June',
+    Jul: 'July',
+    Aug: 'August',
+    Sept: 'September',
+    Oct: 'October',
+    Nov: 'November',
+    Dec: 'December'
+  }
+
+  classrooms: Classroom[];
 
   constructor(private _paymentService: PaymentsService, private _formBuilder: FormBuilder,
     private _classroomService: ClassesService, private _reportService: ReportService) {
@@ -144,9 +161,9 @@ export class PaymentsComponent implements OnInit {
         let content: PaymentDetails[] = data.content;
         for (var i = 0; i < data.totalElements; i++) {
           body[i] = [content[i].registration.child.firstName + ' ' + content[i].registration.child.lastName, content[i].description,
-                    content[i].datePaid, cp.transform(content[i].total, 'CAD', 'symbol-narrow', '1.2-2'), 
-                    cp.transform(content[i].serviceFees, 'CAD', 'symbol-narrow', '1.2-2'), 
-                    content[i].invoiceId, content[i].payee, content[i].payer];
+          content[i].datePaid, cp.transform(content[i].total, 'CAD', 'symbol-narrow', '1.2-2'),
+          cp.transform(content[i].serviceFees, 'CAD', 'symbol-narrow', '1.2-2'),
+          content[i].invoiceId, content[i].payee, content[i].payer];
         }
 
         this._reportService.createPDFReport('Payments', head, body);
@@ -159,36 +176,52 @@ export class PaymentsComponent implements OnInit {
       checked = true;
     }
 
+    const columns = {
+      name : 'name',
+      description: 'description',
+      invoice: 'invoice',
+      datePaid: 'datePaid',
+      payee: 'payee',
+      payer: 'payer',
+      method: 'method',
+      status: 'status',
+      total: 'total',
+      actions: 'actions',
+      month: 'month'
+    }
+
     switch (event.srcElement.name) {
-      case 'name':
+      case columns.name:
         this.columnStates.name = checked;
         break;
-      case 'description':
+      case columns.description:
         this.columnStates.description = checked;
         break;
-      case 'invoice':
+      case columns.invoice:
         this.columnStates.invoiceId = checked;
         break;
-      case 'datePaid':
+      case columns.datePaid:
         this.columnStates.datePaid = checked;
         break;
-      case 'payee':
+      case columns.payee:
         this.columnStates.payee = checked;
         break;
-      case 'payer':
+      case columns.payer:
         this.columnStates.payer = checked;
         break;
-      case 'method':
+      case columns.method:
         this.columnStates.paymentMethod = checked;
         break;
-      case 'status':
+      case columns.status:
         this.columnStates.paymentStatus = checked;
         break;
-      case 'total':
+      case columns.total:
         this.columnStates.total = checked;
         break;
-      case 'actions':
+      case columns.actions:
         this.columnStates.actions = checked;
+      case columns.month:
+        this.columnStates.month = checked;
     }
   }
 

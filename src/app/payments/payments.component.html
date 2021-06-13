@@ -53,6 +53,11 @@
                 </div>
 
                 <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" name="month" (click)="toggleColumnState($event)">
+                    <label for="">Month</label>
+                </div>
+
+                <div class="form-check form-check-inline">
                     <input type="checkbox" class="form-check-input" name="method" (click)="toggleColumnState($event)">
                     <label for="">Method</label>
                 </div>
@@ -155,6 +160,7 @@
                         <th [class.d-none]="!columnStates.payee">Payee</th>
                         <th [class.d-none]="!columnStates.payer">Payer</th>
                         <th [class.d-none]="!columnStates.datePaid">Date Paid</th>
+                        <th>Month</th>
                         <th [class.d-none]="!columnStates.total">Total</th>
                         <th [class.d-none]="!columnStates.paymentStatus">Paid/Unpaid</th>
                         <th [class.d-none]="!columnStates.paymentMethod">Method</th>
@@ -171,6 +177,20 @@
                         <td [class.d-none]="!columnStates.payee">{{payment.payee}}</td>
                         <td [class.d-none]="!columnStates.payer">{{payment.payer}}</td>
                         <td [class.d-none]="!columnStates.datePaid">{{payment.datePaid}}</td>
+
+                        <td *ngIf="payment.paymentMonth == 1 && columnStates.month">{{months.Jan}}</td>
+                        <td *ngIf="payment.paymentMonth == 2 && columnStates.month">{{months.Feb}}</td>
+                        <td *ngIf="payment.paymentMonth == 3 && columnStates.month">{{months.Mar}}</td>
+                        <td *ngIf="payment.paymentMonth == 4 && columnStates.month">{{months.Apr}}</td>
+                        <td *ngIf="payment.paymentMonth == 5 && columnStates.month">{{months.May}}</td>
+                        <td *ngIf="payment.paymentMonth == 6 && columnStates.month">{{months.Jun}}</td>
+                        <td *ngIf="payment.paymentMonth == 7 && columnStates.month">{{months.Jul}}</td>
+                        <td *ngIf="payment.paymentMonth == 8 && columnStates.month">{{months.Aug}}</td>
+                        <td *ngIf="payment.paymentMonth == 9 && columnStates.month">{{months.Sept}}</td>
+                        <td *ngIf="payment.paymentMonth == 10 && columnStates.month">{{months.Oct}}</td>
+                        <td *ngIf="payment.paymentMonth == 11 && columnStates.month">{{months.Nov}}</td>
+                        <td *ngIf="payment.paymentMonth == 12 && columnStates.month">{{months.Dec}}</td>
+
                         <td [class.d-none]="!columnStates.total">{{payment.total | currency}}</td>
                         <td [class.d-none]="!columnStates.paymentStatus">{{payment.paymentStatus}}</td>
                         <td [class.d-none]="!columnStates.paymentMethod">{{payment.paymentMethod}}</td>
