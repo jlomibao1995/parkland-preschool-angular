@@ -1,15 +1,16 @@
 <div *ngIf="registration != null">
     <div class="row" *ngIf="registration.active">
-        <div class="col"></div>
-        <div class="col-auto mb-3" *ngIf="registration.status == status.spotOffered || registration.status == status.unregistered &&  !registration.classroom.full">
-            <a [href]="'/guardian/register/' + registration.paymentList[0].id" class="btn btn-primary">Complete Registration</a>
+        <div class="alert alert-warning"
+            *ngIf="registration.status == status.unregistered &&  registration.classroom.full" role="alert">
+            Class is now full, add child to the Wait List to be notified when a spot is available
         </div>
-
-        <div class="col" *ngIf="registration.status == status.unregistered &&  registration.classroom.full">
-            <div class="alert alert-warning" role="alert">
-                Class is now full, add child to the Wait List to be notified when a spot is available
-              </div>
-
+        <div class="col"></div>
+        <div class="col-auto mb-3"
+            *ngIf="registration.status == status.spotOffered || registration.status == status.unregistered &&  !registration.classroom.full">
+            <a [href]="'/guardian/register/' + registration.paymentList[0].id" class="btn btn-primary">Complete
+                Registration</a>
+        </div>
+        <div class="col-auto" *ngIf="registration.status == status.unregistered &&  registration.classroom.full">
             <button class="btn btn-outline-primary" (click)="waitList()">Add Child to Wait List</button>
         </div>
     </div>
@@ -17,12 +18,12 @@
     <div class="row mb-3" *ngIf="registration.status == status.registered || registration.status == status.pending">
         <div class="col">
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#childInfo"
-             (click)="selectChild(registration.child.id)">Edit Child Info</button>
+                (click)="selectChild(registration.child.id)">Edit Child Info</button>
         </div>
 
         <div class="col">
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactsInfo"
-            (click)="selectChild(registration.child.id)">Edit Child Contacts Info</button>
+                (click)="selectChild(registration.child.id)">Edit Child Contacts Info</button>
         </div>
 
         <div class="col">
@@ -34,10 +35,14 @@
         <div class="col">
             <table class="table table-striped">
                 <thead>
-                    <tr><th class="text-center"></th></tr>
+                    <tr>
+                        <th class="text-center"></th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr><td></td></tr>
+                    <tr>
+                        <td></td>
+                    </tr>
                     <select class="form-select" size="5">
                         <option *ngFor="let payment of paymentList">
                             <tr>
@@ -55,38 +60,42 @@
 </div>
 
 <!-- modal viewing payment details-->
-<div class="modal fade" id="childInfo" tabindex="-1" data-bs-backdrop="static"
-    aria-labelledby="childInfoLabel" aria-hidden="true">
+<div class="modal fade" id="childInfo" tabindex="-1" data-bs-backdrop="static" aria-labelledby="childInfoLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="childInfoLabel">Child Information</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  (click)="ngOnInit()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="ngOnInit()"></button>
             </div>
             <div class="modal-body">
                 <app-child-info-edit *ngIf="childId != null" [childId]="childId"></app-child-info-edit>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ngOnInit()">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="ngOnInit()">Close</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- modal viewing payment details-->
-<div class="modal fade" id="contactsInfo" tabindex="-1" data-bs-backdrop="static"
-    aria-labelledby="contactsInfoLabel" aria-hidden="true">
+<div class="modal fade" id="contactsInfo" tabindex="-1" data-bs-backdrop="static" aria-labelledby="contactsInfoLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="contactsInfoLabel">Child Information</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"  (click)="ngOnInit()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="ngOnInit()"></button>
             </div>
             <div class="modal-body">
                 <app-child-contacts *ngIf="childId != null" [childId]="childId"></app-child-contacts>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="ngOnInit()">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="ngOnInit()">Close</button>
             </div>
         </div>
     </div>

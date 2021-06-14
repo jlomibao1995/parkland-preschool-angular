@@ -108,7 +108,7 @@ export class RegisterChildComponent implements OnInit {
     this._registrationService.registerChild(registration).subscribe(
       data => {
         this.registration = data;
-        this.message = "Child has been registered";
+        this.message = "Child registration details saved";
         this.success = true;
         this.loading = false;
       }, error => {

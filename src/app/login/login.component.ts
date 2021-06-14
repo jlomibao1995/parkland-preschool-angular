@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
     this.loading = false;
 
     this.loginForm = this._formBuilder.group({
-      email: ['parklandpreschoolteam@gmail.com', Validators.required],
-      password: ['Password21!', Validators.required]
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 

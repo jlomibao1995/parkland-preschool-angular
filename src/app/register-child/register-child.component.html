@@ -113,7 +113,7 @@
                             <button class="btn btn-outline-secondary px-4" (click)="previous()">Prev</button>
                         </div>
                         <div class="col-auto form-group">
-                            <input class="btn btn-success px-4" (click)="register()" value="Save Registration Details">
+                            <input class="btn btn-success px-1" (click)="register()" value="Register">
                         </div>
                     </div>
                 </div>
@@ -141,12 +141,12 @@
 
                 <div class="row m-5">
                     <div class="col">
-                        <a class="btn btn-dark btn-md px-4" href="/myaccount">Return to Account</a>
+                        <a class="btn btn-dark btn-md m-3 text-nowrap" href="/myaccount">Return to Account</a>
                     </div>
 
                     <div class="col" *ngIf="registration.status == status.unregistered">
                         <a [href]="'/checkout/' + registration.paymentList[0].invoiceId"
-                            class="btn btn-outline-success">Pay
+                            class="btn btn-outline-success text-nowrap">Pay
                             Registration Fee</a>
                     </div>
                 </div>
