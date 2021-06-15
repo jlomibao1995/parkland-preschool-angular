@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080/api/v1'
+  // baseUrl: 'http://localhost:8080/api/v1'
+  baseUrl: 'https://api.parklandpreschool.com/api/v1'
 };
 
 /*
