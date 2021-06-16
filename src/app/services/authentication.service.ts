@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 import { Account } from '../models/Account';
 import { AccountService } from './account.service';
 import { CookieService } from './cookie.service';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,41 +18,36 @@ export class AuthenticationService {
   constructor(private _http: HttpClient, private _cookieService: CookieService, private _router: Router,
     private _accountService: AccountService) { }
 
-  async authenticate(credentials: any) {
-    const headers = { 'content-type': 'application/json' };
-    await this._http.post<any>(this.url + 'authenticate', credentials, { 'headers': headers })
-      .toPromise().then(data => {
-        // this._cookieService.set('authorization', data.jwt);
-        this._cookieService.set('email', credentials.email);
-        this._router.navigateByUrl('/myaccount');
-      });
+  authenticate(credentials: any) {
+    return this._http.post<any>(this.url + 'authenticate', credentials)
+    .pipe(catchError(this.errorHandler)); 
   }
 
   authenticated() {
-    if (this._cookieService.get('email')) {
+    if (this._cookieService.get('email') != null && this._cookieService.get('email').length > 0) {
       return true;
     }
     return false;
   }
 
-  populateAccountInfo() {
-    return new Promise((resolve, reject) => {
+  // populateAccountInfo() {
+  //   return new Promise((resolve, reject) => {
 
-      this._accountService.getMyAccount().subscribe(
-        data => {
-          this.currentUser = data;
-          resolve(true);
-        }
-      );
-    })
-  }
+  //     this._accountService.getMyAccount().subscribe(
+  //       data => {
+  //         this.currentUser = data;
+  //         resolve(true);
+  //       }
+  //     );
+  //   })
+  // }
 
   logout() {
-    this._http.post<any>(this.url + 'logout', {}).subscribe(
-      data => {
-        this._cookieService.remove('email');
-        this._router.navigateByUrl('/login');
-      }
-    )
+    return this._http.post<any>(this.url + 'logout', {})
+    .pipe(catchError(this.errorHandler)); 
+  }
+
+  errorHandler(error: HttpErrorResponse) {
+    return throwError(error);
   }
 }

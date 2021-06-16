@@ -10,25 +10,30 @@ import { CookieService } from '../services/cookie.service';
   styleUrls: ['./my-account.component.css']
 })
 export class MyAccountComponent implements OnInit {
-  public email: String;
-  public name: String;
-  public role: String;
-  public access: boolean;
-  public id: number;
+   email: String;
+   name: String;
+   role: String;
+   access: boolean;
+   id: number;
+   loading: boolean;
 
   constructor(private _accountService: AccountService, private _authenticationService: AuthenticationService, 
     private _router: Router) { }
 
   ngOnInit(): void {
     this.id = null;
+    this.loading = true;
     if (this._authenticationService.authenticated()) {
-      this._authenticationService.populateAccountInfo().then((value) => {
-        this.email = this._authenticationService.currentUser.email;
-        this.name = this._authenticationService.currentUser.firstName + ' ' + this._authenticationService.currentUser.lastName;
-        this.access = this._authenticationService.currentUser.schoolAccessAllowed;
-        this.id = this._authenticationService.currentUser.id;
-        this.role = this._authenticationService.currentUser.role;
-      });
+      this._accountService.getMyAccount().subscribe(
+        data => {
+          this.email = data.email;
+          this.name = data.firstName + ' ' + data.lastName;
+          this.role = data.role;
+          this.id = data.id;
+          this.access = data.schoolAccessAllowed;
+          this.loading = false;
+        }
+      )
     } else {
       this._router.navigateByUrl("/login");
     }

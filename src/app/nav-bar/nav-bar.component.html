@@ -31,7 +31,7 @@
             <a class="nav-link" href="/admin/accounts" [routerLink]="['/admin/accounts']" [routerLinkActive]="['active']">Accounts</a>
           </li>
           <li class="nav-item" *ngIf="authenticated">
-            <a class="nav-link" href="/login" (click)="logout()">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <li class="nav-item" *ngIf="!authenticated">
             <a class="nav-link" href="/login" aria-disabled="true" [routerLink]="['/login']" [routerLinkActive]="['active']">Login</a>

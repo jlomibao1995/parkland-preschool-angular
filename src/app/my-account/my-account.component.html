@@ -1,5 +1,6 @@
 <app-nav-bar></app-nav-bar>
-<div class="container">
+<app-loading-spinner [httpLoading]="loading"></app-loading-spinner>
+<div class="container" [class.overlay]="loading">
     <div class="card my-5 out">
         <div class="row">
             <div class="col mt-4 text-center">

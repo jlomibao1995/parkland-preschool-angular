@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
+import { CookieService } from '../services/cookie.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   public loading: boolean;
 
   constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService,
-    private _router: Router) { }
+    private _cookieService: CookieService, private _router: Router) { }
 
   ngOnInit(): void {
     if (this._authenticationService.authenticated()) {
@@ -42,10 +43,16 @@ export class LoginComponent implements OnInit {
       this._authenticationService.authenticate({
         email: this.email.value,
         password: this.password.value
-      }).catch(error => {
-        this.message = error;
-        this.loading = false;
-      });
+      }).subscribe(
+        data => {
+          this._cookieService.set('email', this.email.value)
+          this._router.navigateByUrl("/myaccount");
+        },
+        error => {
+          this.message = error;
+          this.loading = false
+        }
+      )
     }
 
 }

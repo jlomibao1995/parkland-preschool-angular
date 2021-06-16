@@ -13,6 +13,22 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "jspdf-autotable",
+              "core-js-pure/features/symbol/iterator",
+              "core-js-pure/features/symbol",
+              "core-js-pure/features/array/from",
+              "core-js-pure/features/array/is-array",
+              "core-js-pure/features/instance/slice",
+              "core-js-pure/features/object/create",
+              "core-js-pure/features/object/define-property",
+              "core-js-pure/features/object/get-own-property-descriptor",
+              "core-js-pure/features/object/get-prototype-of",
+              "core-js-pure/features/object/set-prototype-of",
+              "core-js-pure/features/promise",
+              "core-js-pure/features/reflect/get",
+              "raf"
+           ],
             "outputPath": "dist/parkland-preschool",
             "index": "src/index.html",
             "main": "src/main.ts",

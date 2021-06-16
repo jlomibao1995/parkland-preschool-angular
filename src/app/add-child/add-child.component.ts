@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../services/authentication.service';
+import { AccountService } from '../services/account.service';
 import { ChildService } from '../services/child.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class AddChildComponent implements OnInit {
   @Output() updated: EventEmitter<string> = new EventEmitter();
 
   constructor(private _formBuilder: FormBuilder, private _childService: ChildService,
-    private _authenticationService: AuthenticationService) {
+    private _accountService: AccountService) {
     this.genders = this._childService.gender;
    }
 
@@ -32,9 +32,11 @@ export class AddChildComponent implements OnInit {
       lastName: ['', Validators.required],
     });
 
-    this._authenticationService.populateAccountInfo().then((value) => {
-      this.accountId = this._authenticationService.currentUser.id;
-    });
+    this._accountService.getMyAccount().subscribe(
+      data => {
+        this.accountId = data.id;
+      }
+    )
   }
 
   get firstName() {

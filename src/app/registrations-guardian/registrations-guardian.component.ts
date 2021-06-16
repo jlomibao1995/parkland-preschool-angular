@@ -16,9 +16,9 @@ export class RegistrationsGuardianComponent implements OnInit {
   constructor(private _accountService: AccountService, private _authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this._authenticationService.populateAccountInfo().then((value) => {
-      this.childList = this._authenticationService.currentUser.childList;
-    });
+    this._accountService.getMyAccount().subscribe(
+      data => this.childList = data.childList
+    )
   }
 
   updatedHandler() {

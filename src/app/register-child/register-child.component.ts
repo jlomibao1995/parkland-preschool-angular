@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { disciplineSignatureValidator, outdoorSignatureValidator, safetySignatureValidator, sickSignatureValidator } from '../helpers/signature.validator';
 import { Child } from '../models/Child';
 import { Classroom } from '../models/Classroom';
 import { Registration } from '../models/Registration';
-import { AuthenticationService } from '../services/authentication.service';
+import { AccountService } from '../services/account.service';
 import { ChildService } from '../services/child.service';
 import { ClassesService } from '../services/classroom.service';
 import { RegistrationService } from '../services/registration.service';
@@ -34,7 +33,7 @@ export class RegisterChildComponent implements OnInit {
   public status;
   public infoComplete = false;
 
-  constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService,
+  constructor(private _formBuilder: FormBuilder, private _accountService: AccountService,
     private _childService: ChildService, private _classroomService: ClassesService, 
     private _registrationService: RegistrationService) { 
       this.status = this._registrationService.status;
@@ -57,10 +56,12 @@ export class RegisterChildComponent implements OnInit {
     });
 
     this.loading = true;
-    this._authenticationService.populateAccountInfo().then((value) => {
-      this.childList = this._authenticationService.currentUser.childList;
-      this.loading = false;
-    });
+    this._accountService.getMyAccount().subscribe(
+      data => {
+        this.loading = true;
+        this.childList = data.childList;
+      }
+    );
   }
 
   updatedHandler(event) {
