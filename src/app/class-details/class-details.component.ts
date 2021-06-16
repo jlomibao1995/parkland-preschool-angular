@@ -126,6 +126,8 @@ export class ClassDetailsComponent implements OnInit, OnChanges {
     this.loading = true;
     let sDate = this.startDate.value + ' ' + this.startTime.value;
     let eDate = this.endDate.value + ' ' + this.endTime.value
+    console.log(sDate);
+    console.log(eDate);
 
     const params = new HttpParams()
     .set('capacity', this.capacity.value)
