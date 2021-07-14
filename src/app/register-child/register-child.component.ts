@@ -58,7 +58,7 @@ export class RegisterChildComponent implements OnInit {
     this.loading = true;
     this._accountService.getMyAccount().subscribe(
       data => {
-        this.loading = true;
+        this.loading = false;
         this.childList = data.childList;
       }
     );
