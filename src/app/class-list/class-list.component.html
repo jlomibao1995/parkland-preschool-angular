@@ -38,7 +38,6 @@
                     <th>Name</th>
                     <th>Guardian</th>
                     <th>Email</th>
-                    <th>Phone</th>
                     <th></th>
                 </tr>
             </thead>
@@ -49,7 +48,6 @@
                     <td><a
                             [href]="'mailto:' + registration.child.account.email">{{registration.child.account.email}}</a>
                     </td>
-                    <td>{{registration.child.phoneNumber}}</td>
                     <td>
                         <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#childInfo" (click)="selectChild(i)">
                             <span class="material-icons">
