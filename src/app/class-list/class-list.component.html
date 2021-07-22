@@ -37,7 +37,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Guardian</th>
-                    <th>Email</th>
+                    <th colspan="2">Email</th>
                     <th></th>
                 </tr>
             </thead>
@@ -45,7 +45,7 @@
                 <tr *ngFor="let registration of registrations; let i = index">
                     <td>{{registration.child.firstName}} {{registration.child.lastName}}</td>
                     <td>{{registration.child.account.firstName}} {{registration.child.account.lastName}}</td>
-                    <td><a
+                    <td colspan="2"><a
                             [href]="'mailto:' + registration.child.account.email">{{registration.child.account.email}}</a>
                     </td>
                     <td>
